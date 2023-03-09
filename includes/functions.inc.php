@@ -719,8 +719,7 @@ function ShowMessages($conn, $uid, $friendId, $profileImg, $friendname){
     <?php
     }
 }
-//CHATBOT
-
+//chatbot
 function botSend($msg){?>
     <div class="message"><h1 id="chatSender"><?php echo $msg?></h1></div>
 <?php
@@ -730,8 +729,12 @@ function botReceiv($msg){?>
 <?php
 }
 function INKbotMsg($msg, $replay){
-    botSend($msg);
-    botReceiv($replay);
+    if ($msg == ""){
+        botReceiv($replay);
+    }else{
+        botSend($msg);
+        botReceiv($replay);
+    }
 }
     
 //GET GLOABAL DATA FUCTION (FOR ALL) FROM DATABASE

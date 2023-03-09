@@ -79,6 +79,7 @@ $_SESSION['fileType'] = 1;
     </section>
 
 <script>
+
 var bannerStatus = 1;
 
 function bn(nmr) {

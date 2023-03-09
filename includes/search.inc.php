@@ -157,7 +157,6 @@
         }
         // header("location: ../User/friendz.php?friendz&notuploaded");
     }
-    
     //QUICK DISCOVER REMINDER
     if(isset($_POST['searchgames'])){
 

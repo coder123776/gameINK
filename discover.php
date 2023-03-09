@@ -2,7 +2,7 @@
 include_once('head-footer/header.php');
 include_once('includes/functions.inc.php');
 include_once('includes/dbh.inc.php');
-$_SESSION['fileType'] = 2;
+$_SESSION['fileType'] = 1;
 
 if(isset($_GET['filter'])){
 

@@ -689,15 +689,16 @@ function ShowMessages($conn, $uid, $friendId, $profileImg, $friendname){
     if(mysqli_num_rows($chat) == 0){?>
     <nav class="messages-body1"><img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>"><h1><?php echo $friendname?></h1></nav>
     <div class="messages"><div class="message"><h1 id="messageReceiver">You have no chats with this user yet</h1></div></div>
-    <nav class="messages-body2"><form method="post"><input id="messageTouser" type="text" name="messageTouser" value="" placeholder="Type in your message" minlength="1">
-    <input type="hidden" name="friendId" value="<?php echo $friendId ?>">
-    <input type="hidden" name="currTime" value="<?php echo date("H:i")?>">
-    </form></nav>
+    <nav class="messages-body2"><input id="messageTouser" type="text" name="messageTouser" value="" placeholder="Type in your message" minlength="1">
+    <input id="friendidtouser" type="hidden" name="friendId" value="<?php echo $friendId ?>">
+    <input id="date" type="hidden" name="currTime" value="<?php echo date("H:i")?>">
+    <button id="JSclickMsg" type="submit"></button>
+    </nav>
     <?php
     }else{
     ?>
     <nav class="messages-body1"><img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>"><h1><?php echo $friendname?></h1></nav>
-    <div class="messages">
+    <div id="messages" class="messages">
         <?php
         while ($row = mysqli_fetch_assoc($chat)){
             $sender = $row['ChatSender'];
@@ -712,10 +713,71 @@ function ShowMessages($conn, $uid, $friendId, $profileImg, $friendname){
         }
         ?>
     </div>
-    <nav class="messages-body2"><form method="post"><input id="messageTouser" type="text" name="messageTouser" value="" placeholder="Type in your message" minlength="1">
-    <input type="hidden" name="friendId" value="<?php echo $friendId ?>">
-    <input type="hidden" name="currTime" value="<?php echo date("H:i")?>">
-    </form></nav>
+    <nav class="messages-body2"><input id="messageTouser" type="text" name="messageTouser" value="" placeholder="Type in your message" minlength="1">
+    <input id="friendidtouser" type="hidden" name="friendId" value="<?php echo $friendId ?>">
+    <input id="date" type="hidden" name="currTime" value="<?php echo date("H:i")?>">
+    <input id="friendimg" type="hidden" name="friendimg" value="<?php echo $profileImg ?>">
+    <input id="friendname" type="hidden" name="friendname" value="<?php echo $friendname?>">
+    <button id="JSclickMsg" type="submit"></button>
+    <script>
+    function startTime() {
+    const today = new Date();
+    let h = today.getHours();
+    let m = today.getMinutes();
+    h = checkTime(h);
+    m = checkTime(m);
+    currtime =  h + ":" + m;
+    return currtime;
+    setTimeout(startTime, 1000);
+    }
+    startTime();
+
+    function checkTime(i) {
+    if (i < 10) {i = "0" + i};
+    return i;
+    }
+    function scrolldownChatbot(){
+        document.getElementById("messages").scrollTo(0, 999999999999);
+    }
+    function data(){
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function(){
+            document.getElementById("messages").innerHTML = this.responseText;
+        }
+        xhttp.open("POST", "<?php if($_SESSION['fileType'] == 1){echo "head-footer/chatbotchats.php";}elseif($_SESSION['fileType'] == 2){echo "../head-footer/chatbotchats.php";}?>");
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("getfriendchats");
+    }
+
+    function searchforNewchats() {
+    setTimeout(function() {
+        data();
+        searchforNewchats();
+    }, 1000)
+    }
+    searchforNewchats(); 
+
+    $(document).ready(function() {
+        $("#messageTouser").keyup(function(event) {
+        if (event.keyCode === 13) {
+            $("#JSclickMsg").click();
+        }});
+            $("#JSclickMsg").click(function() {
+            var msgtofriend = $("#messageTouser").val();
+            var friendid = $("#friendidtouser").val();
+            var date = currtime;
+            $(document).load("", {
+                messageTouser: msgtofriend,
+                friendId: friendid,
+                currTime: date
+            });
+            setTimeout( function () {
+            scrolldownChatbot();
+            } , 300 );
+        });
+    });
+    </script>
+    </nav>
     <?php
     }
 }

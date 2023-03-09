@@ -195,6 +195,7 @@ if(!isset($_SESSION['userid'])) {
             <?php
             if(isset($_POST['getFriendsMessages'])){
                 $friendId = $_POST['friendPageId'];
+                $_SESSION['liveFriend'] = $friendId;
                 $friendsname = $_POST['friendPageName'];
                 $friendImg = $_POST['friendPageImg'];
                 ShowMessages($conn, $uid, $friendId, $friendImg, $friendsname);
@@ -204,7 +205,7 @@ if(!isset($_SESSION['userid'])) {
                 $friendId = $_POST['friendId'];
                 $time = $_POST['currTime'];
                 if ($msg == ""){
-
+                    header('location: ?');
                 }else{
                     $sql = "INSERT INTO chat (ChatSender, ChatReceiver, message, time) VALUES (?, ?, ?, ?);";
                     $stmt = mysqli_stmt_init($conn);

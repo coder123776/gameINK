@@ -1,7 +1,7 @@
 <?php
 if (isset($_POST['msgToChatbot'])){
     $messg = $_POST['msgToChatbot'];
-    $searchRespo = "SELECT * FROM inkbot WHERE vraag LIKE '%{$messg}%' LIMIT 1;";
+    $searchRespo = "SELECT * FROM inkbot WHERE vraag LIKE '%{$messg}%' ORDER BY RAND() LIMIT 1;";
     $searchReslut = mysqli_query($conn, $searchRespo);
     if(mysqli_num_rows($searchReslut) > 0){
     while ($row = mysqli_fetch_assoc($searchReslut)){
@@ -57,7 +57,7 @@ if (isset($_POST['msgToChatbot'])){
         }
         }else{
             $firstchat = "INSERT INTO inkbotchats (chatbotReplay, userId) VALUES (?, ?);";
-            $botgreeting = "welcome $username if you need help you can ask me anything";
+            $botgreeting = "welcome $username if you need help, you can ask me anything";
             $stmt = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($stmt, $firstchat)) {
                 header('location: ../User/signup.php?error=stmtfailed');

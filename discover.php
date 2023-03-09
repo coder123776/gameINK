@@ -167,14 +167,18 @@ if (isset($_POST['add'])){
 
                                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
                                 <script type="text/javascript">
+                                        //dit moet wel bij elke input waar je een search hebt
                                         $(document).ready(function(){
+                                        // hier zet je de id
                                         $("#filterS").keyup(function(){
+                                                //is de value van de input
                                                 var input = $(this).val();
-                                                // alert(input);
+                                                // alert(input) om te kijken of het wel werkt;
                                                 if(input != ""){
                                                 $.ajax({
                                                         url:"includes/search.inc.php",
                                                         method:"post",
+                                                        //searchgames is de post, de input is de value die je kan gebruiker voorbeeld: SELECT * FROM ? WHERE ? = '%{input}%'
                                                         data:{searchgames:input},
 
                                                         success:function(data){

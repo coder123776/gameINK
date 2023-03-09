@@ -3,7 +3,7 @@ include_once('../head-footer/EXheader.php');
 include_once('../includes/functions.inc.php');
 include_once('../includes/dbh.inc.php');
 if(!isset($_SESSION['userid'])) {
-    header('location: ../User/login.php');
+    header('location: ../User/login.php?error=loginfirst');
 }else{
     CheckIfBanned($conn, $uid, 2);
     SetBudget($conn, $uid);

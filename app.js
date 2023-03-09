@@ -37,6 +37,7 @@ function Lightmode() {
     // set css variable
     root.style.setProperty('--RGB-0', 'rgb(255, 255, 255)');
     root.style.setProperty('--RGB-10', 'rgb(250, 250, 250)');
+    root.style.setProperty('--RGB-12.5', 'rgb(230, 230, 230)');
     root.style.setProperty('--RGB-15', 'rgb(240, 240, 240)');
     root.style.setProperty('--RGB-20', 'rgb(220, 220, 220)');
     root.style.setProperty('--RGB-35', 'rgb(215, 215, 215)');
@@ -73,6 +74,7 @@ function Darkmode() {
     root.style.setProperty('--RGB-200', 'rgb(200, 200, 200)');
     root.style.setProperty('--RGB-215', 'rgb(215, 215, 215)');
     root.style.setProperty('--RGB-220', 'rgb(220, 220, 220)');
+    root.style.setProperty('--RGB-230', 'rgb(230, 230, 230)');
     root.style.setProperty('--RGB-240', 'rgb(240, 240, 240)');
     root.style.setProperty('--RGB-250', 'rgb(250, 250, 250)');
     root.style.setProperty('--RGB-255', 'rgb(255, 255, 255)');

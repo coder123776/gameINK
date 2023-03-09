@@ -5,7 +5,7 @@ include_once('../includes/functions.inc.php');
 include_once('../includes/transitions.inc.php');
 
 if(!isset($_SESSION['userid'])) {
-    header('location: ../User/login.php');
+    header('location: ../User/login.php?error=loginfirst');
 }else{
         CheckIfBanned($conn, $uid, 2);
         SetBudget($conn, $uid);
@@ -63,7 +63,7 @@ if(!isset($_SESSION['userid'])) {
                 <h1 id="account-delete">Account Delete</h1>
                 <div class="account-delete">
                     <p id="account-delete">
-                        note: if you click to delete your account there is no way back
+                        note: if you click to delete your account... <br> there is no way back
                         you still need to verify by your email to delete your account.
                     </p>
                     <button>Delete Account</button>

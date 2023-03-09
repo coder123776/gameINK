@@ -21,10 +21,13 @@ if (isset($_GET["error"])) {
         echo "<p>Fill in all fields</p>";
     }
     elseif ($_GET["error"] == "userexist") {
-        echo "<p>User don't exist</p>";
+        echo "<p>User don't exist!</p>";
     }
     elseif ($_GET["error"] == "passwordincorrect") {
-        echo "<p>Incorrect password</p>";
+        echo "<p>Incorrect password!</p>";
+    }
+    elseif ($_GET["error"] == "loginfirst") {
+        echo "<p>you need to login first!</p>";
     }
 }
 ?>

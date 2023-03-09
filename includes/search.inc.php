@@ -135,6 +135,7 @@
         header("location: ../User/friendz.php?friendz");
     }
 
+    
 
     if(isset($_POST['changePic'])){
         if(isset($_FILES['changePicFile'])){

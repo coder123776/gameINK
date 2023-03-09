@@ -6,7 +6,7 @@ include_once('includes/dbh.inc.php');
     <?php
     if (isset($_POST['add'])){
         if(!isset($_SESSION['userid'])) {
-            header("location: User/login.php");
+            header("location: User/login.php?error=loginfirst");
         }else{
         if (isset($_SESSION['cart'])){
             $_SESSION['CurrentGame'] = $_POST['productId'];
@@ -22,18 +22,12 @@ include_once('includes/dbh.inc.php');
     ?>
 <title>Welcome at GameINK</title>
 <section id="oneIndex">
-    <div class="main-banner" id="main-banner">
-    <div class="imgban" id="imgban4"></div>
-    <div class="imgban" id="imgban3"></div>
-    <div class="imgban" id="imgban2"></div>
-    <div class="imgban" id="imgban1"></div></div>
+    <div class="main-banner" id="main-banner"><div class="imgban" id="imgban4"></div><div class="imgban" id="imgban3"></div>
+    <div class="imgban" id="imgban2"></div><div class="imgban" id="imgban1"></div></div>
         <div class="Side">
             <?php 
             if (isset($_SESSION['userid'])) {
-                CheckIfBanned($conn, $uid, 1);
-                SetBudget($conn, $uid);
-                CheckLastTimeOnline($conn, $uid);
-                CheckWhereLiving($conn, $uid);
+                CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
                 echo '<h1 id="welcome">welcome '.$username.'</h1><div id="inform"><h1>you may want to play..</h1>';
             }
             else
@@ -44,18 +38,11 @@ include_once('includes/dbh.inc.php');
             <div id="RecGames">
             <h1 id="recGameH1">Grand Theft Auto</h1>
             <p id="recGameP">Grand Theft Auto is a series of action-adventure games created by David Jones and Mike Dailly. Later titles were developed under the oversight of brothers Dan and Sam Houser, Leslie Benzies and Aaron Garbut.</p>
-            <div class="banner-line-parent">
-            <div onclick="bn(1)" class="banner-line" id="bnrLine1"></div>
-            <div onclick="bn(2)" class="banner-line" id="bnrLine2"></div>
-            <div onclick="bn(3)" class="banner-line" id="bnrLine3"></div>
-            <div onclick="bn(4)" class="banner-line" id="bnrLine4"></div>
-            </div>
-            </div>
-        </div>
+            <div class="banner-line-parent"> <div onclick="bn(1)" class="banner-line" id="bnrLine1"></div> <div onclick="bn(2)" class="banner-line" id="bnrLine2"></div>
+            <div onclick="bn(3)" class="banner-line" id="bnrLine3"></div> <div onclick="bn(4)" class="banner-line" id="bnrLine4"></div></div></div></div>
     </section>
     <div id="HeightCorrection"><div class="line"></div>
-    <div class="HeightCorrection-2">
-    <h1 id="txt-2">INK</h1><h1 id="txt-1">Game</h1>
+    <div class="HeightCorrection-2"><h1 id="txt-2">INK</h1><h1 id="txt-1">Game</h1>
     <?php
     if (isset($_SESSION['userid'])){
     if ($uid == $admin1 || $uid == $admin2 || $uid == $admin3 || $uid == $admin4) {
@@ -63,8 +50,7 @@ include_once('includes/dbh.inc.php');
     }
     }
     ?>
-    </div>
-    </div>
+    </div></div>
 
     <!-- GAMES SECTION ----------------------------------------------------------------------------------------------------------------------->
 
@@ -72,54 +58,18 @@ include_once('includes/dbh.inc.php');
     <section id="spotlight">
         <nav id="Spotlight"><h1 id="spotlightTxt"><?php echo date('F') ?> Spotlight games<a id="spotlightTxt" href="discover.php">View More</a></h1></nav>
         <div class="spotlight1">
-            <?php
-            $result = getData($conn, "SELECT * FROM games WHERE State LIKE '%TRENDING%' ORDER BY RAND();");
-            $MaxCards = 0;
-            while ($MaxCards < 5) {
-                if($row = mysqli_fetch_assoc($result)){
-                    GameDisplay1($row['naam'],$row['prijs'],$row['image'],$row['Id']);
-                    $MaxCards++;
-                }
-            }
-            ?>
+            <?php GameDisplay($conn, 'TRENDING', 1); ?>
         </div>
         <div class="spotlight2">
-        <?php
-            $result = getData($conn, "SELECT * FROM games WHERE State LIKE '%TRENDING2%' ORDER BY RAND();");
-            $MaxCards = 0;
-            while ($MaxCards < 3) {
-                if($row = mysqli_fetch_assoc($result)){
-                    GameDisplay2($row['naam'],$row['info'],$row['prijs'],$row['image'],$row['Id']);
-                    $MaxCards++;
-                }
-            }
-            ?>
+        <?php GameDisplay($conn, 'TRENDING2', 2); ?>
         </div>
         <nav id="Spotlight2"><h1 id="spotlightTxt">Populaire games<a id="spotlightTxt" href="discover.php?filter=Pgames">View More</a></h1></nav>
         <div class="spotlight2">
-        <?php
-            $result = getData($conn, "SELECT * FROM games WHERE State LIKE '%POPULAR%' ORDER BY RAND();");
-            $MaxCards = 0;
-            while ($MaxCards < 5) {
-                if($row = mysqli_fetch_assoc($result)){
-                    GameDisplay1($row['naam'],$row['prijs'],$row['image'],$row['Id']);
-                    $MaxCards++;
-                }
-            }
-            ?>
+        <?php GameDisplay($conn, 'POPULAR', 3); ?>
         </div>
         <div class="Spotlight3"><nav id="Spotlight22"><h1 id="spotlightTxt2">Now Free games</h1></nav>
         <div class="spot4">
-            <?php
-            $result = getData($conn, "SELECT * FROM games WHERE State LIKE '%FREE%';");
-            $MaxCards = 0;
-            while ($MaxCards < 2) {
-                if($row = mysqli_fetch_assoc($result)){
-                    GameDisplay4($row['naam'],$row['info'],$row['prijs'],$row['prijs2'],$row['image'],$row['Id']);
-                    $MaxCards++;
-                }
-            }
-            ?>
+        <?php GameDisplay($conn, 'FREE', 4); ?>
         </div></div>
 
         <div class="Spotlight5"><img id="gameImage5" src="docs/GameIdCatalog.png">

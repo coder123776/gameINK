@@ -6,7 +6,7 @@ include_once('../includes/dbh.inc.php');
 $_SESSION['firstTime'] = true;
 
 if(!isset($_SESSION['userid'])) {
-    header("location: ../User/login.php");
+    header("location: ../User/login.php?error=loginfirst");
 }else{
         CheckIfBanned($conn, $uid, 2);
         SetBudget($conn, $uid);

@@ -4,7 +4,7 @@ include_once('../head-footer/EXheader.php');
 include_once('../includes/functions.inc.php');
 
 if(!isset($_SESSION['userid'])) {
-    header("location: ../User/login.php");
+    header("location: ../User/login.php?error=loginfirst");
 }else{
     CheckIfBanned($conn, $uid, 2);
     SetBudget($conn, $uid);
@@ -39,8 +39,8 @@ if(!isset($_SESSION['userid'])) {
             <form action="?friendz" method="post"><button type="submit" name="myfriends" id="your friends" class='fas'><div>&#xf4fc;</div><div><h3>Your Friends</h3></div></button></form>
             <form action="?add" method="post"><button type="submit" name="addfriends" id="your friends" class='fas'><div>&#xf234;</div><div><h3>Add Friends</h3></div></button></form>
             <form action="?request" method="post"><button type="submit" name="reqfriends" id="your friends" class='fas'><div>&#xf0e0;</div><div><h3>Friend Request</h3></div></button></form>
-            <form action="?group" method="post"><button type="submit" name="groups" id="your friends" class='fas'><div>&#xf0c0;</div><div><h3>Groups</h3></div></button></form>
-            <form action="?MakeGroup" method="post"><button type="submit" name="makegroup" id="your friends" class='fa'><div>&#xf0c0;</div><div><h3>Make Group</h3></div></button></form>
+            <form action="?messages" method="post"><button type="submit" name="messages" id="your friends" class='fa'><div>&#xf086;</div><div><h3>Messages</h3></div></button></form>
+            <form action="?groups" method="post"><button type="submit" name="groups" id="your friends" class='fa'><div>&#xf0c0;</div><div><h3>Groups</h3></div></button></form>
             <hr id="friend-hr">
         </nav>
 
@@ -101,96 +101,19 @@ if(!isset($_SESSION['userid'])) {
                 <script type="text/javascript">
                         $(document).ready(function(){
                         $("#inputFriend").keyup(function(){
-                                var input = $(this).val();
-                                // alert(input);
-                                if(input != ""){
-                                $.ajax({
-                                        url:"../includes/search.inc.php", method:"post", data:{searchFriendz:input},
-                                        success:function(data){ $("#friendsz").html(data); $("#friendsz").css("display", "flex");
-                                        }});}});});
+                        var input = $(this).val();
+                        // alert(input);
+                        if(input != ""){
+                        $.ajax({
+                                url:"../includes/search.inc.php", method:"post", data:{searchFriendz:input},
+                                success:function(data){ $("#friendsz").html(data); $("#friendsz").css("display", "flex");
+                        }});}});});
                 </script>
                     <?php
-                            $queryA = "SELECT * FROM friends WHERE senderId = ".$uid." AND status = 'FRIENDS' OR receiverId = ".$uid." AND status = 'FRIENDS';";
-                            $resultA = mysqli_query($conn, $queryA);
-
-                            if (mysqli_num_rows($resultA) > 0){
-                                while($row = mysqli_fetch_assoc($resultA)){
-                                    $sender = $row['senderId'];
-                                    $reciver = $row['receiverId'];
-                                    $status = $row['status'];
-                        
-                                    if ($uid == $sender){
-                                        $queryB = "SELECT * FROM gebruiker WHERE Id = ".$reciver.";";
-                                        $resultB = mysqli_query($conn, $queryB);
-
-                                        if(mysqli_num_rows($resultB) > 0){
-                                            if($row = mysqli_fetch_assoc($resultB)){
-                                                $friendsname = $row['Username'];
-                                                $profileImg = $row['profileImg'];
-                                                $friendId = $row['Id'];
-                                                $friendLevel = $row['level'];
-                                                $friendBio = $row['Bio'];
-                                                $friendDate = $row['onlineDate'];
-                                                $date = $row['onlineDate'];
-                                                $_SESSION['friendnumber'] = mysqli_num_rows($resultA);
-                                                ?>
-                                                <form action="?friendProfile" method="post">
-                                                <button type="submit" name="friendsBtn">
-                                                <div class="row-friendz-child">
-                                                <img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>">
-                                                <div><h1><?php echo $friendsname?></h1><p>Last Online: <?php echo $date ?></p></div></div></button>
-                                                <input type="hidden" name="friendPageId" value="<?php echo $friendId?>">
-                                                <input type="hidden" name="friendPageName" value="<?php echo $friendsname?>">
-                                                <input type="hidden" name="friendPageLevel" value="<?php echo $friendLevel?>">
-                                                <input type="hidden" name="friendPageBio" value="<?php echo $friendBio?>">
-                                                <input type="hidden" name="friendPageDate" value="<?php echo $friendDate?>">
-                                                <input type="hidden" name="friendPageImg" value="<?php echo $profileImg?>">
-                                                </form>
-                                                <?php
-                                            }
-                                        }
-                                    }
-                                    if ($uid == $reciver){
-                                        $queryB = "SELECT * FROM gebruiker WHERE Id = ".$sender.";";
-                                        $resultB = mysqli_query($conn, $queryB);
-
-                                        if(mysqli_num_rows($resultB) > 0){
-                                            if($row = mysqli_fetch_assoc($resultB)){
-                                                $friendsname = $row['Username'];
-                                                $profileImg = $row['profileImg'];
-                                                $friendId = $row['Id'];
-                                                $friendLevel = $row['level'];
-                                                $friendBio = $row['Bio'];
-                                                $friendDate = $row['onlineDate'];
-                                                $date = $row['onlineDate'];
-                                                $_SESSION['friendnumber'] = mysqli_num_rows($resultA);
-                                                ?>
-                                                <form action="?friendProfile" method="post">
-                                                <button type="submit" name="friendsBtn">
-                                                <div class="row-friendz-child">
-                                                <img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>">
-                                                <div><h1><?php echo $friendsname?></h1><p>Last Online: <?php echo $date ?></p></div></div></button>
-                                                <input type="hidden" name="friendPageId" value="<?php echo $friendId?>">
-                                                <input type="hidden" name="friendPageName" value="<?php echo $friendsname?>">
-                                                <input type="hidden" name="friendPageLevel" value="<?php echo $friendLevel?>">
-                                                <input type="hidden" name="friendPageBio" value="<?php echo $friendBio?>">
-                                                <input type="hidden" name="friendPageDate" value="<?php echo $friendDate?>">
-                                                <input type="hidden" name="friendPageImg" value="<?php echo $profileImg?>">
-                                                </form>
-                                                <?php
-                                            }
-                                        }
-                                    }
-                                }
-                                ?>
-                                <?php
-                            }else{
-                                echo "you have no friends";
-                            }
+                    getFriends($conn, $uid, 1);
                     ?>
                 </div>
             </div>
-
         <?php
         }
         if(isset($_GET['add'])){
@@ -257,6 +180,43 @@ if(!isset($_SESSION['userid'])) {
                     </div>
                 </div>
             </div>
+        <?php
+        }
+        if(isset($_GET['messages'])){?>
+        <div class="messages-parent">
+        <div class="messages-nav">
+            <?php
+            getFriends($conn, $uid, 2);
+            ?>
+        </div>
+        <div class="messages-body-line"></div>
+        <div class="messages-body">
+            <?php
+            if(isset($_POST['getFriendsMessages'])){
+                $friendId = $_POST['friendPageId'];
+                $friendsname = $_POST['friendPageName'];
+                $friendImg = $_POST['friendPageImg'];
+                ShowMessages($conn, $uid, $friendId, $friendImg, $friendsname);
+            }
+            if(isset($_POST['messageTouser'])){
+                $msg = $_POST['messageTouser'];
+                $friendId = $_POST['friendId'];
+                $time = $_POST['currTime'];
+
+                $sql = "INSERT INTO chat (ChatSender, ChatReceiver, message, time) VALUES (?, ?, ?, ?);";
+                $stmt = mysqli_stmt_init($conn);
+                if (!mysqli_stmt_prepare($stmt, $sql)) {
+                    header('location: ../error.php?error=stmtfailed');
+                    exit();
+                }
+                mysqli_stmt_bind_param($stmt, "ssss", $uid, $friendId, $msg, $time);
+                mysqli_stmt_execute($stmt);
+                mysqli_stmt_close($stmt);
+                exit();
+            }
+            ?>
+        </div>
+        </div>
         <?php
         }
         ?>

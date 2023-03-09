@@ -2,12 +2,13 @@
 include_once('../includes/dbh.inc.php');
 include_once('../head-footer/EXheader.php');
 include_once('../includes/functions.inc.php');
-
+$_SESSION['fileType'] = 2;
 if(!isset($_SESSION['userid'])) {
     header("location: ../User/login.php?error=loginfirst");
 }else{
     CheckIfBanned($conn, $uid, 2);
     SetBudget($conn, $uid);
+    include_once('../head-footer/chatbot.php');
 }
 ?>
 <title>Your Friends at GameINK</title>
@@ -202,17 +203,20 @@ if(!isset($_SESSION['userid'])) {
                 $msg = $_POST['messageTouser'];
                 $friendId = $_POST['friendId'];
                 $time = $_POST['currTime'];
+                if ($msg == ""){
 
-                $sql = "INSERT INTO chat (ChatSender, ChatReceiver, message, time) VALUES (?, ?, ?, ?);";
-                $stmt = mysqli_stmt_init($conn);
-                if (!mysqli_stmt_prepare($stmt, $sql)) {
-                    header('location: ../error.php?error=stmtfailed');
+                }else{
+                    $sql = "INSERT INTO chat (ChatSender, ChatReceiver, message, time) VALUES (?, ?, ?, ?);";
+                    $stmt = mysqli_stmt_init($conn);
+                    if (!mysqli_stmt_prepare($stmt, $sql)) {
+                        header('location: ../error.php?error=stmtfailed');
+                        exit();
+                    }
+                    mysqli_stmt_bind_param($stmt, "ssss", $uid, $friendId, $msg, $time);
+                    mysqli_stmt_execute($stmt);
+                    mysqli_stmt_close($stmt);
                     exit();
                 }
-                mysqli_stmt_bind_param($stmt, "ssss", $uid, $friendId, $msg, $time);
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_close($stmt);
-                exit();
             }
             ?>
         </div>

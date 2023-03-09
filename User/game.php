@@ -2,7 +2,7 @@
 include_once('../head-footer/EXheader.php');
 include_once('../includes/functions.inc.php');
 include_once('../includes/dbh.inc.php');
-
+$_SESSION['fileType'] = 2;
 $_SESSION['firstTime'] = true;
 
 if(!isset($_SESSION['userid'])) {
@@ -10,6 +10,7 @@ if(!isset($_SESSION['userid'])) {
 }else{
         CheckIfBanned($conn, $uid, 2);
         SetBudget($conn, $uid);
+        include_once('../head-footer/chatbot.php');
     if (isset($_SESSION['cart'][0])) {
         if ($_SESSION['firstTime'] == true){
             $_SESSION['firstTime'] = false;

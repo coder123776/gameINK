@@ -2,9 +2,11 @@
 include_once('../head-footer/EXheader.php');
 include_once('../includes/dbh.inc.php');
 include_once('../includes/functions.inc.php');
+$_SESSION['fileType'] = 2;
 if(isset($_SESSION['userid'])) {
     CheckIfBanned($conn, $uid, 2);
     SetBudget($conn, $uid);
+    include_once('../head-footer/chatbot.php');
 }
 ?>
 <title>Signup at GameINK</title>

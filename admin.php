@@ -2,10 +2,14 @@
 include_once('head-footer/header.php');
 include_once('includes/functions.inc.php');
 include_once('includes/dbh.inc.php');
+$_SESSION['fileType'] = 1;
 if(!isset($_SESSION['userid'])) {
     header("location: index.php");
 }
 else
+include_once('head-footer/chatbot.php');
+CheckIfBanned($conn, $uid, 1);
+SetBudget($conn, $uid);
 if($uid == $admin1 || $uid == $admin2 || $uid == $admin3 || $uid == $admin4){
 }else{
     header("location: index.php");

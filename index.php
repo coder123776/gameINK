@@ -2,6 +2,7 @@
 include_once('head-footer/header.php');
 include_once('includes/functions.inc.php');
 include_once('includes/dbh.inc.php');
+$_SESSION['fileType'] = 1;
 ?>
     <?php
     if (isset($_POST['add'])){
@@ -19,7 +20,7 @@ include_once('includes/dbh.inc.php');
         }
     }
 }
-    ?>
+?> 
 <title>Welcome at GameINK</title>
 <section id="oneIndex">
     <div class="main-banner" id="main-banner"><div class="imgban" id="imgban4"></div><div class="imgban" id="imgban3"></div>
@@ -27,6 +28,7 @@ include_once('includes/dbh.inc.php');
         <div class="Side">
             <?php 
             if (isset($_SESSION['userid'])) {
+                include_once('head-footer/chatbot.php');
                 CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
                 echo '<h1 id="welcome">welcome '.$username.'</h1><div id="inform"><h1>you may want to play..</h1>';
             }

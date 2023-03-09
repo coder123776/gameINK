@@ -2,6 +2,7 @@
 include_once('head-footer/header.php');
 include_once('includes/functions.inc.php');
 include_once('includes/dbh.inc.php');
+$_SESSION['fileType'] = 2;
 
 if(isset($_GET['filter'])){
 
@@ -115,6 +116,7 @@ if(isset($_GET['filter'])){
 if(isset($_SESSION['userid'])) {
         CheckIfBanned($conn, $uid, 1);
         SetBudget($conn, $uid);
+        include_once('head-footer/chatbot.php');
 }
 if (isset($_POST['add'])){
         if(!isset($_SESSION['userid'])) {
@@ -167,18 +169,13 @@ if (isset($_POST['add'])){
 
                                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
                                 <script type="text/javascript">
-                                        //dit moet wel bij elke input waar je een search hebt
                                         $(document).ready(function(){
-                                        // hier zet je de id
                                         $("#filterS").keyup(function(){
-                                                //is de value van de input
                                                 var input = $(this).val();
-                                                // alert(input) om te kijken of het wel werkt;
                                                 if(input != ""){
                                                 $.ajax({
                                                         url:"includes/search.inc.php",
                                                         method:"post",
-                                                        //searchgames is de post, de input is de value die je kan gebruiker voorbeeld: SELECT * FROM ? WHERE ? = '%{input}%'
                                                         data:{searchgames:input},
 
                                                         success:function(data){

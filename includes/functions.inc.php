@@ -137,7 +137,7 @@ function GameDisplay($conn, $state, $displ){
         if($MaxCards1 < 5){
         ?>
         <form method="post"><button name="add" id="addToCart"><div class="card card1">
-        <img id="gameImage1" src="<?php echo $row['image']?>">
+        <div class="gameImage1"><img id="gameImage1" src="<?php echo $row['image']?>"></div>
         <h1 id="gameName1"><?php echo $row['naam']?></h1>
         <h1 id="gamePrice1"><?php echo $productPrice?></h1>
         <input type="hidden" name="productId" value='<?php echo $row['Id']?>'></div></button></form>
@@ -148,7 +148,7 @@ function GameDisplay($conn, $state, $displ){
         if($MaxCards2 < 3){
         ?>
         <form method="post"><button name="add" id="addToCart2"><div class="kaart">
-        <img id="gameImage2" src="<?php echo $row['image']?>">
+        <div class="gameImage2"><img id="gameImage2" src="<?php echo $row['image']?>"></div>
         <h1 id="gameName2"><?php echo $row['naam']?></h1>
         <p id="gameInf"><?php echo $row['info']?></p>
         <h1 id="gamePrice2"><?php echo $productPrice?></h1>
@@ -160,7 +160,7 @@ function GameDisplay($conn, $state, $displ){
         if($MaxCards3 < 5){
         ?>
         <form method="post"><button name="add" id="addToCart"><div class="card card1">
-        <img id="gameImage1" src="<?php echo $row['image']?>">
+        <div class="gameImage1"><img id="gameImage1" src="<?php echo $row['image']?>"></div>
         <h1 id="gameName1"><?php echo $row['naam']?></h1>
         <h1 id="gamePrice1"><?php echo $productPrice?></h1>
         <input type="hidden" name="productId" value='<?php echo $row['Id']?>'></div></button></form>
@@ -171,7 +171,7 @@ function GameDisplay($conn, $state, $displ){
         if($MaxCards4 < 2){
         ?>
         <form method="post"><button name="add" id="addToCart"><div class="spotlight4">
-        <img id="gameImage3" src="<?php echo $row['image']?>">
+        <div class="gameImage3"><img id="gameImage3" src="<?php echo $row['image']?>"></div>
         <h1 id="gameName1"><?php echo $row['naam']?></h1>
         <h1 id="gameName2"><?php echo $row['info']?></h1>
         <h1 id="gamePrice1"><p>from &#128178;<?php echo $row['prijs2']?></p><p id="price2">to <?php echo $productPrice?></p></h1>
@@ -595,6 +595,65 @@ function ShowFriendPage($friendsname, $friendLevel, $friendImg, $friendBio, $uid
     <?php
     }
 
+function showFriends($conn, $uid, $type, $resultA, $resORsendr){
+    $queryB = "SELECT * FROM gebruiker WHERE Id = $resORsendr";
+    $resultB = mysqli_query($conn, $queryB);
+
+        if(mysqli_num_rows($resultB) > 0){
+            if($row = mysqli_fetch_assoc($resultB)){
+                $friendsname = $row['Username'];
+                $profileImg = $row['profileImg'];
+                $friendId = $row['Id'];
+                $friendLevel = $row['level'];
+                $friendBio = $row['Bio'];
+                $friendDate = $row['onlineDate'];
+                $date = $row['onlineDate'];
+                $_SESSION['friendnumber'] = mysqli_num_rows($resultA);
+                if ($type == 1){
+                ?>
+                <form action="?friendProfile" method="post">
+                <button type="submit" name="friendsBtn">
+                <div class="row-friendz-child">
+                <img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>">
+                <div><h1><?php echo $friendsname?></h1><p>Last Online: <?php echo $date ?></p></div></div></button>
+                <input type="hidden" name="friendPageId" value="<?php echo $friendId?>">
+                <input type="hidden" name="friendPageName" value="<?php echo $friendsname?>">
+                <input type="hidden" name="friendPageLevel" value="<?php echo $friendLevel?>">
+                <input type="hidden" name="friendPageBio" value="<?php echo $friendBio?>">
+                <input type="hidden" name="friendPageDate" value="<?php echo $friendDate?>">
+                <input type="hidden" name="friendPageImg" value="<?php echo $profileImg?>">
+                </form>
+                <?php
+                }elseif ($type == 2){
+                    $sql = "SELECT * FROM chat WHERE ChatReceiver = $uid AND ChatSender = $friendId ORDER BY Id DESC LIMIT 1";
+                    $res = mysqli_query($conn, $sql);
+                    if($row = mysqli_fetch_assoc($res)){
+                        $lastchat = $row['message'];
+                        $currT = $row['time'];
+                    }else{
+                        $lastchat = "";
+                        $currT = "";
+                    }
+                    $msg = $lastchat;
+                    $time = $currT;
+                    ?>
+                    <form action="?messages" method="post"><button id="messages-nav-child" type="submit" name="getFriendsMessages">
+                    <div class="messages-nav-child"><img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>"><h1 id="date"><?php if($time == ""){echo date("H:i"); ;}else{echo $time;}?></h1>
+                    <div class="messages-nav-inf"><h1><?php echo $friendsname?></h1><p><?php if($msg == ""){echo "no message from this user yet";}else{echo $msg;}?></p></div>
+                    </div></button>
+                    <input type="hidden" name="friendPageId" value="<?php echo $friendId?>">
+                    <input type="hidden" name="friendPageName" value="<?php echo $friendsname?>">
+                    <input type="hidden" name="friendPageLevel" value="<?php echo $friendLevel?>">
+                    <input type="hidden" name="friendPageBio" value="<?php echo $friendBio?>">
+                    <input type="hidden" name="friendPageDate" value="<?php echo $friendDate?>">
+                    <input type="hidden" name="friendPageImg" value="<?php echo $profileImg?>">
+                    </form>
+                    <hr id="messages-nav">
+                    <?php
+                }
+            }
+        }   
+}
 function getFriends($conn, $uid, $type){
     $queryA = "SELECT * FROM friends WHERE senderId = ".$uid." AND status = 'FRIENDS' OR receiverId = ".$uid." AND status = 'FRIENDS';";
     $resultA = mysqli_query($conn, $queryA);
@@ -606,127 +665,13 @@ function getFriends($conn, $uid, $type){
             $status = $row['status'];
 
             if ($uid == $sender){
-                $queryB = "SELECT * FROM gebruiker WHERE Id = $reciver";
-                $resultB = mysqli_query($conn, $queryB);
-
-                if(mysqli_num_rows($resultB) > 0){
-                    if($row = mysqli_fetch_assoc($resultB)){
-                        $friendsname = $row['Username'];
-                        $profileImg = $row['profileImg'];
-                        $friendId = $row['Id'];
-                        $friendLevel = $row['level'];
-                        $friendBio = $row['Bio'];
-                        $friendDate = $row['onlineDate'];
-                        $date = $row['onlineDate'];
-                        $_SESSION['friendnumber'] = mysqli_num_rows($resultA);
-                        if ($type == 1){
-                        ?>
-                        <form action="?friendProfile" method="post">
-                        <button type="submit" name="friendsBtn">
-                        <div class="row-friendz-child">
-                        <img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>">
-                        <div><h1><?php echo $friendsname?></h1><p>Last Online: <?php echo $date ?></p></div></div></button>
-                        <input type="hidden" name="friendPageId" value="<?php echo $friendId?>">
-                        <input type="hidden" name="friendPageName" value="<?php echo $friendsname?>">
-                        <input type="hidden" name="friendPageLevel" value="<?php echo $friendLevel?>">
-                        <input type="hidden" name="friendPageBio" value="<?php echo $friendBio?>">
-                        <input type="hidden" name="friendPageDate" value="<?php echo $friendDate?>">
-                        <input type="hidden" name="friendPageImg" value="<?php echo $profileImg?>">
-                        </form>
-                        <?php
-                        }elseif ($type == 2){
-                            $sql = "SELECT * FROM chat WHERE ChatReceiver = $uid AND ChatSender = $friendId ORDER BY Id DESC LIMIT 1";
-                            $res = mysqli_query($conn, $sql);
-                            if($row = mysqli_fetch_assoc($res)){
-                                $lastchat = $row['message'];
-                                $currT = $row['time'];
-                            }else{
-                                $lastchat = "";
-                                $currT = "";
-                            }
-                            $msg = $lastchat;
-                            $time = $currT;
-                            ?>
-                            <form action="?messages" method="post"><button id="messages-nav-child" type="submit" name="getFriendsMessages">
-                            <div class="messages-nav-child"><img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>"><h1 id="date"><?php if($time == ""){echo date("H:i"); ;}else{echo $time;}?></h1>
-                            <div class="messages-nav-inf"><h1><?php echo $friendsname?></h1><p><?php if($msg == ""){echo "no message yet";}else{echo $msg;}?></p></div>
-                            </div></button>
-                            <input type="hidden" name="friendPageId" value="<?php echo $friendId?>">
-                            <input type="hidden" name="friendPageName" value="<?php echo $friendsname?>">
-                            <input type="hidden" name="friendPageLevel" value="<?php echo $friendLevel?>">
-                            <input type="hidden" name="friendPageBio" value="<?php echo $friendBio?>">
-                            <input type="hidden" name="friendPageDate" value="<?php echo $friendDate?>">
-                            <input type="hidden" name="friendPageImg" value="<?php echo $profileImg?>">
-                            </form>
-                            <hr id="messages-nav">
-                            <?php
-                        }
-                    }
-                }
+                showFriends($conn, $uid, $type, $resultA, $reciver);
             }elseif($uid == $reciver){
-                $queryB = "SELECT * FROM gebruiker WHERE Id = $sender";
-                $resultB = mysqli_query($conn, $queryB);
-
-                if(mysqli_num_rows($resultB) > 0){
-                    if($row = mysqli_fetch_assoc($resultB)){
-                        $friendsname = $row['Username'];
-                        $profileImg = $row['profileImg'];
-                        $friendId = $row['Id'];
-                        $friendLevel = $row['level'];
-                        $friendBio = $row['Bio'];
-                        $friendDate = $row['onlineDate'];
-                        $date = $row['onlineDate'];
-                        $_SESSION['friendnumber'] = mysqli_num_rows($resultA);
-                        if ($type == 1){
-                            ?>
-                            <form action="?friendProfile" method="post">
-                            <button type="submit" name="friendsBtn">
-                            <div class="row-friendz-child">
-                            <img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>">
-                            <div><h1><?php echo $friendsname?></h1><p>Last Online: <?php echo $date ?></p></div></div></button>
-                            <input type="hidden" name="friendPageId" value="<?php echo $friendId?>">
-                            <input type="hidden" name="friendPageName" value="<?php echo $friendsname?>">
-                            <input type="hidden" name="friendPageLevel" value="<?php echo $friendLevel?>">
-                            <input type="hidden" name="friendPageBio" value="<?php echo $friendBio?>">
-                            <input type="hidden" name="friendPageDate" value="<?php echo $friendDate?>">
-                            <input type="hidden" name="friendPageImg" value="<?php echo $profileImg?>">
-                            </form>
-                            <?php
-                            }elseif ($type == 2){
-                                $sql = "SELECT * FROM chat WHERE ChatReceiver = $uid AND ChatSender = $friendId ORDER BY Id DESC LIMIT 1";
-                                $res = mysqli_query($conn, $sql);
-                                if($row = mysqli_fetch_assoc($res)){
-                                    $lastchat = $row['message'];
-                                    $currT = $row['time'];
-                                }else{
-                                    $lastchat = "";
-                                    $currT = "";
-                                }
-                                $msg = $lastchat;
-                                $time = $currT;
-                            ?>
-                            <form action="?messages" method="post"><button id="messages-nav-child" type="submit" name="getFriendsMessages">
-                            <div class="messages-nav-child"><img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>"><h1 id="date"><?php if($time == ""){echo date("H:i"); ;}else{echo $time;}?></h1>
-                            <div class="messages-nav-inf"><h1><?php echo $friendsname?></h1><p><?php if($msg == ""){echo "no message yet";}else{echo $msg;}?></p></div>
-                            </div></button>
-                            <input type="hidden" name="friendPageId" value="<?php echo $friendId?>">
-                            <input type="hidden" name="friendPageName" value="<?php echo $friendsname?>">
-                            <input type="hidden" name="friendPageLevel" value="<?php echo $friendLevel?>">
-                            <input type="hidden" name="friendPageBio" value="<?php echo $friendBio?>">
-                            <input type="hidden" name="friendPageDate" value="<?php echo $friendDate?>">
-                            <input type="hidden" name="friendPageImg" value="<?php echo $profileImg?>">
-                            </form>
-                            <hr id="messages-nav">
-                            <?php
-                        }
-                    }
-                }
+                showFriends($conn, $uid, $type, $resultA, $sender);
+        }else{
+        echo "you have no friends";
             }
         }
-        ?>
-        <?php
-    }else{
-        echo "you have no friends";
     }
 }
 
@@ -744,7 +689,7 @@ function ShowMessages($conn, $uid, $friendId, $profileImg, $friendname){
     if(mysqli_num_rows($chat) == 0){?>
     <nav class="messages-body1"><img src="<?php if($profileImg == ""){echo "../docs/emptyInput.png";}else{echo $profileImg;} ?>"><h1><?php echo $friendname?></h1></nav>
     <div class="messages"><div class="message"><h1 id="messageReceiver">You have no chats with this user yet</h1></div></div>
-    <nav class="messages-body2"><form method="post"><input id="messageTouser" type="text" name="messageTouser" value="" placeholder="Type in your message">
+    <nav class="messages-body2"><form method="post"><input id="messageTouser" type="text" name="messageTouser" value="" placeholder="Type in your message" minlength="1">
     <input type="hidden" name="friendId" value="<?php echo $friendId ?>">
     <input type="hidden" name="currTime" value="<?php echo date("H:i")?>">
     </form></nav>
@@ -767,14 +712,27 @@ function ShowMessages($conn, $uid, $friendId, $profileImg, $friendname){
         }
         ?>
     </div>
-    <nav class="messages-body2"><form method="post"><input id="messageTouser" type="text" name="messageTouser" value="" placeholder="Type in your message">
+    <nav class="messages-body2"><form method="post"><input id="messageTouser" type="text" name="messageTouser" value="" placeholder="Type in your message" minlength="1">
     <input type="hidden" name="friendId" value="<?php echo $friendId ?>">
     <input type="hidden" name="currTime" value="<?php echo date("H:i")?>">
     </form></nav>
     <?php
     }
 }
+//CHATBOT
 
+function botSend($msg){?>
+    <div class="message"><h1 id="chatSender"><?php echo $msg?></h1></div>
+<?php
+}
+function botReceiv($msg){?>
+    <div class="message"><h1 id="chatReceiver"><?php echo $msg?></h1></div>
+<?php
+}
+function INKbotMsg($msg, $replay){
+    botSend($msg);
+    botReceiv($replay);
+}
     
 //GET GLOABAL DATA FUCTION (FOR ALL) FROM DATABASE
 function getData($dat, $sqlCommand){

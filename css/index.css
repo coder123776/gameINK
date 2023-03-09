@@ -477,10 +477,22 @@ div.kaart{
 
 /* games info !! */
 /* gameType1 --------------------------------------------------------------------------*/
+div.gameImage1{
+    height: 40vh;
+    width: 15vw;
+    border-radius: 2vh;
+    overflow: hidden;
+}
 img#gameImage1{
     height: 40vh;
     width: 15vw;
     border-radius: 2vh;
+}
+img#gameImage1:hover,
+img#gameImage2:hover,
+img#gameImage3:hover
+{
+    transform: scale(1.2);
 }
 h1#gameName1,
 h1#gameName2
@@ -536,6 +548,12 @@ img#gameImage2{
     width: 25vw;
     border-radius: 1vh;
 }
+div.gameImage2{
+    height: 30vh;
+    width: 25vw;
+    border-radius: 1vh;
+    overflow: hidden;
+}
 p#gameInf{
     margin-top: 2%;
     margin-left: 5%;
@@ -578,6 +596,10 @@ a#spotlightTxt{
     margin-left: 8vw;
     color: var(--RGB-255);
     text-decoration: underline;
+    transition: 300ms;
+}
+a#spotlightTxt:hover{
+    color: var(--Huiskleur);
 }
 h1#spotlightTxt2{
     font-size: 250%;
@@ -603,6 +625,12 @@ img#gameImage3{
     width: 30vw;
     border-radius: 1vh;
 }
+div.gameImage3{
+    height: 40vh;
+    width: 30vw;
+    border-radius: 1vh;
+    overflow: hidden;
+}
 /* LAST */
 div.Spotlight5{
     height: 50vh;
@@ -616,6 +644,7 @@ img#gameImage5{
     height: 50vh;
     width: 40vw;
     border-radius: 10px;
+    overflow: hidden;
 }
 div.exploreC{
     height: 50vh;
@@ -651,6 +680,7 @@ button#exploreCbutton{
 h1#spotlightTxt{
     color: var(--RGB-255);
     font-size: 200%;
+    cursor: context-menu;
 }
 /* GAMES SECTION SPOTLIGHT SECTION (END)!! ------------------------------------------------------------------------------------------------------*/
 
@@ -718,6 +748,7 @@ form#signin
 input {
     height: 10%;
     width: 60%;
+    padding-left: 2%;
     border-radius: 10px;
     border: none;
     -webkit-appearance: none;
@@ -2120,6 +2151,10 @@ div.messages-nav-inf{
 div.messages-nav-inf p{
     margin-top: 0.5vh;
     font-size: 70%;
+    width: 9vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 hr#messages-nav{
     height: 0.1vh;
@@ -2175,13 +2210,15 @@ nav.messages-body1 img{
 div.message{
     display: flex;
     flex-direction: column;
-    height: 9vh;
+    height: auto;
     width: auto;
 }
 h1#messageSender,
 h1#messageReceiver{
     max-width: 15vw;
     padding: 1vh 1vw 1vh 1vw;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
     border-radius: 1vh;
     font-size: smaller;
     color: var(--RGB-255);
@@ -2212,7 +2249,121 @@ h1#messageReceiver{
     font-family: Trebuchet MS;
     color: rgb(42, 40, 49);
 }
-/* FOOTER () ------------------------------------------------------------------------------------------------------*/
+/* FOOTER & CHATBOT () ------------------------------------------------------------------------------------------------------*/
+
+div.chatbot-parent{
+    position: fixed;
+    height: 6vh;
+    width: 3vw;
+    left: 1vw;
+    bottom: 2vh;
+    border-radius: 50%;
+    font-size: larger;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: var(--Huiskleur);
+    z-index: 1000000;
+    overflow: visible;
+    cursor: pointer;
+}
+div.chatbot-parent i{
+    position: absolute;
+    margin-left: 1.7vw;
+    margin-top: 3.5vh;
+    height: 6vh;
+    width: 3vw;
+    pointer-events: all;
+}
+div.chatbot-child{
+    position: absolute;
+    height: 50vh;
+    width: 18vw;
+    left: 3vw;
+    bottom: 6vh;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    pointer-events: none;
+    transition: 300ms;
+    background-color: var(--RGB-250);
+}
+div.chatbot-show{
+    opacity: 1;
+    pointer-events: all;
+}
+nav.chatbot-nav{
+    height: 10vh;
+    width: 18vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--RGB-0);
+    background-color: var(--RGB-230);
+}
+nav.chatbot-nav img{
+    height: 8vh;
+    width: 4vw;
+    margin-left: 2vw;
+    margin-right: 1vw;
+    border-radius: 50%;
+}
+div.chatbot-body{
+    height: 26vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    width: 18vw;
+}
+nav.chatbot-input{
+    height: 10vh;
+    width: 18vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: var(--RGB-200);
+}
+input#chatbot-input{
+    height: 8vh;
+    width: 15vw;
+    padding-left: 1vw;
+    font-size: larger;
+    border: none;
+    border-radius: 2vh;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+h1#chatReceiver,
+h1#chatSender{
+    max-width: 10vw;
+    padding: 1vh 1vw 1vh 1vw;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    border-radius: 1vh;
+    font-size: smaller;
+    color: var(--RGB-255);
+    overflow: hidden;
+}
+h1#chatSender{
+    margin-left: auto;
+    margin-right: 1vw;
+    background-color: var(--RGB-35);
+}
+h1#chatReceiver{
+    margin-right: auto;
+    margin-left: 1vw;
+    background-color: var(--RGB-60);
+}
+/* Footer settings */
 
 footer{
     height: 50vh;

@@ -3,12 +3,13 @@ include_once('../includes/dbh.inc.php');
 include_once('../head-footer/EXheader.php');
 include_once('../includes/functions.inc.php');
 include_once('../includes/transitions.inc.php');
-
+$_SESSION['fileType'] = 2;
 if(!isset($_SESSION['userid'])) {
     header('location: ../User/login.php?error=loginfirst');
 }else{
         CheckIfBanned($conn, $uid, 2);
         SetBudget($conn, $uid);
+        include_once('../head-footer/chatbot.php');
 }
 ?>
 <title>Your Profile at GameINK</title>

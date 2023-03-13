@@ -675,6 +675,55 @@ function getFriends($conn, $uid, $type){
     }
 }
 
+function getBotChats(){?>
+    <nav class="messages-body1"><img src="../profilePics/6404b87c90d4ctester.png"><h1>INKbot</h1></nav>
+    <div id="messages" class="messages"><div class="message">
+    <script>
+        function data(){
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function(){
+                document.getElementById("messages").innerHTML = this.responseText;
+            }
+            xhttp.open("POST", "<?php if($_SESSION['fileType'] == 1){echo "head-footer/chatbotchats.php";}elseif($_SESSION['fileType'] == 2){echo "../head-footer/chatbotchats.php";}?>");
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("getchats2");
+        }
+        data();
+    </script>
+    <h1 id="messageReceiver"></h1></div></div>
+    <nav class="messages-body2"><input id="messageTouser" type="text" name="msgToChatbot" value="" placeholder="Type in your message" minlength="1">
+    <button id="JSclick" type="submit"></button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+    function scrolldownChatbot(){
+        document.getElementById("messages").scrollTo(0, 999999999999);
+    }
+
+    $(document).ready(function() {
+        $("#messageTouser").keyup(function(event) {
+        if (event.keyCode === 13) {
+            $("#JSclick").click();
+        }});
+            $("#JSclick").click(function() {
+            var msgtoBot = $("#messageTouser").val();
+            $(document).load("../index.php", {
+                msgToChatbot: msgtoBot
+            });
+            data();
+            setTimeout( function () {
+            scrolldownChatbot();
+            } , 300 );
+        });
+    });
+
+    function showBotchat() {
+        document.getElementById("chatbotChild").classList.toggle("chatbot-show");
+        scrolldownChatbot();
+    }
+    </script>
+    <?php
+}
+
 function messageSender($msg){?>
     <div class="message"><h1 id="messageSender"><?php echo $msg ?></h1></div>
 <?php
@@ -796,6 +845,14 @@ function INKbotMsg($msg, $replay){
     }else{
         botSend($msg);
         botReceiv($replay);
+    }
+}
+function INKbotMsg2($msg, $replay){
+    if ($msg == ""){
+        messageReceiver($replay);
+    }else{
+        messageSender($msg);
+        messageReceiver($replay);
     }
 }
     

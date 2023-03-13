@@ -1,8 +1,9 @@
 <?php
+session_start();
+$_SESSION['fileType'] = 1;
 include_once('head-footer/header.php');
 include_once('includes/functions.inc.php');
 include_once('includes/dbh.inc.php');
-$_SESSION['fileType'] = 1;
 
 if(isset($_GET['filter'])){
 

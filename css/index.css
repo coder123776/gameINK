@@ -1746,6 +1746,7 @@ section.friends-parent{
     align-items: center;
     height: auto;
     background-color: var(--RGB-255);
+
 }
 div.friends-parent-head{
     height: 20vh;
@@ -2213,6 +2214,10 @@ div.message{
     height: auto;
     width: auto;
 }
+div.message a{
+    color: rgb(150, 150, 255);
+    text-decoration: underline;
+}
 h1#messageSender,
 h1#messageReceiver{
     max-width: 15vw;
@@ -2350,6 +2355,7 @@ h1#chatSender{
     margin-bottom: 1vh;
     border-radius: 1vh;
     font-size: smaller;
+    font-weight: normal;
     color: var(--RGB-255);
     overflow: hidden;
 }
@@ -2363,6 +2369,9 @@ h1#chatReceiver{
     margin-left: 1vw;
     background-color: var(--RGB-60);
 }
+
+/* websiteratings */
+
 /* Footer settings */
 
 footer{

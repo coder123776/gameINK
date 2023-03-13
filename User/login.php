@@ -1,8 +1,9 @@
 <?php
-include_once('../head-footer/EXheader.php');
+session_start();
+$_SESSION['fileType'] = 2;
+include_once('../head-footer/header.php');
 include_once('../includes/dbh.inc.php');
 include_once('../includes/functions.inc.php');
-$_SESSION['fileType'] = 2;
 if(isset($_SESSION['userid'])) {
     CheckIfBanned($conn, $uid, 2);
     SetBudget($conn, $uid);
@@ -39,5 +40,5 @@ if (isset($_GET["error"])) {
 </section>
 
 <?php
-include_once('../head-footer/EXfooter.php');
+include_once('../head-footer/footer.php');
 ?>

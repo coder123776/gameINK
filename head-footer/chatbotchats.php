@@ -16,6 +16,19 @@ if(isset($_POST['getchats'])){
         }
     }
 }
+if(isset($_POST['getchats2'])){
+    $uid = $_SESSION['userid'];
+    $searchRespo = "SELECT * FROM inkbotchats WHERE userId = $uid;";
+    $searchReslut = mysqli_query($conn, $searchRespo);
+    while ($row = mysqli_fetch_assoc($searchReslut)){
+        $userSend = $row['userSender'];
+        $Replay = $row['chatbotReplay'];
+        $userid = $row['userId'];
+        if ($uid == $userid){
+            INKbotMsg2($userSend, $Replay);
+        }
+    }
+}
 if(isset($_POST['getfriendchats'])){
     $uid = $_SESSION['userid'];
     $friendId = $_SESSION['liveFriend'];

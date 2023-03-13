@@ -1,9 +1,10 @@
 <?php
+session_start();
+$_SESSION['fileType'] = 2;
 include_once('../includes/dbh.inc.php');
-include_once('../head-footer/EXheader.php');
+include_once('../head-footer/header.php');
 include_once('../includes/functions.inc.php');
 include_once('../includes/transitions.inc.php');
-$_SESSION['fileType'] = 2;
 if(!isset($_SESSION['userid'])) {
     header('location: ../User/login.php?error=loginfirst');
 }else{
@@ -161,7 +162,7 @@ if(!isset($_SESSION['userid'])) {
 
 
 <?php
-include_once '../head-footer/EXfooter.php';
+include_once('../head-footer/footer.php');
 ?>
 
 <!-- retourpolicy

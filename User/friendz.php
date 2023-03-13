@@ -1,14 +1,14 @@
 <?php
-include_once('../includes/dbh.inc.php');
-include_once('../head-footer/EXheader.php');
-include_once('../includes/functions.inc.php');
+session_start();
 $_SESSION['fileType'] = 2;
+include_once('../includes/dbh.inc.php');
+include_once('../head-footer/header.php');
+include_once('../includes/functions.inc.php');
 if(!isset($_SESSION['userid'])) {
     header("location: ../User/login.php?error=loginfirst");
 }else{
     CheckIfBanned($conn, $uid, 2);
     SetBudget($conn, $uid);
-    include_once('../head-footer/chatbot.php');
 }
 ?>
 <title>Your Friends at GameINK</title>
@@ -186,6 +186,16 @@ if(!isset($_SESSION['userid'])) {
         if(isset($_GET['messages'])){?>
         <div class="messages-parent">
         <div class="messages-nav">
+            <form action="?messages" method="post"><button id="messages-nav-child" type="submit" name="getBotChat">
+            <div class="messages-nav-child"><img src="../profilePics/6404b87c90d4ctester.png"><h1 id="date"><?php echo date("H:i") ?></h1>
+            <div class="messages-nav-inf"><h1>INKbot</h1><p>hey i am INKbot and can help you with anything</p></div>
+            <input type="hidden" name="friendPageId" value="123">
+            <input type="hidden" name="friendPageName" value="INKbot">
+            <input type="hidden" name="friendPageLevel" value="GOD">
+            <input type="hidden" name="friendPageDate" value="<?php echo date("H:i")?>">
+            <input type="hidden" name="friendPageImg" value="../profilePics/6404b87c90d4ctester.png">
+            </div></button>
+            <hr id="messages-nav">
             <?php
             getFriends($conn, $uid, 2);
             ?>
@@ -199,6 +209,9 @@ if(!isset($_SESSION['userid'])) {
                 $friendsname = $_POST['friendPageName'];
                 $friendImg = $_POST['friendPageImg'];
                 ShowMessages($conn, $uid, $friendId, $friendImg, $friendsname);
+            }
+            if(isset($_POST['getBotChat'])){
+                getBotChats();
             }
             if(isset($_POST['messageTouser'])){
                 $msg = $_POST['messageTouser'];
@@ -253,5 +266,5 @@ if(!isset($_SESSION['userid'])) {
 </section>
 
 <?php
-include_once '../head-footer/EXfooter.php';
+include_once('../head-footer/footer.php');
 ?>

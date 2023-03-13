@@ -1,9 +1,10 @@
 <?php
-include_once('../head-footer/EXheader.php');
-include_once('../includes/functions.inc.php');
-include_once('../includes/dbh.inc.php');
+session_start();
 $_SESSION['fileType'] = 2;
 $_SESSION['firstTime'] = true;
+include_once('../head-footer/header.php');
+include_once('../includes/functions.inc.php');
+include_once('../includes/dbh.inc.php');
 
 if(!isset($_SESSION['userid'])) {
     header("location: ../User/login.php?error=loginfirst");
@@ -113,5 +114,5 @@ if (isset($_GET['doing'])){
 </section>
 
 <?php
-include_once('../head-footer/EXfooter.php');
+include_once('../head-footer/footer.php');
 ?>

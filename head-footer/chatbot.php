@@ -202,6 +202,12 @@ if (isset($_POST['msgToChatbot'])){
     elseif (stripos($userInput, 'spreek') !== false && stripos($userInput, 'talen') !== false){
         $botReplay = "Momenteel ben ik getraind om te werken met een taal en dat is nederlands";
     }
+    //hoe laat
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'laat') !== false ||
+    stripos($userInput, 'wat') !== false && stripos($userInput, 'tijd') !== false){
+        $date = date("H:i d/m/Y");
+        $botReplay = "de lokale tijd en dag is: $date";
+    }
     //hoeveel jaar ben jij
     elseif (stripos($userInput, 'oud') !== false && stripos($userInput, 'jij') !== false ||
             stripos($userInput, 'oud') !== false && stripos($userInput, 'je') !== false ||

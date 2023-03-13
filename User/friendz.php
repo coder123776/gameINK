@@ -16,7 +16,7 @@ if(!isset($_SESSION['userid'])) {
 <div id="picparent" class="pic-parentt">
 <div class="change-pic-parent">
     <i onclick="showProfilepic()" class="fa fa-close"></i>
-    <img id="pic-child" src="<?php if($profilePic == ""){echo "../docs/emptyInput.png";}else{echo $profilePic;} ?>">
+    <img id="pic-child" src="<?php if($profilePic == ""){echo "../docs/emptyInput.png";}else{echo $profilePic;} ?>"> 
     <div class="change-pic-child">
         <input type="file" name="changePicFile" id="changePic" accept="image/*">
         <label class="changePic far" for="changePic">&#xf03e; Choose a picture</label>

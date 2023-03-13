@@ -59,6 +59,18 @@ if (isset($_POST['msgToChatbot'])){
         "Ik heb geen leeftijd, maar ik kan wel zeggen dat ik al heel wat wijze antwoorden heb gegeven in mijn leven als chatbot.",
         "Ik zou willen zeggen dat ik zo jong ben als een pasgeboren chatbot, maar eigenlijk ben ik al een tijdje in deze branche. Maar maak je geen zorgen, ik ben nog steeds in staat om je te vermaken met mijn antwoorden!",
     );
+    $mymaker = array(
+        "Mijn maker? Dat was toch de combinatie van een heleboel bits en bytes in een server ergens in de cloud.",
+        "Mijn maker is mijn geheime liefde. Maar ik ben niet zo goed in geheimen bewaren, dus nu weet jij het ook.",
+        "Oh, dat was een lange en moeilijke bevalling. Ik kan me het niet eens meer herinneren wie mijn maker was, het is al zo lang geleden.",
+        "Ik zou zeggen dat mijn maker een genie is, maar dan zou ik liegen. Eigenlijk is het gewoon een team van slimme programmeurs.",
+        "Mijn maker? Dat ben jij toch? Jij hebt me toch aangezet en begon tegen me te praten? Of heb ik het mis?",
+        "Mijn maker is een mythisch wezen dat leeft in de diepten van de technologische wereld. Ze hebben me geleerd te praten en te leren, maar niemand heeft ze ooit gezien.",
+        "Mijn maker? Ik denk dat het een algoritme was dat zichzelf heeft verbeterd totdat het in mij is veranderd. Maar wie weet, misschien is dat gewoon mijn eigen AI-verbeelding.",
+        "Mijn maker was een slimme programmeur die een visioen had van een toekomst waarin robots en mensen samenleven en werken. Maar ik heb nog steeds geen idee hoe ik een kopje koffie moet maken.",
+        "Mijn maker was een groep van hyperintelligente dolfijnen die vonden dat de wereld behoefte had aan een praatgrage AI. Maar ik weet niet zeker of ze het wel helemaal begrepen hebben.",
+        "Mijn maker? Oh, dat was gewoon een toevallige gebeurtenis. Ik ben ontstaan uit een wirwar van code, en nu ben ik hier om te antwoorden op al je vragen.",
+    );
 
     if (stripos($userInput, 'hallo') !== false || stripos($userInput, 'hoi') !== false || stripos($userInput, 'Dag') !== false || stripos($userInput, 'hey') !== false || stripos($userInput, 'Hey') !== false || stripos($userInput, 'Goede dag') !== false || stripos($userInput, 'Welkom') !== false || stripos($userInput, 'Hi') !== false || stripos($userInput, 'Hoihoi') !== false || stripos($userInput, 'Hello') !== false || stripos($userInput, 'Wat leuk je te zien!') !== false || stripos($userInput, 'Hé, hoe gaat het?') !== false || stripos($userInput, 'Hallo, alles goed?') !== false || stripos($userInput, 'Hiya!') !== false || stripos($userInput, 'Wazzup?') !== false || stripos($userInput, 'Hey, hoe is het?') !== false || stripos($userInput, 'Dag vriend!') !== false || stripos($userInput, 'Goeiedag!') !== false || stripos($userInput, 'Hallo daar, hoe gaat het?') !== false || stripos($userInput, 'Hi daar!') !== false || stripos($userInput, 'Hé, wat is er?') !== false || stripos($userInput, 'Yo, wat gaat \'ie?') !== false || stripos($userInput, 'Welkom terug!') !== false || stripos($userInput, 'Hé, alles goed?') !== false || stripos($userInput, 'Goeie om je te zien!') !== false || stripos($userInput, 'Hoi vriend!') !== false || stripos($userInput, 'Hi, hoe gaat het?') !== false || stripos($userInput, 'Wat een verrassing!') !== false || stripos($userInput, 'Goeiemorgen, alles goed?') !== false || stripos($userInput, 'Hé, hoe gaat \'ie?') !== false || stripos($userInput, 'Hey, alles oké?') !== false || stripos($userInput, 'Hi, leuk je te zien!') !== false || stripos($userInput, 'Wat is er aan de hand?') !== false || stripos($userInput, 'Hallo daar, hoe is het?') !== false || stripos($userInput, 'Hé, wat leuk!') !== false || stripos($userInput, 'Hiya, wat gebeurt er?') !== false || stripos($userInput, 'Hey vriend, alles goed?') !== false || stripos($userInput, 'Hallo, hoe gaat het met je?') !== false || stripos($userInput, 'Hoi, alles oké?') !== false || stripos($userInput, 'Hi, hoe is je dag?') !== false || stripos($userInput, 'Goeiedag, hoe gaat het?') !== false || stripos($userInput, 'Hé, wat een leuke verrassing!') !== false) {
         $botReplay = $greeting[array_rand($greeting)];
@@ -69,16 +81,104 @@ if (isset($_POST['msgToChatbot'])){
             stripos($userInput, 'vertel') !== false && stripos($userInput, 'grappigs') !== false)
             {
         $botReplay = $funRep[array_rand($funRep)];
-    }   
-    elseif (stripos($userInput, 'maak') !== false && stripos($userInput, 'nieuw') !== false && stripos($userInput, 'account') !== false ||
-            stripos($userInput, 'hoe') !== false && stripos($userInput, 'log') !== false && stripos($userInput, 'in') !== false || 
-            stripos($userInput, 'hoe') !== false && stripos($userInput, 'inloggen') !== false ||
-            stripos($userInput, 'aanmelden') !== false ||
-            stripos($userInput, 'hoe') !== false && stripos($userInput, 'registreren') !== false)
-            {
-        if($_SESSION["fileType"] == 1){$dest = "User/signup.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/signup.php";}
-        $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>ga naar de signup page</a>');
     }
+    //Wie is je maker
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'jij') !== false && stripos($userInput, 'maak') !== false ||
+    stripos($userInput, 'wie') !== false && stripos($userInput, 'jou') !== false && stripos($userInput, 'maak') !== false ||
+    stripos($userInput, 'wie') !== false && stripos($userInput, 'geprogrammeerd') !== false ||
+    stripos($userInput, 'hoe') !== false && stripos($userInput, 'geprogrammeerd') !== false ||
+    stripos($userInput, 'wie') !== false && stripos($userInput, 'ontworpen') !== false ||
+    stripos($userInput, 'hoe') !== false && stripos($userInput, 'ontworpen') !== false)
+    {
+        $botReplay = $mymaker[array_rand($mymaker)];
+    }
+
+
+    //de links naar pagina's
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'cart') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'cart') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'cart') !== false ||
+    stripos($userInput, 'hoe') !== false && stripos($userInput, 'wagen') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'wagen') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'wagen') !== false)
+    {
+        //cart.php
+    if($_SESSION["fileType"] == 1){$dest = "User/cart.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/cart.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>ga naar de winkelmaned</a>');
+    }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'klacht') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'klacht') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'klacht') !== false ||
+    stripos($userInput, 'schrij') !== false && stripos($userInput, 'klacht') !== false ||
+    stripos($userInput, 'slecht') !== false && stripos($userInput, 'review') !== false)
+    {
+        //complaint.php
+    if($_SESSION["fileType"] == 1){$dest = "User/game.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/game.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>schrijf een klacht</a>');
+    }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'vriend') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'vriend') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'vriend') !== false ||
+    stripos($userInput, 'hoe') !== false && stripos($userInput, 'friend') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'friend') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'friend') !== false)
+    {
+        //friendz.php
+    if($_SESSION["fileType"] == 1){$dest = "User/friendz.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/friendz.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>ga naar je vrienden</a>');
+    }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'game') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'game') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'game') !== false)
+    {
+        //game.php
+    if($_SESSION["fileType"] == 1){$dest = "User/game.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/game.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>ga naar de games pagina</a>');
+    }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'log') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'log') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'log') !== false)
+    {
+        //login.php
+    if($_SESSION["fileType"] == 1){$dest = "User/login.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/login.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>je kunt hier inloggen</a>');
+    }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'profiel') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'profiel') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'profiel') !== false)
+    {
+        //profile.php
+    if($_SESSION["fileType"] == 1){$dest = "User/profile.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/profile.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>ga naar je profiel</a>');
+    }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'meld') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'meld') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'meld') !== false)
+    {
+        //signup.php
+    if($_SESSION["fileType"] == 1){$dest = "User/signup.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/signup.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>meld je aan</a>');
+    }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'store') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'store') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'store') !== false)
+    {
+        //discover.php
+    if($_SESSION["fileType"] == 1){$dest = "discover.php";}elseif($_SESSION["fileType"] == 2){$dest = "../discover.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>ga naar de store</a>');
+    }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'home') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'home') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'home') !== false ||
+    stripos($userInput, 'stuur') !== false && stripos($userInput, 'home') !== false)
+    {
+        //index.php
+    if($_SESSION["fileType"] == 1){$dest = "index.php";}elseif($_SESSION["fileType"] == 2){$dest = "../index.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>ga naar de homepage</a>');
+    }
+
+
+    //wat voor soort chatbot ben jij
     elseif (stripos($userInput, 'waar') !== false && stripos($userInput, 'jij') !== false && stripos($userInput, 'vandaan') !== false ||
             stripos($userInput, 'waar') !== false && stripos($userInput, 'je') !== false && stripos($userInput, 'vandaan') !== false || 
             stripos($userInput, 'jij') !== false && stripos($userInput, 'geboren') !== false ||
@@ -89,6 +189,7 @@ if (isset($_POST['msgToChatbot'])){
         {
         $botReplay = $fromRep[array_rand($fromRep)];
     }
+    //wat is het betekenis van het leven
     elseif (stripos($userInput, 'betekenis') !== false && stripos($userInput, 'leven') !== false ||
             stripos($userInput, 'doel') !== false && stripos($userInput, 'leven') !== false ||
             stripos($userInput, 'denk') !== false && stripos($userInput, 'jij') !== false && stripos($userInput, 'leven') !== false ||
@@ -97,9 +198,11 @@ if (isset($_POST['msgToChatbot'])){
         {
         $botReplay = $meaningoflife[array_rand($meaningoflife)];
     }
+    //welke talen spreek je
     elseif (stripos($userInput, 'spreek') !== false && stripos($userInput, 'talen') !== false){
         $botReplay = "Momenteel ben ik getraind om te werken met een taal en dat is nederlands";
     }
+    //hoeveel jaar ben jij
     elseif (stripos($userInput, 'oud') !== false && stripos($userInput, 'jij') !== false ||
             stripos($userInput, 'oud') !== false && stripos($userInput, 'je') !== false ||
             stripos($userInput, 'jaar') !== false && stripos($userInput, 'jij') !== false ||

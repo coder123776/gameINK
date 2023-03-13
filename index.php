@@ -21,46 +21,6 @@ include_once('includes/dbh.inc.php');
         }
     }
 }
-
-// $userInput = "wat is 2 + 3 + 5 + 2";
-// $parts = preg_split("/(\*|\+)/", $userInput, -1, PREG_SPLIT_DELIM_CAPTURE);
-// $parts = array_map('trim', $parts);
-// $result = null;
-// $operator = null;
-
-// foreach ($parts as $part) {
-//     if (is_numeric($part)) {
-//         if ($result === null) {
-//             $result = $part;
-//         } else {
-//             switch ($operator) {
-//                 case "+":
-//                     $result += $part;
-//                     break;
-//                 case "*":
-//                     $result *= $part;
-//                     break;
-//                 default:
-//                     break;
-//             }
-//         }
-//     } else {
-//         $operator = $part;
-//     }
-// }
-// if ($result !== null) {
-//     $botReplay = "Het resultaat van de som is: " . $result;
-// } else {
-//     $botReplay = "Ongeldige invoer. Voer een geldige wiskundige expressie in.";
-// }
-
-// if ($result !== null) {
-//     echo "Het resultaat van de som is: " . $result;
-// } else {
-//     echo "Ongeldige invoer. Voer een geldige wiskundige expressie in.";
-// }
-
-
 ?> 
 <title>Welcome at GameINK</title>
 <section id="oneIndex">

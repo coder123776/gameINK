@@ -29,8 +29,8 @@ include_once('includes/dbh.inc.php');
         <div class="Side">
             <?php 
             if (isset($_SESSION['userid'])) {
-                include_once('head-footer/chatbot.php');
                 CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
+                include_once('head-footer/chatbot.php');
                 echo '<h1 id="welcome">welcome '.$username.'</h1><div id="inform"><h1>you may want to play..</h1>';
             }
             else

@@ -115,8 +115,7 @@ if(isset($_GET['filter'])){
 }
 
 if(isset($_SESSION['userid'])) {
-        CheckIfBanned($conn, $uid, 1);
-        SetBudget($conn, $uid);
+        CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
         include_once('head-footer/chatbot.php');
 }
 if (isset($_POST['add'])){

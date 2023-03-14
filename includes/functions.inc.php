@@ -499,25 +499,25 @@ function EXgenre($name, $location, $img) {
 
 
 //GET USERS BANNED
-function createBan($conn, $banId, $klacht, $banName, $loc) {
-    $sql = "INSERT INTO banlist (Id, klacht, Username) VALUES (?, ?, ?);";
+function createBan($conn, $banId, $klacht, $banName, $loc, $status) {
+    $sql = "INSERT INTO review (uid, klacht, Username, status) VALUES (?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header('location: ../User/signup.php?error=stmtfailed');
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "sss", $banId, $klacht, $banName);
+    mysqli_stmt_bind_param($stmt, "ssss", $banId, $klacht, $banName, $status);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header('location: '.$loc.'');
     exit();
 }
 function createUnban($conn, $username){
-    mysqli_query($conn, "DELETE FROM banlist WHERE Username = $username");
+    mysqli_query($conn, "DELETE FROM review WHERE Username = $username AND status = 'BANNED';");
 }
 function CheckIfBanned($conn, $uid, $file) {
-    $result = mysqli_query($conn, "SELECT Id FROM banlist WHERE Id = $uid");
+    $result = mysqli_query($conn, "SELECT * FROM review WHERE uid = $uid AND status = 'BANNED'");
     if (mysqli_num_rows($result)>0) {
         if ($file == 1) {
             header('location: error.php?type=banned');

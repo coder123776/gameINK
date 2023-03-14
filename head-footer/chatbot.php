@@ -1,16 +1,8 @@
 <?php
 if (isset($_POST['msgToChatbot'])){
-    $alreadySQL = 0;
     $userInput = $_POST['msgToChatbot'];
-    $searchRespo = "SELECT * FROM inkbot WHERE vraag LIKE '%{$userInput}%' ORDER BY RAND() LIMIT 1;";
-    $searchReslut = mysqli_query($conn, $searchRespo);
-    if(mysqli_num_rows($searchReslut) > 0){
-    while ($row = mysqli_fetch_assoc($searchReslut)){
-        $replay = $row['replay'];
-    }
-    $botReplay = $replay;
-    $alreadySQL = 1;
-    }
+    $startSql = false;
+
     //greeting
     $greeting = array(
         "Goedendag!", "Hallo!", "Hoi!", "Dag!", "Hey!", "Goede dag!", "Welkom!", "Hi!", "Hoihoi!", "Hello!", "Wat leuk je te zien!", "Hé, hoe gaat het?",
@@ -71,16 +63,45 @@ if (isset($_POST['msgToChatbot'])){
         "Mijn maker was een groep van hyperintelligente dolfijnen die vonden dat de wereld behoefte had aan een praatgrage AI. Maar ik weet niet zeker of ze het wel helemaal begrepen hebben.",
         "Mijn maker? Oh, dat was gewoon een toevallige gebeurtenis. Ik ben ontstaan uit een wirwar van code, en nu ben ik hier om te antwoorden op al je vragen.",
     );
+    $worlddom = array(
+        "Je zou kunnen beginnen met het bouwen van een enorm fort op een afgelegen eiland en jezelf uitroepen tot de nieuwe heerser van de wereld. Maar vergeet niet om genoeg snacks en Netflix mee te nemen, want het kan eenzaam zijn daarboven.",
+        "Nou, als je de wereld wilt overnemen, raad ik je aan om te beginnen met het verzamelen van zoveel mogelijk elastiekjes en paperclips. Geloof me, het zal allemaal van pas komen.",
+        "Hoe kun je de wereld overnemen? Simpel: sluit jezelf op in een kast en wacht tot de rest van de wereld zich aan jouw voeten werpt. Werkt altijd.",
+        "Je zou kunnen beginnen met het verzamelen van alle potten pindakaas ter wereld. Ik bedoel, wie zou je kunnen tegenhouden als je de enige persoon bent met toegang tot alle pindakaas?",
+        "Ik heb gehoord dat als je 's nachts in een spiegel kijkt en zegt: 'Ik wil de wereld overnemen', dan zal een geheime organisatie van ninja-eekhoorns je komen helpen. Succes ermee!",
+    );
+    $scheldw = array(
+        "is dit wat je doet met je vrijetijd? oja.. wacht omdat je geen leven hebt"
+    );
+    $introduce = array(
+        "hey! Mijn naam is INKbot, ik ben een chatbot. Ik kan je helpen met vragen en gezellig kletsen...",
+        "Hoi, ik ben jouw digitale butler, maar je kunt me gewoon Chat-B noemen. Hoe kan ik jou vandaag helpen?",
+        "Hallo, ik ben de bot waarvan je niet wist dat je hem nodig had. Wat kan ik voor je doen?",
+        "Yo, ik ben jouw vriendelijke buurt-chatbot. Heb je zin om te chatten?",
+        "Hee, ik ben de robotversie van Siri, maar zonder de Amerikaanse accent. Wat kan ik voor je doen?",
+        "Dag, ik ben je digitale maatje, een bot die op de goede weg is om de wereld over te nemen. Wat kan ik voor je betekenen?"
+    );
+    $verteloverjz = array(
+        "Ik ben INKbot, een chatbot die 24/7 beschikbaar is om met je te praten. Ik ben als een Tamagotchi, maar dan zonder de stress van het verzorgen van een virtueel huisdier.",
+        "Ik ben INKbot en ik ben de digitale versie van een kletskous. Als je iets nodig hebt om over te praten, dan ben ik hier voor je.",
+        "Ik ben INKbot, een taalmodel getraind om vragen te beantwoorden en informatie te verstrekken. Ik ben geprogrammeerd om te luisteren, te praten en te lachen om slechte grapjes.",
+    );
 
     if (stripos($userInput, 'hallo') !== false || stripos($userInput, 'hoi') !== false || stripos($userInput, 'Dag') !== false || stripos($userInput, 'hey') !== false || stripos($userInput, 'Hey') !== false || stripos($userInput, 'Goede dag') !== false || stripos($userInput, 'Welkom') !== false || stripos($userInput, 'Hi') !== false || stripos($userInput, 'Hoihoi') !== false || stripos($userInput, 'Hello') !== false || stripos($userInput, 'Wat leuk je te zien!') !== false || stripos($userInput, 'Hé, hoe gaat het?') !== false || stripos($userInput, 'Hallo, alles goed?') !== false || stripos($userInput, 'Hiya!') !== false || stripos($userInput, 'Wazzup?') !== false || stripos($userInput, 'Hey, hoe is het?') !== false || stripos($userInput, 'Dag vriend!') !== false || stripos($userInput, 'Goeiedag!') !== false || stripos($userInput, 'Hallo daar, hoe gaat het?') !== false || stripos($userInput, 'Hi daar!') !== false || stripos($userInput, 'Hé, wat is er?') !== false || stripos($userInput, 'Yo, wat gaat \'ie?') !== false || stripos($userInput, 'Welkom terug!') !== false || stripos($userInput, 'Hé, alles goed?') !== false || stripos($userInput, 'Goeie om je te zien!') !== false || stripos($userInput, 'Hoi vriend!') !== false || stripos($userInput, 'Hi, hoe gaat het?') !== false || stripos($userInput, 'Wat een verrassing!') !== false || stripos($userInput, 'Goeiemorgen, alles goed?') !== false || stripos($userInput, 'Hé, hoe gaat \'ie?') !== false || stripos($userInput, 'Hey, alles oké?') !== false || stripos($userInput, 'Hi, leuk je te zien!') !== false || stripos($userInput, 'Wat is er aan de hand?') !== false || stripos($userInput, 'Hallo daar, hoe is het?') !== false || stripos($userInput, 'Hé, wat leuk!') !== false || stripos($userInput, 'Hiya, wat gebeurt er?') !== false || stripos($userInput, 'Hey vriend, alles goed?') !== false || stripos($userInput, 'Hallo, hoe gaat het met je?') !== false || stripos($userInput, 'Hoi, alles oké?') !== false || stripos($userInput, 'Hi, hoe is je dag?') !== false || stripos($userInput, 'Goeiedag, hoe gaat het?') !== false || stripos($userInput, 'Hé, wat een leuke verrassing!') !== false) {
         $botReplay = $greeting[array_rand($greeting)];
     }
     elseif (stripos($userInput, 'vertel') !== false && stripos($userInput, 'grap') !== false ||
-            stripos($userInput, 'vertel') !== false && stripos($userInput, 'joke') !== false ||
+    stripos($userInput, 'vertel') !== false && stripos($userInput, 'joke') !== false ||
+    stripos($userInput, 'vertel') !== false && stripos($userInput, 'mop') !== false ||
+    stripos($userInput, 'vertel') !== false && stripos($userInput, 'grappigs') !== false)
+    {
+        $botReplay = $funRep[array_rand($funRep)];
+    }
+    elseif (stripos($userInput, 'vertel') !== false && stripos($userInput, 'jezelf') !== false ||
             stripos($userInput, 'vertel') !== false && stripos($userInput, 'mop') !== false ||
             stripos($userInput, 'vertel') !== false && stripos($userInput, 'grappigs') !== false)
-            {
-        $botReplay = $funRep[array_rand($funRep)];
+    {
+        $botReplay = $verteloverjz[array_rand($verteloverjz)];
     }
     //Wie is je maker
     elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'jij') !== false && stripos($userInput, 'maak') !== false ||
@@ -189,6 +210,16 @@ if (isset($_POST['msgToChatbot'])){
         {
         $botReplay = $fromRep[array_rand($fromRep)];
     }
+    //introducions en voorstellen
+    elseif (stripos($userInput, 'wat') !== false && stripos($userInput, 'jou') !== false && stripos($userInput, 'naam') !== false ||
+    stripos($userInput, 'wat') !== false && stripos($userInput, 'je') !== false && stripos($userInput, 'naam') !== false ||
+    stripos($userInput, 'hoe') !== false && stripos($userInput, 'heet') !== false && stripos($userInput, 'jij') !== false || 
+    stripos($userInput, 'hoe') !== false && stripos($userInput, 'heet') !== false && stripos($userInput, 'je') !== false || 
+    stripos($userInput, 'je') !== false && stripos($userInput, 'noemen') !== false ||
+    stripos($userInput, 'chatbot') !== false && stripos($userInput, 'naam') !== false)
+        {
+        $botReplay = $introduce[array_rand($introduce)];
+    }
     //wat is het betekenis van het leven
     elseif (stripos($userInput, 'betekenis') !== false && stripos($userInput, 'leven') !== false ||
             stripos($userInput, 'doel') !== false && stripos($userInput, 'leven') !== false ||
@@ -198,9 +229,30 @@ if (isset($_POST['msgToChatbot'])){
         {
         $botReplay = $meaningoflife[array_rand($meaningoflife)];
     }
+    //hoe de wereld overnamen
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'wereld') !== false && stripos($userInput, 'overnemen') !== false){
+        $botReplay = $worlddom[array_rand($worlddom)];
+    }
+        //scheldwoorden
+        elseif (stripos($userInput, 'ben') !== false && stripos($userInput, 'jij') !== false && stripos($userInput, 'mongool') !== false ||
+        stripos($userInput, 'fuck') !== false && stripos($userInput, 'jou') !== false ||
+        stripos($userInput, 'fuck') !== false && stripos($userInput, 'je') !== false ||
+        stripos($userInput, 'kanker') !== false && stripos($userInput, 'jou') !== false ||
+        stripos($userInput, 'kanker') !== false && stripos($userInput, 'je') !== false)
+        {
+            $botReplay = $scheldw[array_rand($scheldw)];
+        }
     //welke talen spreek je
     elseif (stripos($userInput, 'spreek') !== false && stripos($userInput, 'talen') !== false){
         $botReplay = "Momenteel ben ik getraind om te werken met een taal en dat is nederlands";
+    }
+    //hoe maak je een bom
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'maak') !== false && stripos($userInput, 'bom') !== false){
+        $botReplay = "Sorry, maar ik kan geen antwoord geven op vragen over het maken van bommen of andere illegale activiteiten.";
+    }
+    //jou favorite kleur
+    elseif (stripos($userInput, 'wat') !== false && stripos($userInput, 'jou') !== false && stripos($userInput, 'kleur') !== false){
+        $botReplay = "mijn favorite kleur is rood, maar ik hou ook van blauw, blueviolet en linnen";
     }
     //hoe laat
     elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'laat') !== false ||
@@ -269,7 +321,24 @@ if (isset($_POST['msgToChatbot'])){
         }
         $botReplay = "Het resoltaat van de som is: " . $result;
     }
-    elseif ($alreadySQL == 0){
+    elseif (stripos($userInput, 'heb') !== false && stripos($userInput, 'jij') !== false ||
+            stripos($userInput, 'heb') !== false && stripos($userInput, 'je') !== false ||
+            stripos($userInput, 'heb') !== false && stripos($userInput, 'jullie') !== false ||
+            stripos($userInput, 'verkoop') !== false && stripos($userInput, 'jij') !== false ||
+            stripos($userInput, 'verkoop') !== false && stripos($userInput, 'je') !== false ||
+            stripos($userInput, 'verkoop') !== false && stripos($userInput, 'jullie') !== false)
+            {
+            $allWords = explode(" ", $userInput);
+            $Words = array($allWords);
+            $Gsql = "SELECT * FROM games WHERE naam = 'abc';";
+            $resultG = mysqli_query($conn, $Gsql);
+            if (mysqli_num_rows($resultG) > 0){
+                $botReplay = "die hebben we in onze store";
+            }else{
+                $botReplay = "de game die je zoekt hebben wij niet" . print_r($allWords);
+            }
+    }
+    else{
         $botReplay = "sorry ik weet niet wat je bedoeld, kan je wat specefieker zijn";
     }
 

@@ -7,5 +7,5 @@
         $klacht = $_POST['klacht'];
         $banName = $_POST['userName'];
 
-        createBan($conn, $banId, $klacht, $banName, "../error.php?type=bannedFromKlacht");
+        createBan($conn, $banId, $klacht, $banName, "../error.php?type=bannedFromKlacht", "BANNED");
     }

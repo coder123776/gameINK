@@ -10,8 +10,7 @@ if(!isset($_SESSION['userid'])) {
 }
 else
 include_once('head-footer/chatbot.php');
-CheckIfBanned($conn, $uid, 1);
-SetBudget($conn, $uid);
+CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
 if($uid == $admin1 || $uid == $admin2 || $uid == $admin3 || $uid == $admin4){
 }else{
     header("location: index.php");

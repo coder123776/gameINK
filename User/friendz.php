@@ -7,8 +7,7 @@ include_once('../includes/functions.inc.php');
 if(!isset($_SESSION['userid'])) {
     header("location: ../User/login.php?error=loginfirst");
 }else{
-    CheckIfBanned($conn, $uid, 2);
-    SetBudget($conn, $uid);
+    CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
 }
 ?>
 <title>Your Friends at GameINK</title>

@@ -9,6 +9,7 @@ include_once('../includes/dbh.inc.php');
 if(!isset($_SESSION['userid'])) {
     header("location: ../User/login.php?error=loginfirst");
 }else{
+    // include_once('../head-footer/chatbot.php');
     CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
     if (isset($_SESSION['cart'][0])) {
         if ($_SESSION['firstTime'] == true){

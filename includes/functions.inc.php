@@ -499,15 +499,15 @@ function EXgenre($name, $location, $img) {
 
 
 //GET USERS BANNED
-function createBan($conn, $banId, $klacht, $banName, $loc, $status) {
-    $sql = "INSERT INTO review (uid, klacht, Username, status) VALUES (?, ?, ?, ?);";
+function createReview($conn, $banId, $klacht, $banName, $status, $review, $time, $userimg, $loc) {
+    $sql = "INSERT INTO review (uid, klacht, Username, status, review, time, userimg) VALUES (?, ?, ?, ?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header('location: ../User/signup.php?error=stmtfailed');
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "ssss", $banId, $klacht, $banName, $status);
+    mysqli_stmt_bind_param($stmt, "sssssss", $banId, $klacht, $banName, $status, $review, $time, $userimg);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header('location: '.$loc.'');

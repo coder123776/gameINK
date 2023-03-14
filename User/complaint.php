@@ -13,11 +13,12 @@ if(!isset($_SESSION['userid'])) {
 <title>Complain GameINK</title>
 <section id="cart">
     <div class="complain-parent">
-        <form action="../includes/banning.php" method="post">
+        <form action="../includes/reviews.inc.php" method="post">
         <label for="klacht">Write Your Complain</label>
         <input id="in" name="klacht" type="text" maxlength="75">
         <input id="in" type="hidden" name="userBanId" value="<?php echo $_SESSION['userid'];?>">
         <input id="in" type="hidden" name="userName" value="<?php echo $_SESSION['user'];?>">
+        <input type="hidden" name="userTime" value="<?php echo date("H:i")?>">
         <button name="BannedFromComplain" id="complain" type="submit">Post Complain</button>
         <div>
             <input id="terms" type="checkbox" name="terms" onchange="activateButton(this)">

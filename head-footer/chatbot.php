@@ -137,6 +137,20 @@ if (isset($_POST['msgToChatbot'])){
     if($_SESSION["fileType"] == 1){$dest = "User/game.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/game.php";}
     $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>schrijf een klacht</a>');
     }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'feedb') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'feedb') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'feedb') !== false ||
+    stripos($userInput, 'schrij') !== false && stripos($userInput, 'feedb') !== false ||
+    stripos($userInput, 'hoe') !== false && stripos($userInput, 'review') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'review') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'review') !== false ||
+    stripos($userInput, 'schrij') !== false && stripos($userInput, 'review') !== false ||
+    stripos($userInput, 'write') !== false && stripos($userInput, 'review') !== false)
+    {
+        //feedbacks
+    if($_SESSION["fileType"] == 1){$dest = "User/profile.php?setting=feedback";}elseif($_SESSION["fileType"] == 2){$dest = "../User/profile.php?setting=feedback";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>schrijf een feedback</a>');
+    }
     elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'vriend') !== false ||
     stripos($userInput, 'ga') !== false && stripos($userInput, 'vriend') !== false ||
     stripos($userInput, 'breng') !== false && stripos($userInput, 'vriend') !== false ||

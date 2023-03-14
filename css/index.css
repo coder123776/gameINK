@@ -941,6 +941,49 @@ table.tableOrders {
   table.tableOrders thead {
     background-color: var(--Huiskleur);
   }
+/* feedbacks */
+div.givefb{
+    height: 30vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+input#givefbl {
+    height: 10vh;
+    width: 22vw;
+    padding-left: 1vw;
+    margin-top: 1vh;
+    border: none;
+    border-radius: 1vh;
+    font-size: 150%;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: var(--RGB-0);
+    background-color: var(--RGB-255);
+    box-shadow: 0px 0px 10px 2px var(--RGB-220);
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+}
+button#givefbb{
+    height: 10vh;
+    width: 22vw;
+    margin-top: 1vh;
+    border: none;
+    border-radius: 1vh;
+    font-size: 150%;
+    font-weight: normal;
+    color: var(--RGB-0);
+    background-color: var(--RGB-255);
+    box-shadow: 0px 0px 10px 2px var(--RGB-220);
+    outline: none;
+}
 /* PROFILE PAGE (END) ------------------------------------------------------------------------------------------------------*/
 /* CART PAGE (START) ------------------------------------------------------------------------------------------------------*/
 section#cart{
@@ -2374,7 +2417,38 @@ h1#chatReceiver{
 
 /* Footer settings */
 
+div.review-parent{
+    height: 25vh;
+    width: 20vw;
+    overflow-y: scroll;
+}
+div.review-child{
+    height: 10vh;
+    width: 20vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+div.review-child p{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+img.review-img{
+    height: 8vh;
+    width: 4vw;
+    border-radius: 50%;
+    margin-left: 0.5vw;
+    margin-top: 1vh;
+}
+div.review-c-child{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 15vw;
+}
+
 footer{
+    position: relative;
     height: 50vh;
     width: 100vw;
     background-color: var(--RGB-0);
@@ -2388,15 +2462,18 @@ footer{
     width: 95%;
     display: flex;
     align-items: center;
+    overflow-y: hidden;
 }
 .footer-inf{
     height: 59%;
     width: 95%;
     margin-top: 1%;
+    overflow-y: hidden;
 }
 .footer-inf-txt{
     display: flex;
     flex-direction: row;
+    overflow-y: hidden;
 }
 .footer-inf-txt a{
     color: var(--RGB-255);

@@ -126,18 +126,29 @@ if(!isset($_SESSION['userid'])) {
             ';
             echo $elemnt;
         }
-        if ($_GET['setting'] == "feedback"){
-            $elemnt = '
+        if ($_GET['setting'] == "feedback"){?>
             <div class="profile-parent">
             <div class="account-body">
                 <h1 id="account-title">GIVE FEEDBACKS</h1>
-                <h1>Welcome Full name</h1>
-                <p>ID: UserId</p>
-                <p>Username: Username</p>  
+                <h1>Welcome <?php echo $username?> can you give us a feedback, what can be better and whats good?</h1>
+                <form action="../includes/reviews.inc.php" method="post">
+                <div class="givefb">
+                    <input id="givefbl" type="text" name="givefbl" maxlength="50" required placeholder="type your feedback...">
+                    <button id="givefbb" type="submit" name="givefbb">post Feedback</button>
+                    <input type="hidden" name="givefbn" value="<?php echo $username?>">
+                    <input type="hidden" name="givefbi" value="<?php echo $uid?>">
+                    <input type="hidden" name="givefbpp" value="<?php echo $profilePic?>">
+                    <input type="hidden" name="givefbd" value="<?php echo date("H:i")?>">
+                    <?php
+                    if(isset($_GET['sended'])){
+                        echo "<p>you did send your message, scroll down to see it</p>";
+                    }
+                    ?>
+                </div>
+                </form>
             </div>
             </div>
-            ';
-            echo $elemnt;
+            <?php
         }
         if ($_GET['setting'] == "reedem"){
             $elemnt = '

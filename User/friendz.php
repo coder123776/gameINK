@@ -212,6 +212,7 @@ if(!isset($_SESSION['userid'])) {
             if(isset($_POST['getBotChat'])){
                 getBotChats();
             }
+
             if(isset($_POST['messageTouser'])){
                 $msg = $_POST['messageTouser'];
                 $friendId = $_POST['friendId'];

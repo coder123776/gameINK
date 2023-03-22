@@ -19,8 +19,9 @@ include_once('includes/dbh.inc.php');
             $_SESSION['CurrentGame'] = $_POST['productId'];
             header("location: User/game.php");
         }
-    }
+    } 
 }
+// botToSql($conn, "hebben jullie apex", 1);
 ?> 
 <title>Welcome at GameINK</title>
 <section id="oneIndex">

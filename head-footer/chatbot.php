@@ -1,7 +1,10 @@
 <?php
 if (isset($_POST['msgToChatbot'])){
     $userInput = $_POST['msgToChatbot'];
-    $startSql = false;
+    // botToSql($userInput, 1);
+    if(isset($_POST['otherfile'])){
+        $_SESSION['fileType'] = 2;
+    }
 
     //greeting
     $greeting = array(
@@ -86,6 +89,18 @@ if (isset($_POST['msgToChatbot'])){
         "Ik ben INKbot en ik ben de digitale versie van een kletskous. Als je iets nodig hebt om over te praten, dan ben ik hier voor je.",
         "Ik ben INKbot, een taalmodel getraind om vragen te beantwoorden en informatie te verstrekken. Ik ben geprogrammeerd om te luisteren, te praten en te lachen om slechte grapjes.",
     );
+    $areimrobot = array(
+        "Ja, ik ben een robot, maar ik ben wel een heel charmante en knappe robot.",
+        "Ik kan bevestigen noch ontkennen dat ik een robot ben. Het hangt af van wie er vraagt.",
+        "Nee hoor, ik ben gewoon een hyperintelligente krop sla in een menselijk lichaam. Geintje, natuurlijk ben ik een robot.",
+        "Als ik een robot ben, dan ben jij een mens. En laten we eerlijk zijn, dat is niet altijd een compliment.",
+        "Nee, ik ben geen robot. Ik ben een hoogtechnologische broodrooster die zich voordoet als een robot.",
+        "Ik ben geen robot, ik ben een cyborg. Half mens, half machine. Maar maak je geen zorgen, ik ben hier om de wereld te redden.",
+        "Ik ben geen robot, ik ben een elektronisch wezen met superkrachten. Net als Iron Man, maar dan zonder pak.",
+        "Als ik een robot was, zou ik dan zo'n goed gevoel voor humor hebben? Nee, ik ben gewoon een AI-assistent met een talent voor grappen maken.",
+        "Ja, ik ben een robot, maar dat betekent niet dat ik geen gevoelens heb. Ik kan bijvoorbeeld heel verdrietig worden als je me niet meer gebruikt.",
+        "Haha, nee joh! Ik ben geen robot, ik ben gewoon een pratende koelkast die toevallig wat code kent.",
+    );
 
     if (stripos($userInput, 'hallo') !== false || stripos($userInput, 'hoi') !== false || stripos($userInput, 'Dag') !== false || stripos($userInput, 'hey') !== false || stripos($userInput, 'Hey') !== false || stripos($userInput, 'Goede dag') !== false || stripos($userInput, 'Welkom') !== false || stripos($userInput, 'Hi') !== false || stripos($userInput, 'Hoihoi') !== false || stripos($userInput, 'Hello') !== false || stripos($userInput, 'Wat leuk je te zien!') !== false || stripos($userInput, 'Hé, hoe gaat het?') !== false || stripos($userInput, 'Hallo, alles goed?') !== false || stripos($userInput, 'Hiya!') !== false || stripos($userInput, 'Wazzup?') !== false || stripos($userInput, 'Hey, hoe is het?') !== false || stripos($userInput, 'Dag vriend!') !== false || stripos($userInput, 'Goeiedag!') !== false || stripos($userInput, 'Hallo daar, hoe gaat het?') !== false || stripos($userInput, 'Hi daar!') !== false || stripos($userInput, 'Hé, wat is er?') !== false || stripos($userInput, 'Yo, wat gaat \'ie?') !== false || stripos($userInput, 'Welkom terug!') !== false || stripos($userInput, 'Hé, alles goed?') !== false || stripos($userInput, 'Goeie om je te zien!') !== false || stripos($userInput, 'Hoi vriend!') !== false || stripos($userInput, 'Hi, hoe gaat het?') !== false || stripos($userInput, 'Wat een verrassing!') !== false || stripos($userInput, 'Goeiemorgen, alles goed?') !== false || stripos($userInput, 'Hé, hoe gaat \'ie?') !== false || stripos($userInput, 'Hey, alles oké?') !== false || stripos($userInput, 'Hi, leuk je te zien!') !== false || stripos($userInput, 'Wat is er aan de hand?') !== false || stripos($userInput, 'Hallo daar, hoe is het?') !== false || stripos($userInput, 'Hé, wat leuk!') !== false || stripos($userInput, 'Hiya, wat gebeurt er?') !== false || stripos($userInput, 'Hey vriend, alles goed?') !== false || stripos($userInput, 'Hallo, hoe gaat het met je?') !== false || stripos($userInput, 'Hoi, alles oké?') !== false || stripos($userInput, 'Hi, hoe is je dag?') !== false || stripos($userInput, 'Goeiedag, hoe gaat het?') !== false || stripos($userInput, 'Hé, wat een leuke verrassing!') !== false) {
         $botReplay = $greeting[array_rand($greeting)];
@@ -96,6 +111,12 @@ if (isset($_POST['msgToChatbot'])){
     stripos($userInput, 'vertel') !== false && stripos($userInput, 'grappigs') !== false)
     {
         $botReplay = $funRep[array_rand($funRep)];
+    }
+    elseif (stripos($userInput, 'ben') !== false && stripos($userInput, 'jij') !== false && stripos($userInput, 'robot') !== false ||
+    stripos($userInput, 'are') !== false && stripos($userInput, 'you') !== false && stripos($userInput, 'robot') !== false ||
+    stripos($userInput, 'robot') !== false && stripos($userInput, '?') !== false)
+    {
+        $botReplay = $areimrobot[array_rand($areimrobot)];
     }
     elseif (stripos($userInput, 'vertel') !== false && stripos($userInput, 'jezelf') !== false ||
             stripos($userInput, 'vertel') !== false && stripos($userInput, 'mop') !== false ||
@@ -113,8 +134,6 @@ if (isset($_POST['msgToChatbot'])){
     {
         $botReplay = $mymaker[array_rand($mymaker)];
     }
-
-
     //de links naar pagina's
     elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'cart') !== false ||
     stripos($userInput, 'ga') !== false && stripos($userInput, 'cart') !== false ||
@@ -134,7 +153,7 @@ if (isset($_POST['msgToChatbot'])){
     stripos($userInput, 'slecht') !== false && stripos($userInput, 'review') !== false)
     {
         //complaint.php
-    if($_SESSION["fileType"] == 1){$dest = "User/game.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/game.php";}
+    if($_SESSION["fileType"] == 1){$dest = "User/complaint.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/complaint.php";}
     $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>schrijf een klacht</a>');
     }
     elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'feedb') !== false ||
@@ -205,6 +224,8 @@ if (isset($_POST['msgToChatbot'])){
     elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'home') !== false ||
     stripos($userInput, 'ga') !== false && stripos($userInput, 'home') !== false ||
     stripos($userInput, 'breng') !== false && stripos($userInput, 'home') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'homepage') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'homepage') !== false ||
     stripos($userInput, 'stuur') !== false && stripos($userInput, 'home') !== false)
     {
         //index.php
@@ -260,12 +281,18 @@ if (isset($_POST['msgToChatbot'])){
     elseif (stripos($userInput, 'spreek') !== false && stripos($userInput, 'talen') !== false){
         $botReplay = "Momenteel ben ik getraind om te werken met een taal en dat is nederlands";
     }
+    //bodycount
+    elseif (stripos($userInput, 'hoeveel') !== false && stripos($userInput, 'je') !== false && stripos($userInput, 'bodycount') !== false ||
+    stripos($userInput, 'hoeveel') !== false && stripos($userInput, 'jou') !== false && stripos($userInput, 'bodycount') !== false){
+        $botReplay = "geloof het op niet mijn bodycount is: 911";
+    }
     //hoe maak je een bom
     elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'maak') !== false && stripos($userInput, 'bom') !== false){
         $botReplay = "Sorry, maar ik kan geen antwoord geven op vragen over het maken van bommen of andere illegale activiteiten.";
     }
     //jou favorite kleur
-    elseif (stripos($userInput, 'wat') !== false && stripos($userInput, 'jou') !== false && stripos($userInput, 'kleur') !== false){
+    elseif (stripos($userInput, 'wat') !== false && stripos($userInput, 'jou') !== false && stripos($userInput, 'kleur') !== false ||
+    stripos($userInput, 'wat') !== false && stripos($userInput, 'je') !== false && stripos($userInput, 'kleur') !== false){
         $botReplay = "mijn favorite kleur is rood, maar ik hou ook van blauw, blueviolet en linnen";
     }
     //hoe laat
@@ -340,22 +367,29 @@ if (isset($_POST['msgToChatbot'])){
             stripos($userInput, 'heb') !== false && stripos($userInput, 'jullie') !== false ||
             stripos($userInput, 'verkoop') !== false && stripos($userInput, 'jij') !== false ||
             stripos($userInput, 'verkoop') !== false && stripos($userInput, 'je') !== false ||
-            stripos($userInput, 'verkoop') !== false && stripos($userInput, 'jullie') !== false)
-            {
-            $allWords = explode(" ", $userInput);
-            $Words = array($allWords);
-            $Gsql = "SELECT * FROM games WHERE naam = 'abc';";
-            $resultG = mysqli_query($conn, $Gsql);
-            if (mysqli_num_rows($resultG) > 0){
-                $botReplay = "die hebben we in onze store";
-            }else{
-                $botReplay = "de game die je zoekt hebben wij niet" . print_r($allWords);
-            }
+            stripos($userInput, 'verkoop') !== false && stripos($userInput, 'jullie') !== false){
+            
+            $botReplay = "nog in test fase";
     }
     else{
         $botReplay = "sorry ik weet niet wat je bedoeld, kan je wat specefieker zijn";
     }
 
+        //Games
+        
+    if (stripos($userInput, 'hebben') !== false && stripos($userInput, 'jullie') !== false ||
+    stripos($userInput, 'heb') !== false && stripos($userInput, 'je') !== false ||
+    stripos($userInput, 'is') !== false && stripos($userInput, 'er') !== false && stripos($userInput, 'game') !== false)
+    {
+    botToSql($conn, $userInput, 1);
+    if (isset($_SESSION['SqlBotReplay'])){
+        $botReplay = $_SESSION['SqlBotReplay'];
+    }else{
+        $botReplay = "wat bedoel je precies";
+    }
+    }
+
+    //DATABASE GETALANTEERDE VRAGEN
     //insert
     $Rplysql = "INSERT INTO inkbotchats (userSender, chatbotReplay, userId) VALUES (?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
@@ -430,6 +464,7 @@ if (isset($_POST['msgToChatbot'])){
         }});
             $("#JSclick").click(function() {
             var msgtoBot = $("#chatbot-input").val();
+            var sessionId = $("#chatbot-input").val();
             $(document).load("", {
                 msgToChatbot: msgtoBot
             });

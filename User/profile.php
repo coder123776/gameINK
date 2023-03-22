@@ -50,17 +50,19 @@ if(!isset($_SESSION['userid'])) {
 
                 <div class="account-button-parent">
                     <div class="account-label"><p>Real Name</p><h2><?php echo $name;?></h2></div>
-                    <button id="account-label" type="submit"><i class="fa fa-pencil"></i></button>
+                    <button id="account-label" type="submit" class="fa fa-pencil">&#xf303;</button>
                 </div>
                 <div class="account-button-parent">
                     <div class="account-label"><p>Username</p><h2><?php echo $username;?></h2></div>
-                    <button id="account-label" type="submit"><i class="fa fa-pencil"></i></button>
+                    <button id="account-label" type="submit" class="fa fa-pencil">&#xf303;</button>
                 </div>
                 <h1>Country</h1>
                 <div class="account-button-parent">
                     <div class="account-label"><p>your country</p><h2><?php echo $userlocation['country'] ,'&nbsp;'. $userlocation['city'] ?></h2></div>
-                    <button id="account-label" type="submit"><i class="fa fa-pencil"></i></button>
+                    <button id="account-label" type="submit" class="fa fa-pencil">&#xf303;</button>
                 </div>
+                <h1>Bio</h1>
+                <textarea name="message" rows="10" cols="40"><?php echo $userBio?></textarea>
                 <h1 id="account-delete">Account Delete</h1>
                 <div class="account-delete">
                     <p id="account-delete">

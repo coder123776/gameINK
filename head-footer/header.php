@@ -5,6 +5,7 @@ if(isset($_SESSION['userid'])) {
     $uid = $_SESSION["userid"];
     $name = $_SESSION['name'];
     $profilePic = $_SESSION['profilePic'];
+    $userBio = $_SESSION['bio'];
 }
 ?>
 <link rel="stylesheet" href="<?php if($_SESSION['fileType'] == 1){echo "css/index.css";}elseif($_SESSION['fileType'] == 2){echo "../css/index.css";}?>">
@@ -95,7 +96,7 @@ if(isset($_SESSION['userid'])) {
         }elseif($_SESSION['fileType'] == 2){
             echo '
             <div id="dropdown2">
-            <a id="signuplink" href="User/profile.php?setting=account">
+            <a id="signuplink" href="../User/profile.php?setting=account">
             <i id= "SigninDrop"><h1>Profile Page</h1><i id="drop" class="fas fa-id-card"></i></i></a>
             <a href="../includes/logout.inc.php">
             <i id="LoginDrop"><h1>Log Out</h1><i id="drop" class="fas fa-sign-in-alt"></i></i></a>
@@ -117,7 +118,7 @@ if(isset($_SESSION['userid'])) {
         }elseif($_SESSION['fileType'] == 2){
             echo '
             <div id="dropdown2">
-            <a id="signuplink" href="User/signup.php">
+            <a id="signuplink" href="../User/signup.php">
             <i id= "SigninDrop"><h1>Sing in</h1><i id="drop" class="fa fa-user"></i></i></a>
             <a href="../User/login.php">
             <i id="LoginDrop"><h1>Log in</h1><i id="drop" class="fa fa-user"></i></i></a>

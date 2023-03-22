@@ -15,7 +15,7 @@
             $date = $row['time'];
             ?>
             <div class="review-child">
-                <img class="review-img" src="<?php if($profilePic == ""){ if($_SESSION['fileType'] == 1){echo "docs/emptyInput.png";}elseif($_SESSION['fileType'] == 2){echo "../docs/emptyInput.png";};}else{ if($_SESSION['fileType'] == 1){echo "User/".$profilePic;}elseif($_SESSION['fileType'] == 2){echo "../User/".$profilePic;}} ?>">
+                <img class="review-img" src="<?php if($img == ""){ if($_SESSION['fileType'] == 1){echo "docs/emptyInput.png";}elseif($_SESSION['fileType'] == 2){echo "../docs/emptyInput.png";};}else{ if($_SESSION['fileType'] == 1){echo "User/".$img;}elseif($_SESSION['fileType'] == 2){echo "../User/".$img;}} ?>">
                 <div class="review-c-child">
                 <h1><?php echo $name ?></h1>
                 <p><?php echo $date ?></p>
@@ -23,6 +23,7 @@
                 </div>
             </div>
             <hr>
+            <div class="extra-space"></div>
         <?php
         }
         ?>

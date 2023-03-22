@@ -109,6 +109,7 @@ function loginUser($conn, $username, $pwd) {
         $_SESSION['email'] = $uidExists['Email'];
         $_SESSION['name'] = $uidExists['Name'];
         $_SESSION['profilePic'] = $uidExists['profileImg'];
+        $_SESSION['bio'] = $uidExists['Bio'];
         header('location: ../index.php');
         exit();
     }
@@ -678,36 +679,37 @@ function getFriends($conn, $uid, $type){
 function getBotChats(){?>
     <nav class="messages-body1"><img src="../profilePics/6404b87c90d4ctester.png"><h1>INKbot</h1></nav>
     <div id="messages" class="messages"><div class="message">
-    <script>
-        function data(){
-            const xhttp = new XMLHttpRequest();
-            xhttp.onload = function(){
-                document.getElementById("messages").innerHTML = this.responseText;
-            }
-            xhttp.open("POST", "<?php if($_SESSION['fileType'] == 1){echo "head-footer/chatbotchats.php";}elseif($_SESSION['fileType'] == 2){echo "../head-footer/chatbotchats.php";}?>");
-            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhttp.send("getchats2");
-        }
-        data();
-    </script>
     <h1 id="messageReceiver"></h1></div></div>
-    <nav class="messages-body2"><input id="messageTouser" type="text" name="msgToChatbot" value="" placeholder="Type in your message" minlength="1">
+    <nav class="messages-body2"><input id="messageTobot" type="text" name="msgToChatbot" value="" placeholder="Type in your message" minlength="1">
     <button id="JSclick" type="submit"></button>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
+    function data(){
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function(){
+            document.getElementById("messages").innerHTML = this.responseText;
+        }
+        xhttp.open("POST", "<?php if($_SESSION['fileType'] == 1){echo "head-footer/chatbotchats.php";}elseif($_SESSION['fileType'] == 2){echo "../head-footer/chatbotchats.php";}?>");
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("getchats2");
+    }
+    data();
+
     function scrolldownChatbot(){
         document.getElementById("messages").scrollTo(0, 999999999999);
     }
 
     $(document).ready(function() {
-        $("#messageTouser").keyup(function(event) {
+        $("#messageTobot").keyup(function(event) {
         if (event.keyCode === 13) {
             $("#JSclick").click();
         }});
             $("#JSclick").click(function() {
-            var msgtoBot = $("#messageTouser").val();
+            var msgtoBot = $("#messageTobot").val();
+            var filetype = 0;
             $(document).load("../index.php", {
-                msgToChatbot: msgtoBot
+                msgToChatbot: msgtoBot,
+                otherfile: filetype
             });
             data();
             setTimeout( function () {
@@ -768,6 +770,7 @@ function ShowMessages($conn, $uid, $friendId, $profileImg, $friendname){
     <input id="friendimg" type="hidden" name="friendimg" value="<?php echo $profileImg ?>">
     <input id="friendname" type="hidden" name="friendname" value="<?php echo $friendname?>">
     <button id="JSclickMsg" type="submit"></button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script>
     function startTime() {
     const today = new Date();
@@ -805,7 +808,6 @@ function ShowMessages($conn, $uid, $friendId, $profileImg, $friendname){
     }, 1000)
     }
     searchforNewchats(); 
-
     $(document).ready(function() {
         $("#messageTouser").keyup(function(event) {
         if (event.keyCode === 13) {
@@ -850,12 +852,56 @@ function INKbotMsg($msg, $replay){
 function INKbotMsg2($msg, $replay){
     if ($msg == ""){
         messageReceiver($replay);
+    }elseif($replay == ""){
+        messageSender($msg);
     }else{
         messageSender($msg);
         messageReceiver($replay);
     }
 }
-    
+
+function botToSql($conn, $userinp, $type){
+    if($_SESSION["fileType"] == 1){include_once("includes/dbh.inc.php");}elseif($_SESSION["fileType"] == 2){include_once("../includes/dbh.inc.php");}
+    $checkifinsql = 0;
+    $userWords = explode(" ", $userinp);
+    if ($type == 1){
+        foreach ($userWords as $DDwords) {
+            $sql = "SELECT * FROM games WHERE naam LIKE '$DDwords%';";
+            $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                $checkifinsql = 1;
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $botgamename = $row["naam"];
+                    $botgameid = $row['Id'];
+         }}}
+        if ($checkifinsql == 1){
+            if($_SESSION["fileType"] == 1){$dest = "User/game.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/game.php";}
+                if (isset($_SESSION['cart'])){
+                    $_SESSION['CurrentGame'] = $botgameid;
+                    $_SESSION['SqlBotReplay'] = mysqli_real_escape_string($conn, "ja wij hebben $botgamename <a href=$dest> ga naar de game</a>");
+                }else{
+                    $_SESSION['SqlBotReplay'] = "er is een plorbleem met je winkelwagen, ga even naar de homepage en kilk op een random game, daarna kun je de vraag weer stellen";
+    }}}
+    if ($type == 2){
+        foreach ($userWords as $DDwords) {
+            $sql = "SELECT * FROM gebruiker WHERE Username LIKE '$DDwords%';";
+            $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                $checkifinsql = 1;
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $botFname = $row["Username"];
+                    $botFid = $row['Id'];
+         }}}
+        if ($checkifinsql == 1){
+            if($_SESSION["fileType"] == 1){$dest = "User/game.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/game.php";}
+                if (isset($_SESSION['cart'])){
+                    $_SESSION['CurrentGame'] = $botgameid;
+                    $_SESSION['SqlBotReplay'] = mysqli_real_escape_string($conn, "ja  $botFname is een gebruiker in onze website Klik <a href=$dest>Hier</a> om naar hem te gaan");
+                }else{
+                    $_SESSION['SqlBotReplay'] = "er is een plorbleem met je winkelwagen, ga even naar de homepage en kilk op een random game, daarna kun je de vraag weer stellen";
+    }}}
+}
+
 //GET GLOABAL DATA FUCTION (FOR ALL) FROM DATABASE
 function getData($dat, $sqlCommand){
     include_once('dbh.inc.php');

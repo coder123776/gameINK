@@ -18,7 +18,7 @@ if(isset($_POST['submit'])) {
     if (invalidUid($username) !== false ) {
         header('location: ../User/signup.php?error=invaliduid');
         exit();
-    }
+    } 
     if (invalidEmail($email) !== false ) {
         header('location: ../User/signup.php?error=invalidemail');
         exit();

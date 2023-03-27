@@ -62,7 +62,7 @@ if (isset($_GET['doing'])){
         while ($row = mysqli_fetch_assoc($result)){
             if($row['Id'] == $gameId){
                 $total = $total + (int)$row['prijs'];
-                $total = $total / 100 * 130;
+                // $total = $total / 100 * 130;
                 buyGameScreen($conn, $username, $budget, $total, 2, $btn, $cls, $uid, "", $codetext);
             }
         }
@@ -85,7 +85,7 @@ if (isset($_GET['doing'])){
         while ($row = mysqli_fetch_assoc($result)){
             if($row['Id'] == $gameId){
                 $total = $total + (int)$row['prijs'];
-                $total = $total / 100 * 130;
+                // $total = $total / 100 * 130;
                 buyGameScreen($conn, $username, $budget, $total, 2, $btn, $cls, $uid, "you don't have enough money to buy the game", $codetext);
             }
         }

@@ -1,7 +1,6 @@
 <?php
 if (isset($_POST['msgToChatbot'])){
     $userInput = $_POST['msgToChatbot'];
-    // botToSql($userInput, 1);
     if(isset($_POST['otherfile'])){
         $_SESSION['fileType'] = 2;
     }
@@ -362,31 +361,41 @@ if (isset($_POST['msgToChatbot'])){
         }
         $botReplay = "Het resoltaat van de som is: " . $result;
     }
-    elseif (stripos($userInput, 'heb') !== false && stripos($userInput, 'jij') !== false ||
-            stripos($userInput, 'heb') !== false && stripos($userInput, 'je') !== false ||
+    elseif (stripos($userInput, 'heb') !== false && stripos($userInput, 'jij') !== false && stripos($userInput, 'game') !== false ||
+            stripos($userInput, 'heb') !== false && stripos($userInput, 'je') !== false && stripos($userInput, 'game') !== false ||
             stripos($userInput, 'heb') !== false && stripos($userInput, 'jullie') !== false ||
             stripos($userInput, 'verkoop') !== false && stripos($userInput, 'jij') !== false ||
             stripos($userInput, 'verkoop') !== false && stripos($userInput, 'je') !== false ||
             stripos($userInput, 'verkoop') !== false && stripos($userInput, 'jullie') !== false){
             
-            $botReplay = "nog in test fase";
-    }
-    else{
-        $botReplay = "sorry ik weet niet wat je bedoeld, kan je wat specefieker zijn";
+        botToSql($conn, $userInput, 1);
+        if (isset($_SESSION['SqlBotReplay'])){
+            $botReplay = $_SESSION['SqlBotReplay'];
+            unset($_SESSION['SqlBotReplay']);
+        }elseif (isset($_SESSION['SqlBotnoReplay'])){
+            $botReplay = $_SESSION['SqlBotnoReplay'];
+            unset($_SESSION['SqlBotnoReplay']);
+        }else{
+            $botReplay = "wat bedoel je precies";
+        }
     }
 
         //Games
         
-    if (stripos($userInput, 'hebben') !== false && stripos($userInput, 'jullie') !== false ||
-    stripos($userInput, 'heb') !== false && stripos($userInput, 'je') !== false ||
+    if (stripos($userInput, 'heb') !== false && stripos($userInput, 'jullie') !== false && stripos($userInput, 'gebruiker') !== false ||
+    stripos($userInput, 'heb') !== false && stripos($userInput, 'je') !== false && stripos($userInput, 'gebruiker') !== false ||
+    stripos($userInput, 'bestaat') !== false && stripos($userInput, 'in') !== false && stripos($userInput, 'site') !== false ||
+    stripos($userInput, 'bestaat') !== false && stripos($userInput, 'op') !== false && stripos($userInput, 'site') !== false ||
     stripos($userInput, 'is') !== false && stripos($userInput, 'er') !== false && stripos($userInput, 'game') !== false)
     {
-    botToSql($conn, $userInput, 1);
-    if (isset($_SESSION['SqlBotReplay'])){
-        $botReplay = $_SESSION['SqlBotReplay'];
-    }else{
-        $botReplay = "wat bedoel je precies";
-    }
+        botToSql($conn, $userInput, 2);
+        if (isset($_SESSION['SqlBotReplay'])){
+            $botReplay = $_SESSION['SqlBotReplay'];
+        }elseif (isset($_SESSION['SqlBotnoReplay'])){
+            $botReplay = $_SESSION['SqlBotnoReplay'];
+        }else{
+            $botReplay = "wat bedoel je precies";
+        }
     }
 
     //DATABASE GETALANTEERDE VRAGEN

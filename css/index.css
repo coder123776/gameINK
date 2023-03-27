@@ -390,6 +390,13 @@ h1#txt-2{
 h1#txt-2{
     margin-right: 2vw;
     color: var(--Huiskleur);
+    animation-name: FirstMove1;
+    animation-duration: 3s;
+    /* animation-delay: 2s; */
+}
+@keyframes FirstMove1 {
+    0% {margin-right: 104vw;}
+    100% {margin-right: 2vw;}
 }
 h1#welcome {
     position: sticky;
@@ -431,6 +438,17 @@ div#HeightCorrection .line {
 
 /* FRONT PAGE (SLIDESHOW END)!! ------------------------------------------------------------------------------------------------------*/
 /* GAMES SECTION SPOTLIGHT SECTION ()!! ------------------------------------------------------------------------------------------------------*/
+#Fade1,
+#Fade2,
+#Fade3,
+#Fade4,
+#Fade5,
+#Fade6,
+#Fade7,
+#Fade8
+{
+    opacity: 0;
+}
 section#spotlight{
     height: 360vh;
     width: 100vw;
@@ -438,37 +456,52 @@ section#spotlight{
     flex-direction: column;
     align-items: center;
     background-color: var(--RGB-15);
+    overflow: hidden;
 }
-nav#Spotlight{
+nav.Spotlight{
+    position: relative;
     height: 10vh;
     width: 80vw;
     background-color: var(--RGB-15);
 }
-div.spotlight1{
-    height: 60vh;
-    width: 80vw;
-    background-color: var(--RGB-15);
+div.spotlight11{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 80vw;
+    height: 60vh;
+}
+div.spotlight1,
+div.Spotlight2
+{
+    height: 60vh;
+    width: 80vw;
+    margin-top: 2vh;
+    background-color: var(--RGB-15);
+    display: -webkit-box;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: visible;
+    transition: 500ms;
+}
+div.spotlight1-parent{
+    height: 60vh;
+    width: 80vw;
+    overflow: hidden;
 }
 div.card{
     height: auto;
     width: 15vw;
+    min-width: 15vw;
+    margin-right: 1.25vw;
     background-color: var(--RGB-15);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-div.spotlight2{
-    height: 60vh;
-    width: 80vw;
-    margin-top: 5vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color: var(--RGB-15);
-}
+/* form#cardslide1{
+    margin-left: 10vw;
+} */
 div.kaart{
     height: auto;
     width: 25vw;
@@ -568,7 +601,8 @@ h1#gamePrice2{
     margin-left: 5%;
     color: var(--RGB-255);
 }
-nav#Spotlight2{
+nav.nav-spotlight2{
+    position: relative;
     height: 10vh;
     width: 80vw;
     background-color: var(--RGB-15);
@@ -583,7 +617,7 @@ div.Spotlight3{
     flex-direction: column;
     align-items: center;
 }
-nav#Spotlight22{
+nav.Spotlight22{
     height: 10vh;
     width: 80vw;
     background-color: var(--RGB-120);
@@ -681,6 +715,29 @@ h1#spotlightTxt{
     color: var(--RGB-255);
     font-size: 200%;
     cursor: context-menu;
+}
+
+.Spotlight i,
+.nav-spotlight2 i
+{
+    position: absolute;
+    background-color: var(--RGB-100);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 4.5vh;
+    width: 2.25vw;
+    border-radius: 50%;
+}
+i#left1,
+i#left2{
+    right: 4vw;
+    cursor: pointer;
+}
+i#right1,
+i#right2{
+    right: 1vw;
+    cursor: pointer;
 }
 /* GAMES SECTION SPOTLIGHT SECTION (END)!! ------------------------------------------------------------------------------------------------------*/
 
@@ -2123,7 +2180,7 @@ label.changePic{
     background-color: var(--RGB-255);
     box-shadow: 0px 0px 10px 2px var(--RGB-220);
 }
-div.change-pic-child button{
+button.nbio{
     height: 8vh;
     width: 12vw;
     border-radius: 1vh;
@@ -2283,6 +2340,19 @@ h1#messageReceiver{
     margin-left: 1vw;
     background-color: var(--RGB-60);
 }
+
+/*friendsettings*/
+textarea#nbio{
+    margin-top: 5vh;
+    height: 20vh;
+    width: 30vw;
+    font-size: 150%;
+    resize: none;
+}
+.extraLaag1{
+    height: 3vh;
+}
+
 /* FRIENDS (END) ------------------------------------------------------------------------------------------------------*/
 /* ERRORS (PAGE) ------------------------------------------------------------------------------------------------------*/
 .error{

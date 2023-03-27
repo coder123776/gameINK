@@ -110,6 +110,9 @@ function loginUser($conn, $username, $pwd) {
         $_SESSION['name'] = $uidExists['Name'];
         $_SESSION['profilePic'] = $uidExists['profileImg'];
         $_SESSION['bio'] = $uidExists['Bio'];
+        $_SESSION['level'] = $uidExists['level'];
+        $_SESSION['onlinedate'] = $uidExists['onlineDate'];
+        $_SESSION['land'] = $uidExists['Land'];
         header('location: ../index.php');
         exit();
     }
@@ -135,9 +138,9 @@ function GameDisplay($conn, $state, $displ){
         $productPrice = "&#128178;".$row['prijs'];
     }
     if     ($displ == 1){
-        if($MaxCards1 < 5){
+        if($MaxCards1 < 15){
         ?>
-        <form method="post"><button name="add" id="addToCart"><div class="card card1">
+        <form id="cardslide1" method="post"><button name="add" id="addToCart"><div class="card card1">
         <div class="gameImage1"><img id="gameImage1" src="<?php echo $row['image']?>"></div>
         <h1 id="gameName1"><?php echo $row['naam']?></h1>
         <h1 id="gamePrice1"><?php echo $productPrice?></h1>
@@ -158,9 +161,9 @@ function GameDisplay($conn, $state, $displ){
         $MaxCards2++;
         }
     }elseif($displ == 3){
-        if($MaxCards3 < 5){
+        if($MaxCards3 < 15){
         ?>
-        <form method="post"><button name="add" id="addToCart"><div class="card card1">
+        <form method="post"><button name="add" id="addToCart"><div class="card card2">
         <div class="gameImage1"><img id="gameImage1" src="<?php echo $row['image']?>"></div>
         <h1 id="gameName1"><?php echo $row['naam']?></h1>
         <h1 id="gamePrice1"><?php echo $productPrice?></h1>
@@ -567,23 +570,31 @@ function ShowFriendPage($friendsname, $friendLevel, $friendImg, $friendBio, $uid
         </div>
         <div class="profile-child2">
             <h1 id="level">Level <?php if($friendLevel > 100000){echo "GOD";}else{echo $friendLevel;} ?></h1>
+            <?php
+            if ($uid == $friendId){?>
+            <div onclick="showProfilepic(1)" class="friend-option"><h1>Change Bio</h1></div>
+            <div onclick="showProfilepic(2)" class="friend-option"><h1>Change ProfileImg</h1></div>
+            <div onclick="showProfilepic(3)" class="friend-option"><h1>Change Username</h1></div>
+            <div onclick="showProfilepic(4)" class="friend-option"><h1>Change Email</h1></div>
+            <div onclick="showProfilepic(5)" class="friend-option"><h1>Change Password</h1></div>
+            <?php
+            }else{?>
             <form id="form1" action="../includes/search.inc.php" method="post"><div onclick="submit('form1')" class="friend-option"><h1><?php echo $btnTitle ?></h1></div>
             <input type="hidden" name="friendrequestSender" value="<?php echo $uid?>">
-            <input type="hidden" name="friendrequestReceiver" value="<?php echo $friendId?>">
-            </form>
+            <input type="hidden" name="friendrequestReceiver" value="<?php echo $friendId?>"></form>
             <form id="form2" action="../includes/search.inc.php" method="post"><div onclick="submit('form2')" class="friend-option"><h1>Delete Friend</h1></div>
             <input type="hidden" name="friendDeleteSender" value="<?php echo $uid?>">
-            <input type="hidden" name="friendDeleteReceiver" value="<?php echo $friendId?>">
-            </form>
+            <input type="hidden" name="friendDeleteReceiver" value="<?php echo $friendId?>"></form>
             <form id="form3" action="?messages" method="post"><div onclick="submit('form3')" class="friend-option"><h1>Messages</h1></div>
             <input type="hidden" name="friendPageId" value="<?php echo $friendId?>">
             <input type="hidden" name="friendPageName" value="<?php echo $friendsname?>">
-            <input type="hidden" name="friendPageImg" value="<?php echo $friendImg?>">
-            </form>
+            <input type="hidden" name="friendPageImg" value="<?php echo $friendImg?>"></form>
             <form id="form4" action="../includes/search.inc.php" method="post"><div onclick="submit('form4')" class="friend-option"><h1>Follow</h1></div>
             <input type="hidden" name="friendFollowSender" value="<?php echo $uid?>">
-            <input type="hidden" name="friendFollowReceiver" value="<?php echo $friendId?>">
-            </form>
+            <input type="hidden" name="friendFollowReceiver" value="<?php echo $friendId?>"></form>
+            <?php
+            }
+            ?>
         </div>
         <script>
             function submit(id){
@@ -593,8 +604,8 @@ function ShowFriendPage($friendsname, $friendLevel, $friendImg, $friendBio, $uid
         </script>
     </div>
     </div>
-    <?php
-    }
+<?php
+}
 
 function showFriends($conn, $uid, $type, $resultA, $resORsendr){
     $queryB = "SELECT * FROM gebruiker WHERE Id = $resORsendr";
@@ -878,9 +889,9 @@ function botToSql($conn, $userinp, $type){
             if($_SESSION["fileType"] == 1){$dest = "User/game.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/game.php";}
                 if (isset($_SESSION['cart'])){
                     $_SESSION['CurrentGame'] = $botgameid;
-                    $_SESSION['SqlBotReplay'] = mysqli_real_escape_string($conn, "ja wij hebben $botgamename <a href=$dest> ga naar de game</a>");
+                    $_SESSION['SqlBotReplay'] = mysqli_real_escape_string($conn, "ja wij hebben  $botgamename in onze website Klik <a href=$dest>Hier</a> om naar de game te gaan");
                 }else{
-                    $_SESSION['SqlBotReplay'] = "er is een plorbleem met je winkelwagen, ga even naar de homepage en kilk op een random game, daarna kun je de vraag weer stellen";
+                    $_SESSION['SqlBotnoReplay'] = "er is een plorbleem met je winkelwagen, ga even naar de homepage en kilk op een random game, daarna kun je de vraag weer stellen";
     }}}
     if ($type == 2){
         foreach ($userWords as $DDwords) {
@@ -889,18 +900,28 @@ function botToSql($conn, $userinp, $type){
             if (mysqli_num_rows($result) > 0) {
                 $checkifinsql = 1;
                 while ($row = mysqli_fetch_assoc($result)) {
+                    $botFid = $row["Id"];
                     $botFname = $row["Username"];
-                    $botFid = $row['Id'];
+                    $botFlevel = $row["level"];
+                    $botFimg = $row["profileImg"];
+                    $botFbio = $row["Bio"];
+                    $botFdate = $row["onlineDate"];
          }}}
         if ($checkifinsql == 1){
-            if($_SESSION["fileType"] == 1){$dest = "User/game.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/game.php";}
-                if (isset($_SESSION['cart'])){
-                    $_SESSION['CurrentGame'] = $botgameid;
-                    $_SESSION['SqlBotReplay'] = mysqli_real_escape_string($conn, "ja  $botFname is een gebruiker in onze website Klik <a href=$dest>Hier</a> om naar hem te gaan");
+            if($_SESSION["fileType"] == 1){$dest = "User/friendz.php?friendProfile";}elseif($_SESSION["fileType"] == 2){$dest = "../User/friendz.php?friendProfile";}
+                    $_SESSION['friendId'] = $botFid;
+                    $_SESSION['friendsname'] = $botFname;
+                    $_SESSION['friendLevel'] = $botFlevel;
+                    $_SESSION['friendImg'] = $botFimg;
+                    $_SESSION['friendBio'] = $botFbio;
+                    $_SESSION['friendDate'] = $botFdate;
+
+                    $_SESSION['SqlBotReplay'] = mysqli_real_escape_string($conn, "ja  $botFname is een gebruiker in onze website Klik <a href=$dest>Hier</a> om naar hem/haar te gaan");
                 }else{
-                    $_SESSION['SqlBotReplay'] = "er is een plorbleem met je winkelwagen, ga even naar de homepage en kilk op een random game, daarna kun je de vraag weer stellen";
-    }}}
+                    $_SESSION['SqlBotnoReplay'] = "controleer of je de naam goed hebt gespeld, als de naam toch goed is bestaat hij niet op de site";
+    }}
 }
+
 
 //GET GLOABAL DATA FUCTION (FOR ALL) FROM DATABASE
 function getData($dat, $sqlCommand){

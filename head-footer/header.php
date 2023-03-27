@@ -6,6 +6,9 @@ if(isset($_SESSION['userid'])) {
     $name = $_SESSION['name'];
     $profilePic = $_SESSION['profilePic'];
     $userBio = $_SESSION['bio'];
+    $userlevel = $_SESSION['level'];
+    $userOnlineDate = $_SESSION['onlinedate'];
+    $userland = $_SESSION['land'];
 }
 ?>
 <link rel="stylesheet" href="<?php if($_SESSION['fileType'] == 1){echo "css/index.css";}elseif($_SESSION['fileType'] == 2){echo "../css/index.css";}?>">

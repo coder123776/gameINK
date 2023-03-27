@@ -98,3 +98,51 @@ window.onload=function(){
     // }
 }
 
+function fade_in(element) {
+    var op = 0.1;
+    element.style.opacity = op;
+    var timer = setInterval(function () {
+        if (op >= 1){
+            clearInterval(timer);
+        }
+        element.style.opacity = op;
+        op += op * 0.1;
+    }, 5);
+}
+
+var faded = false;
+
+function check_fade_in() {
+    var elements = document.querySelectorAll('#Fade1, #Fade2, #Fade3, #Fade4, #Fade5, #Fade6, #Fade7, #Fade8');
+    elements.forEach(function(element) {
+      var position = element.getBoundingClientRect();
+      if (position.top < window.innerHeight && position.bottom >= 0 && !element.classList.contains('faded')) {
+        element.classList.add('faded');
+        setTimeout(function() {
+            fade_in(element);
+        }, 500);
+      }
+    });
+}
+
+function showProfilepic(type) {
+
+    if (type == 1){
+        document.getElementById("picparent1").classList.toggle("pic-parent");
+    }
+    if (type == 2){
+        document.getElementById("picparent2").classList.toggle("pic-parent");
+    }
+    if (type == 3){
+        document.getElementById("picparent3").classList.toggle("pic-parent");
+    }
+    if (type == 4){
+        document.getElementById("picparent4").classList.toggle("pic-parent");
+    }
+    if (type == 5){
+        document.getElementById("picparent5").classList.toggle("pic-parent");
+    }
+}
+
+
+

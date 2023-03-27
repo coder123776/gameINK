@@ -4,21 +4,6 @@ require_once('dbh.inc.php');
 require_once('functions.inc.php');
 
 if (isset($_POST['addGame'])){
-    //MAKING A GAME
-    function createGame($conn, $naam, $prijs, $gameDiscount, $gameImage, $gameLogo, $gameVideo, $gameGenre, $gamePegi, $gamePegiImg, $gameState, $gameInfo, $gameCompany, $gameRating, $gameRelease, $gamePlatform) {
-        $sql = "INSERT INTO games (naam, prijs, image, genre, Company, State, info, prijs2, image2, video, rating, pegName, pegImg, platform) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-        $stmt = mysqli_stmt_init($conn);
-        if (!mysqli_stmt_prepare($stmt, $sql)) {
-            header('location: ../User/signup.php?error=stmtfailed');
-            exit();
-        }
-
-        mysqli_stmt_bind_param($stmt, "ssssssssssssss", $naam, $prijs, $gameImage, $gameGenre, $gameCompany, $gameState, $gameInfo, $gameDiscount, $gameLogo, $gameVideo, $gameRating, $gamePegi, $gamePegiImg, $gamePlatform);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-        header('location: ../admin.php');
-        exit();
-    }
 
     $gameName = $_POST['gamename'];
     $gamePrice = $_POST['gameprice'];

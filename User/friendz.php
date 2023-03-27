@@ -11,24 +11,57 @@ if(!isset($_SESSION['userid'])) {
 }
 ?>
 <title>Your Friends at GameINK</title>
-<form action="../includes/search.inc.php" method="post" enctype="multipart/form-data">
-<div id="picparent" class="pic-parentt">
+<!-- settings -->
+<form action="../includes/search.inc.php" method="post" enctype="multipart/form-data"><div id="picparent1" class="pic-parentt">
 <div class="change-pic-parent">
-    <i onclick="showProfilepic()" class="fa fa-close"></i>
+    <i onclick="showProfilepic(1)" class="fa fa-close"></i>
+    <textarea name="newbio" id="nbio" cols="30" rows="10" value="" maxlength="400"></textarea>
+    <div class="extraLaag1"></div>
+    <button class="nbio" type="submit" name="changeBio">Verstuur</button>
+</div></div></form>
+<!-- picture -->
+<form action="../includes/search.inc.php" method="post" enctype="multipart/form-data"><div id="picparent2" class="pic-parentt">
+<div class="change-pic-parent">
+    <i onclick="showProfilepic(2)" class="fa fa-close"></i>
     <img id="pic-child" src="<?php if($profilePic == ""){echo "../docs/emptyInput.png";}else{echo $profilePic;} ?>"> 
     <div class="change-pic-child">
         <input type="file" name="changePicFile" id="changePic" accept="image/*">
         <label class="changePic far" for="changePic">&#xf03e; Choose a picture</label>
-        <button type="submit" name="changePic">Upload Image</button>
-    </div>
-</div>
-</div>
-</form>
-<script>
-        function showProfilepic() {
-            document.getElementById("picparent").classList.toggle("pic-parent");
-        }
-</script>
+        <button class="nbio" type="submit" name="changePic">Upload Image</button>
+</div></div></div></form>
+<!-- username -->
+<form action="../includes/search.inc.php" method="post" enctype="multipart/form-data"><div id="picparent3" class="pic-parentt">
+<div class="change-pic-parent">
+    <i onclick="showProfilepic(3)" class="fa fa-close"></i>
+        <label for="oldU">type in your old username</label>
+        <input id="changeUsern" name="oldU" type="text">
+        <label for="newU">type in your new username</label>
+        <input id="changeUsern" name="newU" type="text">
+        <button class="nbio" type="submit" name="changeUsern">Change Username</button>
+</div></div></form>
+<!-- email -->
+<form action="../includes/search.inc.php" method="post" enctype="multipart/form-data"><div id="picparent4" class="pic-parentt">
+<div class="change-pic-parent">
+    <i onclick="showProfilepic(4)" class="fa fa-close"></i>
+        <label for="oldU">type in your old username</label>
+        <input id="changeUsern" name="oldE" type="text">
+        <label for="newU">type in your new username</label>
+        <input id="changeUsern" name="newE" type="text">
+        <button class="nbio" type="submit" name="changeEmail">Change Username</button>
+</div></div></form>
+<!-- password -->
+<form action="../includes/search.inc.php" method="post" enctype="multipart/form-data"><div id="picparent5" class="pic-parentt">
+<div class="change-pic-parent">
+    <i onclick="showProfilepic(5)" class="fa fa-close"></i>
+    <img id="pic-child" src="<?php if($profilePic == ""){echo "../docs/emptyInput.png";}else{echo $profilePic;} ?>"> 
+    <div class="change-pic-child">
+        <input type="file" name="changePicFile" id="changePic" accept="image/*">
+        <label class="changePic far" for="changePic">&#xf03e; Choose a picture</label>
+        <button class="nbio" type="submit" name="changePwd">Upload Image</button>
+</div></div></div></form>
+
+
+
 <section class="friends-parent">
     <div class="friends-parent-head">
         <img onclick="showProfilepic()" class="userPic" src="<?php if($profilePic == ""){echo "../docs/emptyInput.png";}else{echo $profilePic;} ?>">
@@ -40,7 +73,7 @@ if(!isset($_SESSION['userid'])) {
             <form action="?add" method="post"><button type="submit" name="addfriends" id="your friends" class='fas'><div>&#xf234;</div><div><h3>Add Friends</h3></div></button></form>
             <form action="?request" method="post"><button type="submit" name="reqfriends" id="your friends" class='fas'><div>&#xf0e0;</div><div><h3>Friend Request</h3></div></button></form>
             <form action="?messages" method="post"><button type="submit" name="messages" id="your friends" class='fa'><div>&#xf086;</div><div><h3>Messages</h3></div></button></form>
-            <form action="?groups" method="post"><button type="submit" name="groups" id="your friends" class='fa'><div>&#xf0c0;</div><div><h3>Groups</h3></div></button></form>
+            <form action="?mypage" method="post"><button type="submit" name="mypage" id="your friends" class='fa'><div>&#xf406;</div><div><h3>My Page</h3></div></button></form>
             <hr id="friend-hr">
         </nav>
 
@@ -65,7 +98,7 @@ if(!isset($_SESSION['userid'])) {
                 $_SESSION['friendDate'] = $friendDate;
                 ShowFriendPage($friendsname, $friendLevel, $friendImg, $friendBio, $uid, $friendId);
             }
-            if(isset($_GET['alreadyfriends']) || isset($_GET['alreadypending']) || isset($_GET['alreadysend'])){
+            elseif(isset($_GET['alreadyfriends']) || isset($_GET['alreadypending']) || isset($_GET['alreadysend'])){
                 $friendId = $_SESSION['friendId'];
                 $friendsname = $_SESSION['friendsname'];
                 $friendLevel = $_SESSION['friendLevel'];
@@ -74,9 +107,25 @@ if(!isset($_SESSION['userid'])) {
                 $friendDate = $_SESSION['friendDate'];
                 ShowFriendPage($friendsname, $friendLevel, $friendImg, $friendBio, $uid, $friendId);
             }
-        ?>
-            <?php
+            elseif(isset($_SESSION['friendId']) && isset($_SESSION['friendsname']) && isset($_SESSION['friendLevel']) && isset($_SESSION['friendImg']) && isset($_SESSION['friendBio']) &&isset($_SESSION['friendDate'])){
+                $friendId = $_SESSION['friendId'];
+                $friendsname = $_SESSION['friendsname'];
+                $friendLevel = $_SESSION['friendLevel'];
+                $friendImg = $_SESSION['friendImg'];
+                $friendBio = $_SESSION['friendBio'];
+                $friendDate = $_SESSION['friendDate'];
+                ShowFriendPage($friendsname, $friendLevel, $friendImg, $friendBio, $uid, $friendId);
             }
+        }
+        if(isset($_GET['mypage'])){
+            $friendId = $uid;
+            $friendsname = $username;
+            $friendLevel = $userlevel;
+            $friendImg = $profilePic;
+            $friendBio = $userBio;
+            $friendDate = $userOnlineDate;
+            ShowFriendPage($friendsname, $friendLevel, $friendImg, $friendBio, $uid, $friendId);
+        }
         if(isset($_GET['friendz'])){
             if(isset($_SESSION['friendnumber'])){
                 $friendcount = $_SESSION['friendnumber'];

@@ -55,6 +55,12 @@ if (isset($_POST['buycartgames'])){
             MakeOrder($conn, $checkUser, $checkEmail, $product['name'], $product['info'], $product['price'], $product['image'], $uid, $product['id']);
         }
     }
+    unset($_SESSION['AllIds']);
+    unset($_SESSION['AllNames']);
+    unset($_SESSION['AllImages']);
+    unset($_SESSION['AllPrices']);
+    unset($_SESSION['AllInfos']);
+    unset($_SESSION['cart']);
     header('location: ../User/profile.php?setting=orders');
     exit();
 }

@@ -11,6 +11,7 @@ if(!isset($_SESSION['userid'])) {
     CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
         include_once('../head-footer/chatbot.php');
 }
+// print_r($_SESSION['AllNames']);
 ?>
 <title>Your Profile at GameINK</title>
 <section id="Profile">
@@ -123,7 +124,7 @@ if(!isset($_SESSION['userid'])) {
                     <input type="hidden" name="givefbn" value="<?php echo $username?>">
                     <input type="hidden" name="givefbi" value="<?php echo $uid?>">
                     <input type="hidden" name="givefbpp" value="<?php echo $profilePic?>">
-                    <input type="hidden" name="givefbd" value="<?php echo date("H:i")?>">
+                    <input type="hidden" name="givefbd" value="<?php echo date('jS F Y H:i');?>">
                     <?php
                     if(isset($_GET['sended'])){
                         echo "<p>you did send your message, scroll down to see it</p>";

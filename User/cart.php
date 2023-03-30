@@ -64,8 +64,9 @@ if(isset($_POST['remove'])){
                         foreach ($itemId as $id){
                             if($row['Id'] == $id){
                                 $gname = $row['naam'];
+                                $gprice = $row['prijs'];
                                 $total = $total + (int)$row['prijs'];?>
-                                <h3 id="cartSubtotal"><?php echo $gname ." &#128178;".$total ?></h3>
+                                <h3 id="cartSubtotal"><?php echo $gname ." &#128178;".$gprice ?></h3>
                                 <?php
                             }
                         }
@@ -73,7 +74,7 @@ if(isset($_POST['remove'])){
                 }
                 ?>
                 <hr id="cart">
-                <h4 id="cartSubtotal">Subtotal: <?php echo $total ?></h4>
+                <h4 id="cartSubtotal">Subtotal: <?php echo " &#128178;". $total ?></h4>
                 <button type="submit" name="buy2" id="cartSubtotal">Check out</button>
             </div>
             </form>

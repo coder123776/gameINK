@@ -8,8 +8,9 @@
         $klacht = $_POST['klacht'];
         $banName = $_POST['userName'];
         $time = $_POST['userTime'];
+        $profilep = $_SESSION['profilePic'];
 
-        createReview($conn, $banId, $klacht, $banName, "BANNED", "", $time, "", "../error.php?type=bannedFromKlacht");
+        createReview($conn, $banId, $klacht, $banName, "BANNED", $klacht, $time, $profilep, "../error.php?type=bannedFromKlacht");
     }
     if(isset($_POST['givefbb'])){
         $review = $_POST['givefbl'];
@@ -26,6 +27,6 @@
             mysqli_query($conn, $sql);
             header('location: ../User/profile.php?setting=feedback&sended');
         }else{
-            createReview($conn, $id, "", $name, "MESSAGE", $review, $time, $profilep,"../User/profile.php?setting=feedback&sended");
+            createReview($conn, $id, $review, $name, "MESSAGE", $review, $time, $profilep,"../User/profile.php?setting=feedback&sended");
         }
     }

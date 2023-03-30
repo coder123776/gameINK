@@ -6,7 +6,8 @@
         <h1>Reviews</h1>
         <div class="review-parent">
         <?php 
-        $reviews = "SELECT * FROM review WHERE status = 'MESSAGE';";
+        // WHERE status = 'MESSAGE'
+        $reviews = "SELECT * FROM review ;";
         $result = mysqli_query($conn, $reviews);
         while ($row = mysqli_fetch_assoc($result)){
             $name = $row['Username'];

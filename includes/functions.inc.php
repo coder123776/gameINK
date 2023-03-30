@@ -108,6 +108,7 @@ function loginUser($conn, $username, $pwd) {
         $_SESSION["user"] = $uidExists["Username"];
         $_SESSION['email'] = $uidExists['Email'];
         $_SESSION['name'] = $uidExists['Name'];
+        $_SESSION["password"] = $uidExists["Password"];
         $_SESSION['profilePic'] = $uidExists['profileImg'];
         $_SESSION['bio'] = $uidExists['Bio'];
         $_SESSION['level'] = $uidExists['level'];
@@ -241,7 +242,7 @@ function CreateGamePage($productName, $productVideo, $productInfo, $productGenre
     <h1 id="game-title">'.$productName.'</h1>
     <div class="cartBody">
     <div class="gamedisplay-parent">
-        <iframe id="game-vid" src="https://www.youtube.com/embed/'.$productVideo.'?autoplay=1&mute=1&controls=1" frameborder="0"></iframe>
+        <iframe id="game-vid" src="https://www.youtube.com/embed/'.$productVideo.'?autoplay=1&mute=1&controls=0" frameborder="0" style="pointer-events: none;"></iframe>
         <p id="game-info">'.$productInfo.'</p>
         <h1 id="game-genre">Genre</h1>
         <p id="game-genre">'.$productGenre.'</p>
@@ -324,7 +325,7 @@ function buyGameScreen($conn, $user, $wallet, $Tprice, $type, $button, $colsebut
                 <div class="paypal" id="paypal"></div>
                 <script src="https://www.paypal.com/sdk/js?client-id=AZLZpIsRImLEzb0Lib54PbLsNg_POLIU3uBKdahm4Uycn_A5sRoSPllpOxH6rBFH-7sJNbut-KRVB4EA" data-namespace="paypal_sdk"></script>
                 <script>
-                var totalprice = document.getElementById('TotalpriceForjs').value ;
+                var totalprice = document.getElementById('TotalpriceForjs').value;
                 paypal_sdk.Buttons({
                 createOrder : function(data, actions){
                 return actions.order.create({
@@ -396,16 +397,21 @@ function buyGameScreen($conn, $user, $wallet, $Tprice, $type, $button, $colsebut
                 $total = 0;
                 if ($type == 1){
                     echo '<input type="hidden" name="buyHeader" value="../User/cart.php?doing=nomony">';
+                    $_SESSION['AllIds'] = array();
+                    $_SESSION['AllNames'] = array();
+                    $_SESSION['AllImages'] = array();
+                    $_SESSION['AllPrices'] = array();
+                    $_SESSION['AllInfos'] = array();
                     while ($row = mysqli_fetch_assoc($result)){
                         foreach ($itemId as $id){
                             if($row['Id'] == $id){
                                 GameDisplay5($row['image'],$row['naam'],$row['prijs']);
                                 $total = $total + (int)$row['prijs'];
-                                echo '<input type="hidden" name="buyId" value="'.$id.'">';
-                                echo '<input type="hidden" name="checkName" value="'.$row['naam'].'">';
-                                echo '<input type="hidden" name="checkImg" value="'.$row['image'].'">';
-                                echo '<input type="hidden" name="checkPrice" value="'.$row['prijs'].'">';
-                                echo '<input type="hidden" name="checkInf" value="'.$row['info'].'">';
+                                $_SESSION['AllIds'][] = $id;
+                                $_SESSION['AllNames'][] = $row['naam'];
+                                $_SESSION['AllImages'][] = $row['image'];
+                                $_SESSION['AllPrices'][] = $row['prijs'];
+                                $_SESSION['AllInfos'][] = $row['info'];
                             }
                         }
                     }
@@ -414,7 +420,7 @@ function buyGameScreen($conn, $user, $wallet, $Tprice, $type, $button, $colsebut
                                 echo '<input type="hidden" name="checkUsername" value="'.$row['Username'].'">';
                                 echo '<input type="hidden" name="checkEmail" value="'.$row['Email'].'">';
                             }
-                        }
+                    }
                 }elseif ($type == 2){
                     echo '<input type="hidden" name="buyHeader" value="../User/game.php?doing=nomony">';
                     echo '<input type="hidden" name="buyId" value="'.$gameId.'">';
@@ -543,8 +549,18 @@ function CheckWhereLiving($conn, $uid){
     $location = $userlocation['country'];
     mysqli_query($conn, "UPDATE gebruiker SET Land = '$location' WHERE gebruiker.Id = $uid;");
 }
+
+function CheckOwnedProducts($conn, $uid) {
+    $result = mysqli_query($conn, "SELECT * FROM orders WHERE gebruikerId = $uid");
+    $ownedGamegs = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $ownedGamegs[] = $row['bestelimage'];
+    }
+    $_SESSION['ownedgamesImg'] = $ownedGamegs;
+}
+
 //FRIENDS
-function ShowFriendPage($friendsname, $friendLevel, $friendImg, $friendBio, $uid, $friendId){
+function ShowFriendPage($conn, $friendsname, $friendLevel, $friendImg, $friendBio, $uid, $friendId){
     if(isset($_GET['alreadyfriends'])){
         $btnTitle = "Already Friends";
         echo "<script>alert('already friends')</script>";
@@ -563,9 +579,24 @@ function ShowFriendPage($friendsname, $friendLevel, $friendImg, $friendBio, $uid
     <h1 id="mainTxt"><?php echo $friendsname?></h1>
     <div class="row-friend-profile-child">
         <div class="profile-child1">
-        <h1 id="Bio">Bio</h1>
+            <h1 id="Bio">Bio</h1>
             <div class="bio">
                 <h1 id="bi"><?php if($friendBio == ""){echo "This user don't have a bio yet";}else{echo $friendBio;} ?></h1>
+            </div>
+            <h1 id="Bio">Owned games</h1>
+            <div class="ownedgames">
+            <?php
+            CheckOwnedProducts($conn, $friendId);
+            $allgames = $_SESSION['ownedgamesImg'];
+            if (count($allgames) == 0) {
+                echo "de gebruiker heeft geen games";
+            } else {
+                foreach ($allgames as $gameimages) {?>
+                    <img src="<?php echo $gameimages ?>">
+                <?php
+                }
+            }
+            ?>
             </div>
         </div>
         <div class="profile-child2">

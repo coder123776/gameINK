@@ -19,9 +19,7 @@ if(!isset($_SESSION['userid'])) {
         CreateSetting("ACCOUNT SETTINGS", "account");
         CreateSetting("ORDERS", "orders");
         CreateSetting("PAYMENT MANAGMENT", "payment");
-        CreateSetting("PASSWORD & SECURITY", "security");
         CreateSetting("FEEDBACK", "feedback");
-        CreateSetting("REEDEM CODE", "reedem");
         ?>
     </nav>
 
@@ -50,19 +48,17 @@ if(!isset($_SESSION['userid'])) {
 
                 <div class="account-button-parent">
                     <div class="account-label"><p>Real Name</p><h2><?php echo $name;?></h2></div>
-                    <button id="account-label" type="submit" class="fa fa-pencil">&#xf303;</button>
                 </div>
                 <div class="account-button-parent">
                     <div class="account-label"><p>Username</p><h2><?php echo $username;?></h2></div>
-                    <button id="account-label" type="submit" class="fa fa-pencil">&#xf303;</button>
                 </div>
                 <h1>Country</h1>
                 <div class="account-button-parent">
                     <div class="account-label"><p>your country</p><h2><?php echo $userlocation['country'] ,'&nbsp;'. $userlocation['city'] ?></h2></div>
-                    <button id="account-label" type="submit" class="fa fa-pencil">&#xf303;</button>
                 </div>
                 <h1>Bio</h1>
                 <textarea name="message" rows="10" cols="40"><?php echo $userBio?></textarea>
+                <H1>To change settings Click <a href="../User/friendz.php?mypage">>></a></H1>
                 <h1 id="account-delete">Account Delete</h1>
                 <div class="account-delete">
                     <p id="account-delete">
@@ -115,19 +111,6 @@ if(!isset($_SESSION['userid'])) {
             ';
             echo $elemnt;
         }
-        if ($_GET['setting'] == "security"){
-            $elemnt = '
-            <div class="profile-parent">
-            <div class="account-body">
-                <h1 id="account-title">SECURITY SETTINGS</h1>
-                <h1>Welcome Full name</h1>
-                <p>ID: UserId</p>
-                <p>Username: Username</p>  
-            </div>
-            </div>
-            ';
-            echo $elemnt;
-        }
         if ($_GET['setting'] == "feedback"){?>
             <div class="profile-parent">
             <div class="account-body">
@@ -151,19 +134,6 @@ if(!isset($_SESSION['userid'])) {
             </div>
             </div>
             <?php
-        }
-        if ($_GET['setting'] == "reedem"){
-            $elemnt = '
-            <div class="profile-parent">
-            <div class="account-body">
-                <h1 id="account-title">REEDEM CODES</h1>
-                <h1>Welcome Full name</h1>
-                <p>ID: UserId</p>
-                <p>Username: Username</p>  
-            </div>
-            </div>
-            ';
-            echo $elemnt;
         }
     }
 

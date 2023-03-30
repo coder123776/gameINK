@@ -303,6 +303,11 @@ div.main-banner{
     overflow: hidden;
     position: relative;
 }
+video.vidban{
+    width: 70vw;
+    position: absolute;
+    padding: 0;
+}
 div.main-banner .imgban{
     height: 100%;
     width: 100%;
@@ -312,33 +317,35 @@ div.main-banner .imgban{
     -webkit-transition: all ease-in-out 500ms;
     -moz-transition: all ease-in-out 500ms;
     -o-transition: all ease-in-out 500ms;
+    background-color: black;
+    overflow: hidden;
 }
 div.main-banner #imgban4{
-    background-image: url(../docs/Slide2.png);
-    background-size: cover;
+    /* background-image: url(../docs/Slide2.png); */
+    /* background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     right: 0%;
 }
 div.main-banner #imgban3{
-    background-image: url(../docs/Slide3.png);
-    background-size: cover;
+    /* background-image: url(../docs/Slide3.png); */
+    /* background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     right: 0%;
 }
 div.main-banner #imgban2{
-    background-image: url(../docs/Slide4.png);
-    background-size: cover;
+    /* background-image: url(../docs/Slide4.png); */
+    /* background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     right: 0%;
 }
 div.main-banner #imgban1{
-    background-image: url(../docs/Slide1.png);
-    background-size: cover;
+    /* background-image: url(../docs/Slide1.png); */
+    /* background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     right: 0%;
 }
 div.banner-line-parent{
@@ -1177,6 +1184,7 @@ button#cartSubtotal{
     color: black;
     cursor: pointer;
     box-shadow: 0px 0px 5px 2px var(--RGB-120);
+    margin-bottom: 1vh;
 }
 /* CART PAGE (END) ------------------------------------------------------------------------------------------------------*/
 /* GAME PAGE (START) ------------------------------------------------------------------------------------------------------*/
@@ -1872,8 +1880,7 @@ div.friends-parent-head img{
     cursor: pointer;
 }
 div.friends-parent{
-    height: 100vh;
-    height: 100vh;
+    height: auto;
     width: 80%;
     display: flex;
     flex-direction: row;
@@ -1914,6 +1921,7 @@ nav.friends-parent button div h3{
 }
 hr#friend-hr{
     margin-top: 2vh;
+    margin-bottom: 20vh;
 }
 
 div.rows-friends{
@@ -2117,6 +2125,30 @@ h1#bi{
 /* h1#Bio{
     margin: 1vh 1vw 1vh 1vw;
 } */
+.change-pic-parent label{
+    margin-top: 2vh;
+}
+input#change-inp{
+    height: 8vh;
+    width: 20vw;
+    padding-left: 1vw;
+    margin-top: 1vh;
+    border: none;
+    border-radius: 1vh;
+    font-size: 150%;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: var(--RGB-0);
+    background-color: var(--RGB-255);
+    box-shadow: 0px 0px 10px 2px var(--RGB-220);
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+}
 .pic-parentt{
     display: none;
 }
@@ -2181,6 +2213,7 @@ label.changePic{
     box-shadow: 0px 0px 10px 2px var(--RGB-220);
 }
 button.nbio{
+    margin-top: 3vh;
     height: 8vh;
     width: 12vw;
     border-radius: 1vh;
@@ -2351,6 +2384,25 @@ textarea#nbio{
 }
 .extraLaag1{
     height: 3vh;
+}
+
+/* ownedgames */
+div.ownedgames{
+    height: 35.5vh;
+    width: 39vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: scroll;
+    margin-bottom: 10vh;
+}
+div.ownedgames img{
+    height: 15vh;
+    width: 5vw;
+    margin-top: 1vh;
+    margin-left: 0.75vw;
+    margin-right: 0.75vw;
+    border-radius: 1vh;
 }
 
 /* FRIENDS (END) ------------------------------------------------------------------------------------------------------*/

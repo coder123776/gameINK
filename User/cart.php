@@ -34,8 +34,9 @@ if(isset($_POST['remove'])){
                 while ($row = mysqli_fetch_assoc($result)){
                     foreach ($itemId as $id){
                         if($row['Id'] == $id){
-                            GameCart($row['naam'],$row['prijs'],$row['image'],$row['Id'],$row['Company']);
+                            $gname = $row['naam'];
                             $total = $total + (int)$row['prijs'];
+                            GameCart($row['naam'],$row['prijs'],$row['image'],$row['Id'],$row['Company']);
                         }
                     }
                 }
@@ -52,11 +53,27 @@ if(isset($_POST['remove'])){
                 <h1 id="cartSubtotal">Cart Games</h1>
                 <h2 id="cartSubtotal"><?php if(isset($_SESSION['cart'])){
                     $count = count($_SESSION['cart']);
-                    echo "Total Games: ".($count).""; }else{ echo "Price 0";}?></h2>
-                <h3 id="cartSubtotal">Actual Price: <?php echo "&#128178;".$total ?></h3>
-                <h3 id="cartSubtotal">inflation Taxes: <?php $tax = $total / 100 * 30; echo "&#128178;".$tax ?></h3>
+                    echo "Total Games: ".($count).""; }else{ echo "Price 0";}?>
+                </h2>
+                <?php
+                $total = 0;
+                if (isset($_SESSION['cart'])){
+                    $itemId = array_column($_SESSION['cart'], 'productId');
+                    $result = getData($conn, "SELECT * FROM games");
+                    while ($row = mysqli_fetch_assoc($result)){
+                        foreach ($itemId as $id){
+                            if($row['Id'] == $id){
+                                $gname = $row['naam'];
+                                $total = $total + (int)$row['prijs'];?>
+                                <h3 id="cartSubtotal"><?php echo $gname ." &#128178;".$total ?></h3>
+                                <?php
+                            }
+                        }
+                    }
+                }
+                ?>
                 <hr id="cart">
-                <h4 id="cartSubtotal">Subtotal: <?php echo $total + $tax ?></h4>
+                <h4 id="cartSubtotal">Subtotal: <?php echo $total ?></h4>
                 <button type="submit" name="buy2" id="cartSubtotal">Check out</button>
             </div>
             </form>
@@ -88,7 +105,7 @@ if (isset($_GET['doing'])){
         $result = getData($conn, "SELECT * FROM games");
         $itemId = array_column($_SESSION['cart'], 'productId');
         $budget = $_SESSION['budget'];
-        $btn = '<div class="bestelling-price"><p>when clicking "buy product" I accept that I am 18 years older and I know that no returns are possible.</p><button type="submit" name="buyGameCart">Buy Product</button></div>';
+        $btn = '<div class="bestelling-price"><p>when clicking "buy product" I accept that I am 18 years older and I know that no returns are possible.</p><button type="submit" name="buycartgames">Buy Product</button></div>';
         $cls = '<button type="submit" name="closeCart"><i class="fa fa-close"></i></button>';
 
         while ($row = mysqli_fetch_assoc($result)){
@@ -111,7 +128,7 @@ if (isset($_GET['doing'])){
         $result = getData($conn, "SELECT * FROM games");
         $gameId = $_SESSION['CurrentGame'];
         $budget = $_SESSION['budget'];
-        $btn = '<div class="bestelling-price"><p>when clicking "buy product" I accept that I am 18 years older and I know that no returns are possible.</p><button type="submit" name="buyGameGame">Buy Product</button></div>';
+        $btn = '<div class="bestelling-price"><p>when clicking "buy product" I accept that I am 18 years older and I know that no returns are possible.</p><button type="submit" name="buycartgames">Buy Product</button></div>';
         $cls = '<button type="submit" name="closeGame"><i class="fa fa-close"></i></button>';
         $total = 0;
 
@@ -119,7 +136,7 @@ if (isset($_GET['doing'])){
             if($row['Id'] == $gameId){
                 $total = $total + (int)$row['prijs'];
                 $total = $total / 100 * 130;
-                buyGameScreen($conn, $username, $budget, $total, 2, $btn, $cls, $uid, "you don't have enough money to buy the game", $codetext);
+                buyGameScreen($conn, $username, $budget, $total, 1, $btn, $cls, $uid, "you don't have enough money to buy the game", $codetext);
             }
         }
     }

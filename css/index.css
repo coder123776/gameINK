@@ -1143,7 +1143,6 @@ button#RemoveCart{
     background-color: rgb(100, 0, 0);
 }
 div.cartSubtotal{
-    height: 50vh;
     width: 20vw;
     border-radius: 10px;
     display: flex;
@@ -1164,6 +1163,7 @@ h1#cartSubtotal{
 }
 h2#cartSubtotal{
     font-size: 150%;
+    /* margin-bottom: 5vh; */
 }
 h3#cartSubtotal{
     font-size: 100%;

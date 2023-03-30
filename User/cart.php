@@ -7,7 +7,7 @@ include_once('../includes/dbh.inc.php');
 if(!isset($_SESSION['userid'])) {
     header('location: ../User/login.php?error=loginfirst');
 }else{
-    CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
+    CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid); CheckLevel($conn, $uid);
 }
 if(isset($_POST['remove'])){
     if ($_GET['action'] == 'remove'){

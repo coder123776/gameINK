@@ -7,7 +7,7 @@ include_once('../includes/functions.inc.php');
 if(!isset($_SESSION['userid'])) {
     header("location: ../User/login.php?error=loginfirst");
 }else{
-    CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
+    CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid); CheckLevel($conn, $uid);
 }
 ?>
 <title>Your Friends at GameINK</title>
@@ -202,7 +202,6 @@ if(!isset($_SESSION['userid'])) {
                     <h1>Friends Request</h1>
                 </nav>
                 <div class="row-friendz">
-                <input type="text" name="addfriends" placeholder="search for friend requests">
                     <div class="row-friendz">
                         <?php 
                         $uid = $_SESSION['userid'];

@@ -316,7 +316,7 @@ function buyGameScreen($conn, $user, $wallet, $Tprice, $type, $button, $colsebut
             <hr>
             <div class="body">
                 <h1 id="titl">WALLET BALANCE</h1>$
-                <div class="b wallet"><i class="fa fa-money"></i><h1>Wallet: <?php if($wallet < 2){echo "you have no money yet";}elseif($wallet > 2107483647){echo "infinite money";}else {echo "&#128178;". $wallet;}?></h1></div>
+                <div class="b wallet"><i class="fa fa-money"></i><h1>Wallet: <?php if($wallet < -2){echo "you owe us money, report this before you can get banned";}elseif($wallet < 2){echo "you have no money yet";}elseif($wallet > 2107483647){echo "infinite money";}else {echo "&#128178;". $wallet;}?></h1></div>
                 <h1 id="titl">PAYMENT METHODS</h1>
                 <div onclick="showReedem()" class="b reedem"><img src="https://cdn0.iconfinder.com/data/icons/ecommerce-121/24/gift-card-512.png"><h1>Reedem code</h1></div>
                 <div id="reedem" class="b reedema"><input name="codesent" type="text" maxlength="25"><button type="submit" name="submitCode">Reedem Code</button></div>
@@ -536,6 +536,14 @@ function CheckIfBanned($conn, $uid, $file) {
         }
     }
 
+}
+function CheckLevel($conn, $uid){
+    $result = getData($conn, "SELECT level FROM gebruiker WHERE Id = $uid;");
+
+    while ($row = mysqli_fetch_assoc($result)){
+        $level = $row['level'];
+        $_SESSION['level'] = $level;
+    }
 }
 //Last Online
 function CheckLastTimeOnline($conn, $uid){

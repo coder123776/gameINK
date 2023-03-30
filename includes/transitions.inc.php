@@ -6,8 +6,12 @@ include_once('functions.inc.php');
 if (!isset($_SESSION)){
     session_start();
 }
+
 function ChangeBudget($conn, $number, $uid){
     mysqli_query($conn, "UPDATE gebruiker SET budget = budget - $number  WHERE gebruiker.Id = $uid;");
+}
+function ChangeLevel($conn, $level, $uid){
+    mysqli_query($conn, "UPDATE gebruiker SET level = level + $level  WHERE gebruiker.Id = $uid;");
 }
 
 function MakeOrder($conn, $bestelnaam, $bestelemail, $bestelproduct, $bestelprodinf, $bestelprijs, $bestelimage, $uid, $gameid){
@@ -47,11 +51,12 @@ if (isset($_POST['buycartgames'])){
         ];
     }, $_SESSION['AllIds'], $_SESSION['AllNames'], $_SESSION['AllImages'], $_SESSION['AllPrices'], $_SESSION['AllInfos']);
     
+    ChangeLevel($conn, $totalPrice, $uid);
+    ChangeBudget($conn, $totalPrice, $uid);
     foreach ($elkeProduct as $product) {
         if($totalPrice > $budget){
             header("location: ".$nomoneyloc."");
         }elseif ($totalPrice < $budget){
-            ChangeBudget($conn, $totalPrice, $uid);
             MakeOrder($conn, $checkUser, $checkEmail, $product['name'], $product['info'], $product['price'], $product['image'], $uid, $product['id']);
         }
     }
@@ -83,7 +88,9 @@ if (isset($_POST['buyGameGame'])){
         header("location: ".$nomoneyloc."");
     }elseif ($totalPrice < $budget){
         ChangeBudget($conn, $totalPrice, $uid);
+        ChangeLevel($conn, $totalPrice, $uid);
         MakeOrder($conn, $checkUser, $checkEmail, $checkName, $checkInfo, $checkPrijs, $checkImage, $uid, $checkId);
+        header('location: ../User/profile.php?setting=orders');
     }
 }
 if (isset($_POST['submitCode'])){
@@ -91,6 +98,9 @@ if (isset($_POST['submitCode'])){
     $uid = $_SESSION['userid'];
     if ($codeSent == $reedemcode1 || $codeSent == $reedemcode2 || $codeSent == $reedemcode3){
         mysqli_query($conn, "UPDATE gebruiker SET budget = budget + 100  WHERE gebruiker.Id = $uid;");
+        header("location: ../User/game.php?doing=buying&codefound");
+    }elseif ($codeSent == $reedemcode4){
+        mysqli_query($conn, "UPDATE gebruiker SET budget = budget + 1000  WHERE gebruiker.Id = $uid;");
         header("location: ../User/game.php?doing=buying&codefound");
     }else{
         header("location: ../User/game.php?doing=buying&codenotfound");

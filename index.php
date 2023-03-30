@@ -23,7 +23,7 @@ include_once('includes/dbh.inc.php');
     } 
 }
 if (isset($_SESSION['userid'])){
-    CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid); CheckOwnedProducts($conn, $uid);
+    CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid); CheckOwnedProducts($conn, $uid); CheckLevel($conn, $uid);
     include_once('head-footer/chatbot.php');
     $checkifuserExist = true;
 }

@@ -8,7 +8,7 @@ include_once('../includes/transitions.inc.php');
 if(!isset($_SESSION['userid'])) {
     header('location: ../User/login.php?error=loginfirst');
 }else{
-    CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid);
+    CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid); CheckLevel($conn, $uid);
         include_once('../head-footer/chatbot.php');
 }
 // print_r($_SESSION['AllNames']);

@@ -337,7 +337,7 @@ function buyGameScreen($conn, $user, $wallet, $Tprice, $type, $button, $colsebut
                     application_context: {
                         shipping_preference: "NO_SHIPPING",
                     },
-                    country_code : "PH"
+                    country_code : "NL"
                 })
                 },
                 style: {
@@ -363,7 +363,7 @@ function buyGameScreen($conn, $user, $wallet, $Tprice, $type, $button, $colsebut
                         _token : token
                         })
                     }).then(function(res){
-                        window.location.href = "../includes/transitions.inc.php";
+                        window.location.href = "../User/profile.php?setting=orders";
                     });
                     });
                 },

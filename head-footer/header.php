@@ -1,15 +1,10 @@
 <?php
-if(isset($_SESSION['userid'])) {
-    $username = $_SESSION["user"];
-    $email = $_SESSION["email"];
-    $uid = $_SESSION["userid"];
-    $name = $_SESSION['name'];
-    $profilePic = $_SESSION['profilePic'];
-    $userBio = $_SESSION['bio'];
-    $userlevel = $_SESSION['level'];
-    $userOnlineDate = $_SESSION['onlinedate'];
-    $userland = $_SESSION['land'];
-}
+if($_SESSION['fileType'] == 1){include_once('includes/dbh.inc.php');}elseif($_SESSION['fileType'] == 2){include_once('../includes/dbh.inc.php');}
+// if(!isset($_GET['checkIfLegal'])) {
+//     $redirect_url = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'] . '&checkIfLegal=true';
+//     header('Location: ' . $redirect_url);
+//     exit;
+// }
 ?>
 <link rel="stylesheet" href="<?php if($_SESSION['fileType'] == 1){echo "css/index.css";}elseif($_SESSION['fileType'] == 2){echo "../css/index.css";}?>">
 <head>
@@ -39,7 +34,7 @@ if(isset($_SESSION['userid'])) {
     <a id="inc" href="<?php if($_SESSION['fileType'] == 1){echo "User/friendz.php?friendz";}elseif($_SESSION['fileType'] == 2){echo "../User/friendz.php?friendz";}?>">Friends</a>
     <a id="inc" href="<?php if($_SESSION['fileType'] == 1){echo "User/complaint.php";}elseif($_SESSION['fileType'] == 2){echo "../User/complaint.php";}?>">Complain</a>
     <a id="inc" href="<?php if($_SESSION['fileType'] == 1){echo "discover.php";}elseif($_SESSION['fileType'] == 2){echo "../discover.php";}?>">Store</a>
-    <a id="inc" href="<?php if($_SESSION['fileType'] == 1){echo "User/cart.php";}elseif($_SESSION['fileType'] == 2){echo "../User/cart.php";}?>">Cart</a>
+    <a id="inc" href="<?php if($_SESSION['fileType'] == 1){echo "aboutUs.php";}elseif($_SESSION['fileType'] == 2){echo "../aboutUs.php";}?>">About Us</a>
     <button onclick="Lightmode()" ondblclick="Darkmode()" id="Lightmode">Toggle Light Mode <i id="BrightIcon" class='fas fa-moon'></i></button>
 </div>
     <nav id="Navbar">
@@ -60,22 +55,22 @@ if(isset($_SESSION['userid'])) {
                             echo '<a href="User/cart.php"><i class="fa fa-shopping-cart" id="user"></i><div id="cartCount"><h1 id="cartCount">'.$count.'</h1></div></a>';
                         }elseif($_SESSION['fileType'] == 2){
                             echo '<a href="../User/cart.php"><i class="fa fa-shopping-cart" id="user"></i><div id="cartCount"><h1 id="cartCount">'.$count.'</h1></div></a>';
-                        }
+                        }}else{
+                        echo '<a href="User/cart.php"><i class="fa fa-shopping-cart" id="user"></i><div id="cartCount"><h1 id="cartCount">0</h1></div></a>';
                     }
-                    else
-                    {
-                        echo '<a><i class="fa fa-shopping-cart" id="user"></i><div id="cartCount"><h1 id="cartCount">0</h1></div></a>';
-                    }
-
-
                     if($_SESSION['fileType'] == 1){
                         echo '<a href="User/friendz.php?friendz"><i class="fas fa-user-friends" id="user"></i></a>';
                     }elseif($_SESSION['fileType'] == 2){
                         echo '<a href="../User/friendz.php?friendz"><i class="fas fa-user-friends" id="user"></i></a>';
                     }
-                }
-                else
-                {
+                    if ($isadmin == true){
+                    if($_SESSION['fileType'] == 1){
+                        echo '<a href="admin.php"><i class="fa fa-gear" id="user"></i></a>';
+                    }elseif($_SESSION['fileType'] == 2){
+                        echo '<a href="../admin.php"><i class="fa fa-gear" id="user"></i></a>';
+                    }
+                    }
+                }else{
                     echo'
                     <a  onclick="Dropdown2()"><i class="fas fa-user-circle" id="user"></i></a>
                     ';

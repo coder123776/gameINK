@@ -79,7 +79,7 @@ a#pad {
 }
 div.ProfileThings{
     height: 8vh;
-    width: 30vw;
+    /* width: 30vw; */
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
@@ -1156,6 +1156,8 @@ h4#cartSubtotal{
     height: 5vh;
     width: 20vw;
     margin-left:2vw;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 h1#cartSubtotal{
     font-size: 250%;
@@ -1167,6 +1169,7 @@ h2#cartSubtotal{
 }
 h3#cartSubtotal{
     font-size: 100%;
+    white-space: nowrap;
 }
 h4#cartSubtotal{
     margin-top: 10vh;
@@ -1493,93 +1496,6 @@ h1#enoughmoney{
     overflow-y: visible;
 }
 /* GAME PAGE (END) ------------------------------------------------------------------------------------------------------*/
-/* ADMIN () ------------------------------------------------------------------------------------------------------*/
-a#admin-link{
-    font-size: 150%;
-    color: rgb(179, 0, 255);
-    margin-right: 2vw;
-    text-decoration: underline;
-}
-.admin-product{
-    margin: 10vh 10vw 10vh 10vw;
-    border-radius: 2vh;
-    height: 170vh;
-    width: 80vw;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--RGB-240);
-    align-items: center;
-}
-button#game-builder{
-    height: 10vh;
-    width: 40%;
-    margin-top: 1vh;
-    border: none;
-    border-radius: 5px;
-    font-size: 100%;
-    font-weight: bold;
-    color: var(--RGB-255);
-    background-color: rgb(250, 0, 0);
-    cursor: pointer;
-}
-input#game-builder{
-    margin-top: 1vh;
-    height: 3vh;
-    width: 50%;
-    border: 0.1vh;
-    border-color: var(--RGB-180);
-    border-style: solid;
-    background-color: var(--RGB-255);
-}
-form#game-tool{
-    margin-top: 5vh;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--RGB-240);
-    align-items: center;
-}
-
-
-.admin-unban{
-    margin: 10vh 10vw 10vh 10vw;
-    border-radius: 2vh;
-    height: 50vh;
-    width: 80vw;
-    background-color: var(--RGB-240);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.admin-unban form{
-    height: 45vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-input#admin-unban{
-    margin-top: 3vh;
-    font-size: 300%;
-    height: 25vh;
-    width: 80%;
-    text-align: center;
-    border-style: none;
-    border-color: var(--RGB-240);
-    background-color: var(--RGB-240);
-}
-button#admin-unban{
-    height: 10vh;
-    width: 40%;
-    margin-top: 2vh;
-    border: none;
-    border-radius: 5px;
-    font-size: 100%;
-    font-weight: bold;
-    color: var(--RGB-0);
-    background-color: var(--RGB-240);
-    box-shadow: 0px 0px 10px 5px var(--RGB-215);
-    cursor: pointer;
-}
 /* DISCOVER (START) ------------------------------------------------------------------------------------------------------*/
 nav#discover{
     height: 15vh;
@@ -2616,4 +2532,183 @@ footer{
     width: 95%;
     display: flex;
     flex-direction: row;
+}
+
+button.noshow{
+    background: none;
+    border: none;
+}
+/* Admin */
+section.admin-head{
+    width: 90vw;
+    margin-left: 5vw;
+    background-color: white;
+}
+
+div.admin-nav-head{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+}
+div.pijltjes{
+    display: flex;
+    flex-direction: row;
+}
+i#left3,
+i#right3{
+    cursor: pointer;
+    background-color: var(--RGB-100);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 4.5vh;
+    width: 2.25vw;
+    margin: 0vh 0.5vw 0vh 0.5vw;
+    border-radius: 50%;
+}
+div.admin-nav-body{
+    width: 70vw;
+    overflow: hidden;
+}
+div.admin-nav{
+    overflow: visible;
+    display: -webkit-box;
+    flex-direction: row;
+    margin-top: 2vh;
+    transition: 500ms;
+}
+div.admin-nav-option{
+    height: 10vh;
+    width: 16vw;
+    margin-right: 0.8vw;
+    margin-left: 0.8vw;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: x-large;
+    border-radius: 1vh;
+    background-color: var(--RGB-255);
+    box-shadow: 0px 0px 5px 2px  var(--RGB-200);
+    cursor: pointer;
+}
+div.admin-body-m{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: sans-serif;
+}
+h1#admin-t{
+    font-size: 350%;
+    margin-top: 5vh;
+}
+input.search-Admin{
+    height: 5vh;
+    width: 40vw;
+    padding-left: 2%;
+    border: none;
+    border: 0.1vh;
+    border-radius: 1vh;
+    border-style: solid;
+    border-color: var(--RGB-230);
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    font-size: 150%;
+    background-color: var(--RGB-240);
+    margin-top: 2vh;
+}
+div.admin-filters{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 2vh;
+}
+div.admin-filters-child{
+    height: 7vh;
+    width: 15vw;
+    font-size: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 0.1vh;
+    border-style: solid;
+    border-color: var(--RGB-0);
+    cursor: pointer;
+}
+div.admin-line{
+    height: 1vh;
+    width: 70vw;
+    border-radius: 1vh;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    background-color: var(--RGB-0);
+}
+div.showedgebruikers{
+    height: auto;
+    width: 70vw;
+    margin-bottom: 5vh;
+    border-radius: 1vh;
+    background-color: var(--RGB-0);
+    display: flex;
+    flex-direction: column;
+}
+div.gebruikerDisp-head{
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    width: 65vw;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    margin-left: 2.5vw;
+    border-radius: 1vh;
+    background-color: var(--RGB-240);
+}
+div.gebruikerDisp-1{
+    display: flex;
+    flex-direction: row;
+    margin-left: 1vw;
+    margin-top: 2vh;
+}
+
+img.gebruikerDisp{
+    height: 10vh;
+    width: 5vw;
+    border-radius: 50%;
+    margin-right: 4vw;
+}
+div.namestag{
+    display: flex;
+    flex-direction: column;
+    margin: 0vh 1vw 0vh 1vw;
+}
+
+div.gebruikerDisp-3{
+    height: 21vh;
+    width: 60vw;
+    margin-left: 2.5vw;
+    margin-top: 5vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+div.admin-option{
+    height: 10vh;
+    width: 18vw;
+    max-width: 18vw;
+    font-size: 150%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 0.1vh;
+    border-style: solid;
+    border-color: var(--RGB-0);
+    cursor: pointer;
 }

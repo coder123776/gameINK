@@ -4,7 +4,6 @@ $_SESSION['fileType'] = 1;
 $checkifuserExist = false;
 include_once('head-footer/header.php');
 include_once('includes/functions.inc.php');
-include_once('includes/dbh.inc.php');
 ?>
     <?php
     if (isset($_POST['add'])){
@@ -62,9 +61,14 @@ if (isset($_SESSION['userid'])){
     <div class="HeightCorrection-2"><h1 id="txt-2">INK</h1><h1 id="txt-1">Game</h1>
     <?php
     if (isset($_SESSION['userid'])){
-    if ($uid == $admin1 || $uid == $admin2 || $uid == $admin3 || $uid == $admin4) {
-        echo '<h1 id="txt-1">Welcome Admin &nbsp;&nbsp;&nbsp;</h1><a id=admin-link href="admin.php">Admin TOOL</a>';
+    foreach ($admins as $admin){
+        if ($admin == $uid){
+            echo '<h1 id="txt-1">Welcome Admin &nbsp;&nbsp;&nbsp;</h1>';
+        }
     }
+    // if ($uid == $admin1 || $uid == $admin2 || $uid == $admin3 || $uid == $admin4) {
+    //     echo '<h1 id="txt-1">Welcome Admin &nbsp;&nbsp;&nbsp;</h1>';
+    // }
     }
     ?>
     </div></div>

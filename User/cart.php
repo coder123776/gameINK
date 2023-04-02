@@ -10,6 +10,15 @@ if(!isset($_SESSION['userid'])) {
     CheckIfBanned($conn, $uid, 1); SetBudget($conn, $uid); CheckLastTimeOnline($conn, $uid); CheckWhereLiving($conn, $uid); CheckLevel($conn, $uid);
 }
 if(isset($_POST['remove'])){
+    // if(isset($_POST['removeId'])){
+    //     $removeId = $_POST['removeId'];
+    //     foreach ($_SESSION['cart'] as $cartId => $value){
+    //         if($value['productId'] == $removeId){
+    //             unset($_SESSION['cart'][$cartId]);
+                // echo "<script>window.location = 'cart.php'</script>";
+    //         }
+    //     }
+    // }
     if ($_GET['action'] == 'remove'){
         foreach ($_SESSION['cart'] as $key => $value){
             if($value['productId'] == $_GET['Id']){
@@ -39,6 +48,10 @@ if(isset($_POST['remove'])){
                             GameCart($row['naam'],$row['prijs'],$row['image'],$row['Id'],$row['Company']);
                         }
                     }
+                }
+                $count = count($_SESSION['cart']);
+                if ($count == 0){
+                    echo "<h1>Cart is Empty</h1>";
                 }
             }
             else
@@ -82,15 +95,19 @@ if(isset($_POST['remove'])){
 </section>
 <?php
 if (isset($_POST['buy2'])){
+    $checkownedgames = 0;
     $itemId = array_column($_SESSION['cart'], 'productId');
     foreach ($itemId as $id){
         $cartgame = $id;
+        $ownedgame = mysqli_query($conn, "SELECT Id, bestelnaam, gebruikerId FROM orders WHERE gebruikerId = ".$uid." AND gameId = ".$cartgame.";");
+        if (mysqli_num_rows($ownedgame) > 0) {
+            $checkownedgames = 1;
+        }
     }
-    $ownedgame = mysqli_query($conn, "SELECT Id, bestelnaam, gebruikerId FROM orders WHERE gebruikerId = ".$uid." AND gameId = ".$cartgame.";");
-    if (mysqli_num_rows($ownedgame)>0) {
-        echo "<script> alert('you already own some games in your cart, remove them first')</script>";
-    }else{
+    if ($checkownedgames == 0){
         echo "<script> window.location.href= 'cart.php?doing=buying'; </script>";
+    }else{
+        echo "<script> alert('you already own some games in your cart, remove them first')</script>";
     }
 }
 

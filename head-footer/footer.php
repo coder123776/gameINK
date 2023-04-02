@@ -7,7 +7,7 @@
         <div class="review-parent">
         <?php 
         // WHERE status = 'MESSAGE'
-        $reviews = "SELECT * FROM review ;";
+        $reviews = "SELECT * FROM review WHERE status = 'MESSAGE' OR status = 'BANNED';";
         $result = mysqli_query($conn, $reviews);
         while ($row = mysqli_fetch_assoc($result)){
             $name = $row['Username'];

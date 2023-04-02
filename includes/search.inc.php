@@ -1,6 +1,6 @@
 <?php
-    require_once('../includes/dbh.inc.php');
-    require_once('../includes/functions.inc.php');
+    include_once('../includes/dbh.inc.php');
+    include_once('../includes/functions.inc.php');
     session_start();
 
     if(isset($_POST['addfriends'])){
@@ -227,5 +227,42 @@
             mysqli_query($conn, $upd);
             header("location: ../User/friendz.php?mypage");
             $_SESSION['password'] = $newPwHash;
+        }
+    }
+
+    if(isset($_POST['searchAdmin1'])){
+        $Sgames = $_POST['searchAdmin1'];
+        $dataGames = "SELECT * FROM gebruiker WHERE Name LIKE '%{$Sgames}%' AND NOT Id = 123458;";
+        $result = mysqli_query($conn, $dataGames);
+        while($row = mysqli_fetch_assoc($result)){
+        if (mysqli_num_rows($result)>0){
+            showAdminGebruikers($conn, $dataGames);
+        }else{
+            echo "<h1 id='nothingfound'>Nothing found</h1>";
+        }
+        }
+    }
+    if(isset($_POST['searchAdmin2'])){
+        $Sgames = $_POST['searchAdmin2'];
+        $dataGames = "SELECT * FROM gebruiker WHERE Name LIKE '%{$Sgames}%' AND NOT Id = 123458;";
+        $result = mysqli_query($conn, $dataGames);
+        while($row = mysqli_fetch_assoc($result)){
+        if (mysqli_num_rows($result)>0){
+            showAdminGebruikers($conn, $dataGames);
+        }else{
+            echo "<h1 id='nothingfound'>Nothing found</h1>";
+        }
+        }
+    }
+    if(isset($_POST['searchAdmin3'])){
+        $Sgames = $_POST['searchAdmin3'];
+        $dataGames = "SELECT * FROM gebruiker WHERE Land LIKE '%{$Sgames}%' AND NOT Id = 123458;";
+        $result = mysqli_query($conn, $dataGames);
+        while($row = mysqli_fetch_assoc($result)){
+        if (mysqli_num_rows($result)>0){
+            showAdminGebruikers($conn, $dataGames);
+        }else{
+            echo "<h1 id='nothingfound'>Nothing found</h1>";
+        }
         }
     }

@@ -213,6 +213,7 @@ function GameCart($productName, $productPrice, $productImg, $productId, $company
         </div>
     </div>
     </div>
+    <input type="hidden" name="removeId" value="'.$productId.'">
     </form>
     ';
 
@@ -524,10 +525,10 @@ function createReview($conn, $banId, $klacht, $banName, $status, $review, $time,
     exit();
 }
 function createUnban($conn, $username){
-    mysqli_query($conn, "DELETE FROM review WHERE Username = $username AND status = 'BANNED';");
+    mysqli_query($conn, "DELETE FROM review WHERE Username = $username AND status = 'BANNED' OR Username = $username AND status = 'BANNED2';");
 }
 function CheckIfBanned($conn, $uid, $file) {
-    $result = mysqli_query($conn, "SELECT * FROM review WHERE uid = $uid AND status = 'BANNED'");
+    $result = mysqli_query($conn, "SELECT * FROM review WHERE uid = $uid AND status = 'BANNED' OR uid = $uid AND status = 'BANNED2';");
     if (mysqli_num_rows($result)>0) {
         if ($file == 1) {
             header('location: error.php?type=banned');
@@ -970,5 +971,54 @@ function getData($dat, $sqlCommand){
 
     if(mysqli_num_rows($data)>0){
         return $data;
+    }
+}
+//admins
+function showAdminGebruikers($conn, $sql){
+    $maxNmr = 0;
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0){
+        while ($row = mysqli_fetch_assoc($result)){
+            if ($maxNmr < 10){
+                $img = $row['profileImg'];
+                $usern = $row['Username'];
+                $rname = $row['Name'];
+                $email = $row['Email'];
+                $budget = $row['budget'];
+                $level = $row['level'];
+                $land = $row['Land'];
+                $lastonline = $row['onlineDate'];
+                $id = $row['Id'];
+                ?>
+                    <div class="gebruikerDisp-head">
+                        <div class="gebruikerDisp-1">
+                            <img class="gebruikerDisp" src="<?php if($img == ""){ if($_SESSION['fileType'] == 1){echo "docs/emptyInput.png";}elseif($_SESSION['fileType'] == 2){echo "../docs/emptyInput.png";};}else{ if($_SESSION['fileType'] == 1){echo "User/".$img;}elseif($_SESSION['fileType'] == 2){echo "../User/".$img;}} ?>">
+                            <div class="namestag"><label for="username">Username</label><h1 name="username"><?php echo $usern?></h1></div>
+                            <div class="namestag"><label for="username">Real name</label><h1 name="username"><?php echo $rname?></h1></div>
+                            <div class="namestag"><label for="username">Email</label><h1 name="username"><?php echo $email?></h1></div>
+                        </div>
+                        <div class="gebruikerDisp-1">
+                            <div class="namestag"><label for="username">Budget</label><h1 name="username"><?php echo $budget?></h1></div>
+                            <div class="namestag"><label for="username">Level</label><h1 name="username"><?php echo $level?></h1></div>
+                            <div class="namestag"><label for="username">Land</label><h1 name="username"><?php echo $land?></h1></div>
+                            <div class="namestag"><label for="username">Last Online</label><h1 name="username"><?php echo $lastonline?></h1></div>
+                            <div class="namestag"><label for="username">Id</label><h1 name="username"><?php echo $id?></h1></div>
+                            <div class="namestag"><label for="username">admin</label><h1 name="username"><?php if ($_SESSION['isadmin'] == false){echo "false";}else{echo "true";}?></h1></div>
+                        </div>
+                        <div class="gebruikerDisp-3">
+                                <form method="post"><button id="admin-option" class="noshow" type="submit" name="makeAdmin"><div class="admin-option"><h1>Make Admin</h1></div></button><input type="hidden" name="id" value="<?php echo $id?>"><input type="hidden" name="user" value="<?php echo $usern?>"></form>
+                                <form method="post"><button id="admin-option" class="noshow" type="submit" name="changebudget"><div class="admin-option"><h1>Change Budget</h1></div></button></form>
+                                <form method="post"><button id="admin-option" class="noshow" type="submit" name="changelevel"><div class="admin-option"><h1>Change Level</h1></div></button></form>
+                                <form method="post"><button id="admin-option" class="noshow" type="submit" name="changeusername"><div class="admin-option"><h1>Change Username</h1></div></button></form>
+                                <form method="post"><button id="admin-option" class="noshow" type="submit" name="changepassword"><div class="admin-option"><h1>Change Password</h1></div></button></form>
+                                <form method="post"><button id="admin-option" class="noshow" type="submit" name="changeemail"><div class="admin-option"><h1>Change Email</h1></div></button></form>
+                        </div>
+                    </div>
+                <?php
+            }
+        }
+    }else{
+        echo "<h1 id='noresult'>Nothing has found</h1>";
     }
 }

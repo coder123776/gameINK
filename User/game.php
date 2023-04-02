@@ -5,7 +5,6 @@ $_SESSION['firstTime'] = true;
 include_once('../head-footer/header.php');
 include_once('../includes/functions.inc.php');
 include_once('../includes/dbh.inc.php');
-
 if(!isset($_SESSION['userid'])) {
     header("location: ../User/login.php?error=loginfirst");
 }else{

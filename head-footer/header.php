@@ -22,7 +22,7 @@ if($_SESSION['fileType'] == 1){include_once('includes/dbh.inc.php');}elseif($_SE
     <script src="<?php if($_SESSION['fileType'] == 1){echo "app.js";}elseif($_SESSION['fileType'] == 2){echo "../app.js";}?>"></script>
 </head>
 <div id="dropdown1">
-    <i id="close" onclick="showProfilepic()" class="fa fa-close"></i>
+    <i id="close" onclick="Dropdown()" class="fa fa-close"></i>
     <div class="Searchbar">
         <form id="searchBar" action="">
             <button type="submit"><i class="fa fa-search"></i></button>
@@ -43,7 +43,20 @@ if($_SESSION['fileType'] == 1){include_once('includes/dbh.inc.php');}elseif($_SE
             <L id="line"></L>
             <L id="line"></L>
         </i></a>
-        <a href="<?php if($_SESSION['fileType'] == 1){echo "index.php";}elseif($_SESSION['fileType'] == 2){echo "../index.php";}?>" id="logo"><img id="logo" src="<?php if($_SESSION['fileType'] == 1){echo "docs/logo.png";}elseif($_SESSION['fileType'] == 2){echo "../docs/logo.png";}?>"></a>
+        <?php
+        if (isset($_SESSION['userid'])) {
+            if ($isadmin == true){?>
+        <a href="<?php if($_SESSION['fileType'] == 1){echo "index.php";}elseif($_SESSION['fileType'] == 2){echo "../index.php";}?>" id="logo1"><img id="logo" src="<?php if($_SESSION['fileType'] == 1){echo "docs/logo.png";}elseif($_SESSION['fileType'] == 2){echo "../docs/logo.png";}?>"></a>
+        <?php
+        }else{?>
+        <a href="<?php if($_SESSION['fileType'] == 1){echo "index.php";}elseif($_SESSION['fileType'] == 2){echo "../index.php";}?>" id="logo2"><img id="logo" src="<?php if($_SESSION['fileType'] == 1){echo "docs/logo.png";}elseif($_SESSION['fileType'] == 2){echo "../docs/logo.png";}?>"></a>
+        <?php
+        }
+        }else{?>
+        <a href="<?php if($_SESSION['fileType'] == 1){echo "index.php";}elseif($_SESSION['fileType'] == 2){echo "../index.php";}?>" id="logo3"><img id="logo" src="<?php if($_SESSION['fileType'] == 1){echo "docs/logo.png";}elseif($_SESSION['fileType'] == 2){echo "../docs/logo.png";}?>"></a>
+        <?php
+        }
+        ?>
         <div class="ProfileThings">
             <?php
                 if (isset($_SESSION['userid'])) {?>

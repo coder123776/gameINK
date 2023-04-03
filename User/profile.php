@@ -77,26 +77,45 @@ if(!isset($_SESSION['userid'])) {
             <div class="profile-parent">
             <div class="account-body">
                 <h1 id="account-title">MY ORDERS</h1>
+                <input class="searchOrders" id="searchOrders" type="text" name="searchOrders" placeholder="search your orders...">
                 <p>History</p>
                 <table class="tableOrders">
                     <thead>
                         <tr>
                             <th>OrderId</th>
-                            <th>Name</th>o
-                            <th>Email</th>
                             <th>product Name</th>
+                            <th>Date</th>
                             <th>product Price</th>
                             <th>product Image</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="displayorders">
                     <?php
-                    DisplayOrder($conn, $uid);
+                    DisplayOrder($conn, $uid, 1, "");
                     ?>
                     </tbody>
                 </table> 
             </div>
             </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+            <script type="text/javascript">
+                    $(document).ready(function(){
+                    $("#searchOrders").keyup(function(){
+                            var input = $(this).val();
+                            if(input != ""){
+                            $.ajax({
+                                    url:"../includes/search.inc.php",
+                                    method:"post",
+                                    data:{searchorders:input},
+
+                                    success:function(data){
+                                    $("#displayorders").html(data);
+                                    }
+                            });
+                            }
+                    });
+                    });
+            </script>
             <?php
 
         }

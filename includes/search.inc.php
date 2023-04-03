@@ -266,3 +266,17 @@
         }
         }
     }
+    //orders
+    if(isset($_POST['searchorders'])){
+        $Sgames = $_POST['searchorders'];
+        $uid = $_SESSION['userid'];
+        $dataGames = "SELECT * FROM orders WHERE bestelproduct LIKE '%{$Sgames}%' AND gebruikerId = $uid;";
+        $result = mysqli_query($conn, $dataGames);
+        while($row = mysqli_fetch_assoc($result)){
+        if (mysqli_num_rows($result)>0){
+            DisplayOrder($conn, $uid, 2, $dataGames);
+        }else{
+            echo "<h1 id='nothingfound'>Nothing found</h1>";
+        }
+        }
+    }

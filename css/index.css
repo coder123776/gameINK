@@ -94,9 +94,20 @@ img.user-profile-icon{
     border-style: solid;
     border-color: var(--RGB-255);
 }
-a#logo {
+a#logo1 {
+    position: absolute;
     cursor: pointer;
-    padding-left: 10%;
+    padding-left: 48vw;
+}
+a#logo2 {
+    position: absolute;
+    cursor: pointer;
+    padding-left: 48vw;
+}
+a#logo3 {
+    position: absolute;
+    cursor: pointer;
+    padding-left: 48vw;
 }
 i#dropdownParent {
     height: 4vh;
@@ -452,7 +463,15 @@ div#HeightCorrection .line {
 #Fade5,
 #Fade6,
 #Fade7,
-#Fade8
+#Fade8,
+
+#abtF1,
+#abtF2,
+#abtF3,
+#abtF4,
+#abtF5,
+#abtF6,
+#abtF7
 {
     opacity: 0;
 }
@@ -977,6 +996,21 @@ p#account-delete{
     cursor: pointer;
 }
 /*orders*/
+input.searchOrders {
+    height: 8vh;
+    width: 30vw;
+    margin: 1vh 0.5vw 1vh 0.5vw;
+    font-size: 2em;
+    padding-left: 2%;
+    border-radius: 10px;
+    border: none;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    box-shadow: 0px 0px 5px 3px var(--RGB-200);
+}
 table.tableOrders {
     width: 100%;
     max-width: 100%;
@@ -2544,6 +2578,14 @@ section.admin-head{
     margin-left: 5vw;
     background-color: white;
 }
+div.welcometoadmin{
+    height: 48vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 3em;
+}
 
 div.admin-nav-head{
     display: flex;
@@ -2711,4 +2753,71 @@ div.admin-option{
     border-style: solid;
     border-color: var(--RGB-0);
     cursor: pointer;
+}
+
+/* about us */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+div.frontBalk1,
+div.frontBalk2,
+div.frontBalk3,
+div.frontBalk4
+{
+    height: 80vh;
+    width: 100vw;
+    /* background-color: rgba(255, 70, 70, 1); */
+    background-image: url(../docs/aboutUs.png);
+    background-attachment: fixed;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    color: var(--RGB-255);
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 4em;
+}
+div.frontBalk1 h1{
+    margin-top: 15vh;
+    font-weight: bold;
+}
+div.aboutus1,
+div.aboutus2,
+div.aboutus3,
+div.aboutus4
+{
+    height: 80vh;
+    width: 100vw;
+    background-color: var(--RGB-255);
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+h1.nicetomeet{
+    font-size: 300%;
+    width: 60vw;
+}
+p.information{
+    white-space: pre;
+    font-weight: normal;
+    width: 60vw;
+}
+div.frontBalk2{
+    height: 50vh;
+    background-image: url(../docs/aboutUs2.png);
+    font-size: 2.5em;
+}
+div.frontBalk3{
+    height: 50vh;
+    background-image: url(../docs/aboutUs3.png);
+    font-size: 2.5em;
+}
+div.frontBalk4{
+    height: 50vh;
+    background-image: url(../docs/aboutUs4.png);
+    font-size: 2.5em;
 }

@@ -31,7 +31,7 @@ if(isset($_POST['makeAdmin'])){
 
 function showOptions($option, $post){
     echo '
-    <form method="post">
+    <form action="?'.$option.'" method="post">
     <button class="noshow" type="submit" name="'.$post.'">
     <div class="admin-nav-option">
     <h1>'.$option.'</h1>
@@ -56,6 +56,8 @@ if (isset($_POST['filternaam'])){
         <div class="admin-nav-body"><div class="admin-nav"><?php showOptions("Gebruikers", "GebruikersAdmin"); showOptions("Games", "GamesAdmin"); showOptions("INKbot", "BotAdmin"); showOptions("Reviews", "ReviewAdmin"); showOptions("Orders", "OrdersAdmin"); showOptions("Friends", "FriendAdmin"); showOptions("Chats", "ChatAdmin"); showOptions("Moderators", "ModeratorAdmin"); ?></div></div>
     </div>
 
+    <?php 
+    if (isset($_GET['Gebruikers'])){?>
     <div class="admin-body-m">
         <h1 id="admin-t">Welcome To Gebruiker TOOL</h1>
         <input id="<?php
@@ -77,7 +79,47 @@ if (isset($_POST['filternaam'])){
         <?php showAdminGebruikers($conn, "SELECT * FROM gebruiker WHERE NOT Id = 123458 ORDER BY RAND();"); ?>
         </div>
     </div>
+    <?php
+    }
+    if (isset($_GET['Games'])){?>
+
+    <?php
+    }
+    elseif (isset($_GET['INKbot'])){?>
+    
+    <?php
+    }
+    elseif (isset($_GET['Reviews'])){?>
+    
+    <?php
+    }
+    elseif (isset($_GET['Orders'])){?>
+    
+    <?php
+    }
+    elseif (isset($_GET['Friends'])){?>
+    
+    <?php
+    }
+    elseif (isset($_GET['Chats'])){?>
+    
+    <?php
+    }
+    elseif (isset($_GET['Moderators'])){?>
+    
+    <?php
+    }else{
+        echo "
+        <div class='welcometoadmin'>
+        <h1>Welcome to The admin Tools</h1>
+        </div>";
+    }
+    ?>
+
+
 </section>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 

@@ -14,15 +14,15 @@ function ChangeLevel($conn, $level, $uid){
     mysqli_query($conn, "UPDATE gebruiker SET level = level + $level  WHERE gebruiker.Id = $uid;");
 }
 
-function MakeOrder($conn, $bestelnaam, $bestelemail, $bestelproduct, $bestelprodinf, $bestelprijs, $bestelimage, $uid, $gameid){
-    $sql = "INSERT INTO orders (bestelnaam, bestelemail, bestelproduct, bestelprodInf, bestelprijs, bestelimage, gebruikerId, gameId) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+function MakeOrder($conn, $bestelnaam, $bestelemail, $bestelproduct, $bestelprodinf, $bestelprijs, $bestelimage, $uid, $gameid, $datum){
+    $sql = "INSERT INTO orders (bestelnaam, bestelemail, bestelproduct, bestelprodInf, bestelprijs, bestelimage, gebruikerId, gameId, besteldatum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header('location: ../User/error.php?error=stmtfailed');
         exit();
     }
 
-    mysqli_stmt_bind_param($stmt, "ssssssss", $bestelnaam, $bestelemail, $bestelproduct, $bestelprodinf, $bestelprijs, $bestelimage, $uid, $gameid);
+    mysqli_stmt_bind_param($stmt, "sssssssss", $bestelnaam, $bestelemail, $bestelproduct, $bestelprodinf, $bestelprijs, $bestelimage, $uid, $gameid, $datum);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 }
@@ -40,6 +40,7 @@ if (isset($_POST['buycartgames'])){
     $uid = $_SESSION['userid'];
     $checkUser = $_SESSION['user'];
     $checkEmail = $_SESSION['email'];
+    $datum = date('jS F Y H:i');
 
     $elkeProduct = array_map(function ($id, $name, $image, $price, $info) {
         return [
@@ -57,7 +58,7 @@ if (isset($_POST['buycartgames'])){
         if($totalPrice > $budget){
             header("location: ".$nomoneyloc."");
         }elseif ($totalPrice < $budget){
-            MakeOrder($conn, $checkUser, $checkEmail, $product['name'], $product['info'], $product['price'], $product['image'], $uid, $product['id']);
+            MakeOrder($conn, $checkUser, $checkEmail, $product['name'], $product['info'], $product['price'], $product['image'], $uid, $product['id'], $datum);
         }
     }
     unset($_SESSION['AllIds']);
@@ -75,6 +76,7 @@ if (isset($_POST['buyGameGame'])){
     $nomoneyloc = $_POST['buyHeader'];
     $minusorplus = "-";
     $uid = $_SESSION['userid'];
+    $datum = date('jS F Y H:i');
 
     $checkId = $_POST['buyId'];
     $checkName = $_POST['checkName'];
@@ -89,7 +91,7 @@ if (isset($_POST['buyGameGame'])){
     }elseif ($totalPrice < $budget){
         ChangeBudget($conn, $totalPrice, $uid);
         ChangeLevel($conn, $totalPrice, $uid);
-        MakeOrder($conn, $checkUser, $checkEmail, $checkName, $checkInfo, $checkPrijs, $checkImage, $uid, $checkId);
+        MakeOrder($conn, $checkUser, $checkEmail, $checkName, $checkInfo, $checkPrijs, $checkImage, $uid, $checkId, $datum);
         header('location: ../User/profile.php?setting=orders');
     }
 }
@@ -104,27 +106,6 @@ if (isset($_POST['submitCode'])){
         header("location: ../User/game.php?doing=buying&codefound");
     }else{
         header("location: ../User/game.php?doing=buying&codenotfound");
-    }
-}
-
-function DisplayOrder($conn, $uid){
-    $result = getData($conn, "SELECT * FROM orders WHERE gebruikerId = $uid;");
-    if ($result){
-        while ($row = mysqli_fetch_assoc($result)){
-            $element = '
-            <tr>
-            <td>'.$row['Id'].'</td>
-            <td>'.$row['bestelnaam'].'</td>
-            <td>'.$row['bestelemail'].'</td>
-            <td>'.$row['bestelproduct'].'</td>
-            <td>&nbsp; &#128178;'.$row['bestelprijs'].'</td>
-            <td><img src="'.$row['bestelimage'].'"></img></td>
-            </tr>
-            ';
-            echo $element;
-            }
-    }else{
-        echo "no orders Yet";
     }
 }
 if(!isset($_POST)){

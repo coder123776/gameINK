@@ -113,7 +113,7 @@ function fade_in(element) {
 var faded = false;
 
 function check_fade_in() {
-    var elements = document.querySelectorAll('#Fade1, #Fade2, #Fade3, #Fade4, #Fade5, #Fade6, #Fade7, #Fade8');
+    var elements = document.querySelectorAll('#Fade1, #Fade2, #Fade3, #Fade4, #Fade5, #Fade6, #Fade7, #Fade8, #abtF1, #abtF2, #abtF3, #abtF4, #abtF5, #abtF6, #abtF7');
     elements.forEach(function(element) {
       var position = element.getBoundingClientRect();
       if (position.top < window.innerHeight && position.bottom >= 0 && !element.classList.contains('faded')) {
@@ -125,6 +125,7 @@ function check_fade_in() {
     });
 }
 
+//show profile pic
 function showProfilepic(type) {
 
     if (type == 1){

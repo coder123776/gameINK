@@ -145,6 +145,17 @@ if (isset($_POST['msgToChatbot'])){
     if($_SESSION["fileType"] == 1){$dest = "User/cart.php";}elseif($_SESSION["fileType"] == 2){$dest = "../User/cart.php";}
     $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>ga naar de winkelmaned</a>');
     }
+    elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'about') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'about') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'about') !== false ||
+    stripos($userInput, 'hoe') !== false && stripos($userInput, 'about') !== false ||
+    stripos($userInput, 'ga') !== false && stripos($userInput, 'about') !== false ||
+    stripos($userInput, 'breng') !== false && stripos($userInput, 'about') !== false)
+    {
+        //aboutus.php
+    if($_SESSION["fileType"] == 1){$dest = "aboutUs.php";}elseif($_SESSION["fileType"] == 2){$dest = "../aboutUs.php";}
+    $botReplay = mysqli_real_escape_string($conn, '<a href='.$dest.'>ga naar de about up page</a>');
+    }
     elseif (stripos($userInput, 'hoe') !== false && stripos($userInput, 'klacht') !== false ||
     stripos($userInput, 'ga') !== false && stripos($userInput, 'klacht') !== false ||
     stripos($userInput, 'breng') !== false && stripos($userInput, 'klacht') !== false ||

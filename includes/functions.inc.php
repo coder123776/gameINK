@@ -1022,3 +1022,27 @@ function showAdminGebruikers($conn, $sql){
         echo "<h1 id='noresult'>Nothing has found</h1>";
     }
 }
+//orders
+function DisplayOrder($conn, $uid, $type, $sql){
+    if ($type == 1) {
+        $result = getData($conn, "SELECT * FROM orders WHERE gebruikerId = $uid;");
+    }elseif ($type == 2) {
+        $result = mysqli_query($conn, $sql);
+    }
+    if ($result){
+        while ($row = mysqli_fetch_assoc($result)){
+            $element = '
+            <tr>
+            <td>'.$row['Id'].'</td>
+            <td>'.$row['bestelproduct'].'</td>
+            <td>'.$row['besteldatum'].'</td>
+            <td>&nbsp; &#128178;'.$row['bestelprijs'].'</td>
+            <td><img src="'.$row['bestelimage'].'"></img></td>
+            </tr>
+            ';
+            echo $element;
+            }
+    }else{
+        echo "no orders Yet";
+    }
+}

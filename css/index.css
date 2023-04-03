@@ -2754,6 +2754,114 @@ div.admin-option{
     border-color: var(--RGB-0);
     cursor: pointer;
 }
+div.admin-games{
+    display: flex;
+    flex-direction: row;
+}
+div.admin-game-options{
+    height: 100vh;
+    width: 20vw;
+    margin-bottom: 10vh
+}
+input.admin-game-options{
+    height: 5vh;
+    width: 18vw;
+    margin: 1vh 1vw 1vh 1vw;
+    padding-left: 2vw;
+    padding-right: 1vw;
+    -webkit-appearance: none;
+    -ms-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: 0;
+    outline: 0;
+    border-bottom: 0.25vh solid var(--RGB-0);
+}
+div.admin-game-body{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 50vw;
+    margin-bottom: 10vh
+}
+div.admin-pegi{
+    width: 18vw;
+    margin: 1vh 1vw 1vh 1vw;
+    height: 5vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    color: var(--RGB-255);
+    background-color: var(--RGB-0);
+    font-size: 1em;
+    border-radius: 1vh;
+}
+div.admin-pegi label{
+    width: 10vw;
+    margin-left: 2vw;
+}
+div.admin-pegi input{
+    height: 3vh;
+    width: 5vw;
+    cursor: pointer;
+}
+div.admin-game-card{
+    height: 100vh;
+    width: 25vw;
+    margin-left: 12.5vw;
+    border-radius: 2vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+div.admin-game-card img{
+    height: 60vh;
+    width: 25vw;
+    border-radius: 2vh;
+}
+div.admin-game-card h1{
+    margin-top: 3vh;
+    font-size: 2em;
+}
+div.admin-game-card p{
+    margin-top: 2.5vh;
+    align-items: center;
+    text-align: center;
+}
+div.checkpriceAdmin{
+    display: flex;
+    flex-direction: row;
+}
+div.admin-game-extras{
+    position: absolute;
+    right: 15vw;
+    width: 10vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+hr#adminextraline{
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
+    height: 0.5vh;
+    background-color: var(--RGB-0);
+    border: none;
+    border-radius: 1vh;
+}
+button.makeGameProduct{
+    height: 5vh;
+    width: 18vw;
+    margin: 1vh 1vw 1vh 1vw;
+    border: none;
+    background: none;
+    border-radius: 1vh;
+    font-size: 1.5em;
+    color: var(--RGB-255);
+    font-weight: bold;
+    background-color: red;
+}
 
 /* about us */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');

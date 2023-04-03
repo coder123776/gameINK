@@ -274,21 +274,6 @@ function CreateGamePage($productName, $productVideo, $productInfo, $productGenre
     ';
     echo $element;
 }
-//GAME PAGE
-function createGame($conn, $naam, $prijs, $gameDiscount, $gameImage, $gameLogo, $gameVideo, $gameGenre, $gamePegi, $gamePegiImg, $gameState, $gameInfo, $gameCompany, $gameRating, $gameRelease, $gamePlatform) {
-    $sql = "INSERT INTO games (naam, prijs, image, genre, Company, State, info, prijs2, image2, video, rating, pegName, pegImg, platform) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header('location: ../User/signup.php?error=stmtfailed');
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt, "ssssssssssssss", $naam, $prijs, $gameImage, $gameGenre, $gameCompany, $gameState, $gameInfo, $gameDiscount, $gameLogo, $gameVideo, $gameRating, $gamePegi, $gamePegiImg, $gamePlatform);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    header('location: ../admin.php');
-    exit();
-}
 //Budget
 function SetBudget($conn, $uid){
         $result = getData($conn, "SELECT budget FROM gebruiker WHERE Id = $uid;");
@@ -1004,7 +989,9 @@ function showAdminGebruikers($conn, $sql){
                             <div class="namestag"><label for="username">Land</label><h1 name="username"><?php echo $land?></h1></div>
                             <div class="namestag"><label for="username">Last Online</label><h1 name="username"><?php echo $lastonline?></h1></div>
                             <div class="namestag"><label for="username">Id</label><h1 name="username"><?php echo $id?></h1></div>
-                            <div class="namestag"><label for="username">admin</label><h1 name="username"><?php if ($_SESSION['isadmin'] == false){echo "false";}else{echo "true";}?></h1></div>
+                            <div class="namestag"><label for="username">admin</label><h1 name="username"><?php
+                                if ($_SESSION['isadmin'] == false){echo "false";}else{echo "true";}
+                                ?></h1></div>
                         </div>
                         <div class="gebruikerDisp-3">
                                 <form method="post"><button id="admin-option" class="noshow" type="submit" name="makeAdmin"><div class="admin-option"><h1>Make Admin</h1></div></button><input type="hidden" name="id" value="<?php echo $id?>"><input type="hidden" name="user" value="<?php echo $usern?>"></form>
@@ -1022,6 +1009,8 @@ function showAdminGebruikers($conn, $sql){
         echo "<h1 id='noresult'>Nothing has found</h1>";
     }
 }
+
+
 //orders
 function DisplayOrder($conn, $uid, $type, $sql){
     if ($type == 1) {

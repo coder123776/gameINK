@@ -129,11 +129,12 @@ if (isset($_GET['doing'])){
         while ($row = mysqli_fetch_assoc($result)){
             foreach ($itemId as $id){
                 if($row['Id'] == $id){
-                    $buyprice = $total + $tax;
+                    $buyprice = $total;
                     buyGameScreen($conn, $username, $budget, $buyprice, 1, $btn, $cls, $uid, "", $codetext);
                 }
             }
         }
+        ?> <style> *{ overflow-y: hidden;}</style> <?php
     }
     if($_GET['doing'] == 'nomony'){
         if(isset($_GET['codefound'])){

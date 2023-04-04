@@ -236,7 +236,23 @@ if (isset($_POST['makeGameProduct'])){
     <?php
     }
     elseif (isset($_GET['Orders'])){?>
-    
+    <div class="admin-body-m"> 
+      <h1 id="admin-t">Welcome To The Orders TOOL</h1> 
+      <input class="search-Admin" id="SearchOrders" type="text" placeholder="search orders.."> 
+      <div class="admin-line"></div> 
+      <div class="admin-orders-body" id="showtheorders"> 
+        <?php 
+          $ordersSQL = "SELECT * FROM orders"; 
+          $result = mysqli_query($conn, $ordersSQL); 
+          if(mysqli_num_rows($result) > 0){ 
+            while($row = mysqli_fetch_assoc($result)){ 
+              $Id = $row["Id"]; 
+              $ProductName = $row["bestelproduct"]; 
+              $Date = $row["besteldatum"]; 
+              $CostumerName = $row["bestelnaam"]; 
+
+              DisplayOrderAdmin($Id, $ProductName, $Date, $CostumerName); 
+            }} ?> </div> </div>
     <?php
     }
     elseif (isset($_GET['Friends'])){?>
@@ -337,48 +353,29 @@ $('#gameBodyCRAT').on('input', function() {
 });
 
 $(document).ready(function(){
-    $("#searchadminElse").keyup(function(){
-            var input = $(this).val();
-            if(input != ""){
-            $.ajax({
-                    url:"includes/search.inc.php",
-                    method:"post",
-                    data:{searchAdmin1:input},
-                    success:function(data){
-                    $("#showedgebruikers").html(data);
-                    $("#showedgebruikers").css("display", "flex");
-                    }
-            });
-            }
-    });
-    $("#searchadminNaam").keyup(function(){
-            var input = $(this).val();
-            if(input != ""){
-            $.ajax({
-                    url:"includes/search.inc.php",
-                    method:"post",
-                    data:{searchAdmin2:input},
-                    success:function(data){
-                    $("#showedgebruikers").html(data);
-                    $("#showedgebruikers").css("display", "flex");
-                    }
-            });
-            }
-    });
-    $("#searchadminLand").keyup(function(){
-            var input = $(this).val();
-            if(input != ""){
-            $.ajax({
-                    url:"includes/search.inc.php",
-                    method:"post",
-                    data:{searchAdmin3:input},
-                    success:function(data){
-                    $("#showedgebruikers").html(data);
-                    $("#showedgebruikers").css("display", "flex");
-                    }
-            });
-            }
-    });
+  
+function search(inputID, searchParam, resultID) {
+  $(inputID).keyup(function() {
+    var input = $(this).val();
+    if (input != "") {
+      $.ajax({
+        url: "includes/search.inc.php",
+        method: "post",
+        data: { [searchParam]: input },
+        success: function(data) {
+          $(resultID).html(data);
+          $(resultID).css("display", "flex");
+        }
+      });
+    }
+  });
+}
+
+search("#searchadminElse", "searchAdmin1", "#showedgebruikers");
+search("#searchadminNaam", "searchAdmin2", "#showedgebruikers");
+search("#searchadminLand", "searchAdmin3", "#showedgebruikers");
+search("#SearchOrders", "searchAdmin4", "#showtheorders");
+
 });
 
 $(document).ready(function() {

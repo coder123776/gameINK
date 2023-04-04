@@ -266,6 +266,20 @@
         }
         }
     }
+    if(isset($_POST['searchAdmin4'])){ 
+        $Sgames = $_POST['searchAdmin4']; 
+        $dataGames = "SELECT * FROM orders WHERE bestelproduct LIKE '%{$Sgames}%'"; 
+        $result = mysqli_query($conn, $dataGames); 
+            while($row = mysqli_fetch_assoc($result)){ 
+                $Id = $row["Id"]; 
+                $ProductName = $row["bestelproduct"]; 
+                $Date = $row["besteldatum"]; 
+                $CostumerName = $row["bestelnaam"]; 
+            if (mysqli_num_rows($result)>0){ 
+                DisplayOrderAdmin($Id, $ProductName, $Date, $CostumerName); 
+            }else{ 
+                echo "<h1 id='nothingfound'>Nothing found</h1>";
+    }}}
     //orders
     if(isset($_POST['searchorders'])){
         $Sgames = $_POST['searchorders'];

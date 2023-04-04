@@ -438,11 +438,6 @@ function buyGameScreen($conn, $user, $wallet, $Tprice, $type, $button, $colsebut
 </div>
 </div>
 </form>
-<style>
-    *{
-        overflow-y: hidden;
-    }
-</style>
 <?php
 }
 ?>
@@ -1035,3 +1030,23 @@ function DisplayOrder($conn, $uid, $type, $sql){
         echo "no orders Yet";
     }
 }
+
+function DisplayOrderAdmin($Id, $ProductName, $Date, $CostumerName){?> 
+    <div class="admin-orders-child"> 
+        <div class="orders-child-id"> 
+            <h1>OrdId</h1> 
+            <p><?php echo $Id ?></p>
+        </div>
+        <div class="orders-child-id">
+            <h1>OrdName</h1>
+            <p><?php echo $ProductName ?></p>
+        </div>
+        <div class="orders-child-id">
+            <h1>Date</h1>
+            <p><?php echo $Date ?></p>
+        </div>
+        <div class="orders-child-id">
+            <h1>GebName</h1>
+            <p><?php echo $CostumerName ?></p>
+        </div></div> 
+<?php }

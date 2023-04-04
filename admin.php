@@ -100,7 +100,7 @@ if (isset($_POST['makeGameProduct'])){
 <section class="admin-head">
     <div class="admin-nav-head">
         <div class="pijltjes"><i id="left3" class='fas fa-angle-left' style='font-size:24px'></i><i id="right3" class='fas fa-angle-right' style='font-size:24px'></i></div>
-        <div class="admin-nav-body"><div class="admin-nav"><?php showOptions("Gebruikers", "GebruikersAdmin", "Gebruikers"); showOptions("Make Games", "GamesAdmin", "Games"); showOptions("UPD Games", "BotAdmin", "INKbot"); showOptions("Orders", "OrdersAdmin", "Orders"); showOptions("Reviews", "ReviewAdmin", "Reviews"); showOptions("Friends", "FriendAdmin", "Friends"); showOptions("Chats", "ChatAdmin", "Chats"); showOptions("Moderators", "ModeratorAdmin", "Moderators"); ?></div></div>
+        <div class="admin-nav-body"><div class="admin-nav"><?php showOptions("Gebruikers", "GebruikersAdmin", "Gebruikers"); showOptions("Make Games", "GamesAdmin", "Games"); showOptions("UPD Games", "BotAdmin", "INKbot"); showOptions("Orders", "OrdersAdmin", "Orders"); ?></div></div>
     </div>
 
     <?php 
